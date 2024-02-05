@@ -7,3 +7,4 @@ const Color homeBgColor = Color.fromARGB(255, 35, 37, 47);
 const Color lightBlueColor = Color.fromARGB(255, 127, 222, 252);
 const Color whiteColor = Color.fromARGB(255, 248, 248, 242);
 const Color blueColor = Color.fromARGB(255, 112, 156, 255);
+const Color garkGreyColor = Color.fromARGB(255, 154, 155, 160);
