@@ -9,6 +9,7 @@ class Header extends StatefulWidget {
 }
 
 class _HeaderState extends State<Header> {
+  bool _titleState = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,9 +21,13 @@ class _HeaderState extends State<Header> {
           StatefulBuilder(
 
             builder: (BuildContext context , void Function(void Function())_) {
-              return Text(
-                "Personal Website | Yassine Sahli",
-                style: GoogleFonts.jura(fontSize: 35,color: ,fontWeight: FontWeight.w500),
+              return InkWell(
+                onTap: ()=>true,
+                onHover: (bool value) => _(() => _titleState = value),
+                child: Text(
+                  "Personal Website | Yassine Sahli",
+                  style: GoogleFonts.jura(fontSize: 35,color: _titleState ? : ,fontWeight: FontWeight.w500),
+                ),
               );
             }
           ),
