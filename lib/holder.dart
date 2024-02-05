@@ -13,7 +13,7 @@ class Holder extends StatefulWidget {
 
 class _HolderState extends State<Holder> {
   final List<Widget> _sections = <Widget>[
-    const Space(),
+    Space(),
     Home(),
   ];
 
@@ -23,7 +23,6 @@ class _HolderState extends State<Holder> {
       body: Stack(
         alignment: Alignment.topCenter,
         children: <Widget>[
-          const Header(),
           Positioned.fill(
             child: ListView.builder(
               padding: EdgeInsets.zero,
@@ -31,6 +30,7 @@ class _HolderState extends State<Holder> {
               itemBuilder: (BuildContext context, int index) => _sections[index],
             ),
           ),
+          const Header(),
         ],
       ),
     );
