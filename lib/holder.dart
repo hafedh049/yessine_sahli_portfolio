@@ -14,6 +14,7 @@ class _HolderState extends State<Holder> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
+        alignment: Alignment.topCenter,
         children: <Widget>[
           const Header(),
         ],

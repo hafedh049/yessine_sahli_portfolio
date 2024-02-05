@@ -14,6 +14,7 @@ class Main extends StatelessWidget {
   Widget build(BuildContext context) {
     return const GetMaterialApp(
       home: const Holder(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
