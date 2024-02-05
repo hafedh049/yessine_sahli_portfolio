@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'holder.dart';
+
 void main() {
   runApp(const Main());
 }
