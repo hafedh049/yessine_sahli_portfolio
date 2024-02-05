@@ -9,7 +9,7 @@ class Space extends StatelessWidget {
     final Size size = MediaQuery.sizeOf(context);
     return Container(
       width: size.width,
-      height: size.height * .3,
+      height: size.height * .2,
       color: oddDarkBgColor,
     );
   }

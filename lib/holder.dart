@@ -23,12 +23,10 @@ class _HolderState extends State<Holder> {
       body: Stack(
         alignment: Alignment.topCenter,
         children: <Widget>[
-          Positioned.fill(
-            child: ListView.builder(
-              padding: EdgeInsets.zero,
-              itemCount: _sections.length,
-              itemBuilder: (BuildContext context, int index) => _sections[index],
-            ),
+          ListView.builder(
+            padding: EdgeInsets.zero,
+            itemCount: _sections.length,
+            itemBuilder: (BuildContext context, int index) => _sections[index],
           ),
           const Header(),
         ],

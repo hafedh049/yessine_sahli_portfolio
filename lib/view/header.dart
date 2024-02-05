@@ -48,8 +48,13 @@ class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: headerBgColor,
+      width: MediaQuery.sizeOf(context).width,
+      height: MediaQuery.sizeOf(context).height * .1,
       padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: headerBgColor,
+        boxShadow: <BoxShadow>[BoxShadow(blurStyle: BlurStyle.outer, color: whiteColor.withOpacity(.6), offset: const Offset(0, 1))],
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
