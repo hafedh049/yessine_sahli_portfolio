@@ -117,6 +117,7 @@ class _ContactState extends State<Contact> {
                 Row(
                   children: <Widget>[
                     const Icon(FontAwesome.envelope, size: 25, color: whiteColor),
+                    const SizedBox(width: 10),
                     StatefulBuilder(
                       builder: (BuildContext context, void Function(void Function()) _) {
                         return InkWell(
@@ -129,12 +130,9 @@ class _ContactState extends State<Contact> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
-                              Text(
-                                "Higher Institute of Technological Studies in Communications of Tunis",
-                                style: GoogleFonts.jura(fontSize: 18, color: lightBlueColor, fontWeight: FontWeight.w500),
-                              ),
+                              Text("yassine1sehli@gmail.com", style: GoogleFonts.jura(fontSize: 18, color: lightBlueColor, fontWeight: FontWeight.w500)),
                               const SizedBox(height: 5),
-                              AnimatedContainer(duration: 300.ms,color: blueColor,width: _emailState ? :0,height: 1 ),
+                              AnimatedContainer(duration: 300.ms, color: lightBlueColor, width: _emailState ? "yassine1sehli@gmail.com".length * 10 : 0, height: 1),
                             ],
                           ),
                         );
@@ -143,6 +141,32 @@ class _ContactState extends State<Contact> {
                   ],
                 ),
                 const SizedBox(height: 20),
+                Row(
+                  children: <Widget>[
+                    const Icon(FontAwesome.envelope, size: 25, color: whiteColor),
+                    const SizedBox(width: 10),
+                    StatefulBuilder(
+                      builder: (BuildContext context, void Function(void Function()) _) {
+                        return InkWell(
+                          hoverColor: transparent,
+                          splashColor: transparent,
+                          highlightColor: transparent,
+                          onTap: () => true,
+                          onHover: (bool value) => _(() => _emailState = value),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Text("Ariana, Tunis", style: GoogleFonts.jura(fontSize: 18, color: lightBlueColor, fontWeight: FontWeight.w500)),
+                              const SizedBox(height: 5),
+                              AnimatedContainer(duration: 300.ms, color: lightBlueColor, width: _emailState ? "Ariana, Tunis".length * 10 : 0, height: 1),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
