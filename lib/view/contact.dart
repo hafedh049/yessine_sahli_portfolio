@@ -46,7 +46,7 @@ class _ContactState extends State<Contact> {
                 const SizedBox(height: 20),
                 Flexible(
                   child: Container(
-                    decoration: BoxDecoration(color: darkGreyColor.withOpacity(.6), borderRadius: BorderRadius.circular(5), border: Border.all(color: blueColor, width: 2)),
+                    decoration: BoxDecoration(color: darkGreyColor.withOpacity(.4), borderRadius: BorderRadius.circular(5), border: Border.all(color: blueColor, width: 2)),
                     child: TextField(
                       controller: _nameController,
                       decoration: InputDecoration(
