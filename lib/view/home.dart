@@ -89,7 +89,7 @@ class _HomeState extends State<Home> {
                       onHover: (bool value) => _(() => _linkState = value),
                       child: Text(
                         "Higher Institute of Technological Studies in Communications of Tunis",
-                        style: GoogleFonts.jura(fontSize: 18, color: lightBlueColor, fontWeight: FontWeight.w500, decoration: !_linkState ? TextDecoration.none : TextDecoration.underline),
+                        style: GoogleFonts.jura(fontSize: 18, color: lightBlueColor, fontWeight: FontWeight.w500, decoration: !_linkState ? TextDecoration.none : TextDecoration.underline, decorationColor: lightBlueColor, decorationThickness: 3),
                       ),
                     );
                   },
