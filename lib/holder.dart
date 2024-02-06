@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yessine/view/contact.dart';
+import 'package:yessine/view/footer.dart';
 import 'package:yessine/view/home.dart';
 import 'package:yessine/view/space.dart';
 
@@ -13,10 +14,11 @@ class Holder extends StatefulWidget {
 }
 
 class _HolderState extends State<Holder> {
-  final List<Widget> _sections = <Widget>[
+  final List<Widget> _sections = const <Widget>[
     Space(),
     Home(),
     Contact(),
+    Footer(),
   ];
 
   @override

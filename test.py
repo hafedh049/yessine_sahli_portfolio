@@ -1,1 +1,9 @@
-print((lambda x: x == x[::-1])(input("donner une chaine : ")))
+def dfs(x):
+    while True:
+        l = list()
+        for i in x:
+            if isinstance(i, list):
+                l.extend(i)
+            else:
+                l.append(i)
+        x = l.copy()
