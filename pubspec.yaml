@@ -21,6 +21,7 @@ dependencies:
   lottie: ^3.0.0
   comment_tree: ^0.3.0
   icons_plus: ^5.0.0
+  url_strategy: ^0.2.0
 
 dev_dependencies:
   flutter_test:
