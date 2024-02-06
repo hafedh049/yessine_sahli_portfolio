@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:yessine/shared/globals.dart';
@@ -67,10 +68,16 @@ class _HomeState extends State<Home> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
+                AnimatedContainer(
+                  duration: 500.ms,
+                  width: 140,
+                  height: 140,
+                  decoration: BoxDecoration(shape: BoxShape.circle, image: DecorationImage(image: AssetImage("assets/images/home_logo.png"))),
+                ),
                 const SizedBox(height: 20),
-                Text("Yassine Sahli", style: GoogleFonts.jura(fontSize: 35, color: whiteColor, fontWeight: FontWeight.w500)),
+                Text("Yassine Sahli", style: GoogleFonts.jura(fontSize: 30, color: whiteColor, fontWeight: FontWeight.w500)),
                 const SizedBox(height: 20),
-                Text("IT Student Specialized In Network Security", style: GoogleFonts.jura(fontSize: 28, color: garkGreyColor, fontWeight: FontWeight.w500)),
+                Text("IT Student Specialized In Network Security", style: GoogleFonts.jura(fontSize: 25, color: garkGreyColor, fontWeight: FontWeight.w500)),
                 const SizedBox(height: 20),
                 StatefulBuilder(
                   builder: (BuildContext context, void Function(void Function()) _) {
@@ -82,7 +89,7 @@ class _HomeState extends State<Home> {
                       onHover: (bool value) => _(() => _linkState = value),
                       child: Text(
                         "Higher Institute of Technological Studies in Communications of Tunis",
-                        style: GoogleFonts.jura(fontSize: 16, color: lightBlueColor, fontWeight: FontWeight.w500, decoration: !_linkState ? TextDecoration.none : TextDecoration.underline),
+                        style: GoogleFonts.jura(fontSize: 18, color: lightBlueColor, fontWeight: FontWeight.w500, decoration: !_linkState ? TextDecoration.none : TextDecoration.underline),
                       ),
                     );
                   },
