@@ -26,6 +26,7 @@ class _ContactState extends State<Contact> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: MediaQuery.sizeOf(context).height - MediaQuery.sizeOf(context).height * .1,
       padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 64),
       color: evenDarkBgColor,
       child: Row(
@@ -56,6 +57,51 @@ class _ContactState extends State<Contact> {
                       ),
                     ),
                   ),
+                ),
+                const SizedBox(height: 20),
+                Flexible(
+                  child: Container(
+                    decoration: BoxDecoration(color: darkGreyColor.withOpacity(.4), borderRadius: BorderRadius.circular(5), border: Border.all(color: blueColor, width: 2)),
+                    child: TextField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        hintText: "E-mail",
+                        hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Flexible(
+                  child: Container(
+                    decoration: BoxDecoration(color: darkGreyColor.withOpacity(.4), borderRadius: BorderRadius.circular(5), border: Border.all(color: blueColor, width: 2)),
+                    child: TextField(
+                      controller: _messageController,
+                      maxLines: 15,
+                      decoration: InputDecoration(
+                        hintText: "Message",
+                        hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(color: blueColor, borderRadius: BorderRadius.circular(5)),
+                        child: Text(
+                          "SEND",
+                          style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
