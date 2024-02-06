@@ -14,37 +14,19 @@ class Footer extends StatefulWidget {
 class _FooterState extends State<Footer> {
   bool _wowChemyState = false;
   bool _openSourceState = false;
-  late final List<Map<String, dynamic>> _icons;
-
-  @override
-  void initState() {
-    _icons = <Map<String, dynamic>>[
-      <String, dynamic>{
-        "icon": FontAwesome.creative_commons_brand,
-        "callback": () async => await launchUrlString(""),
-      },
-      <String, dynamic>{
-        "icon": FontAwesome.circle_dollar_to_slot_solid,
-        "callback": () async => await launchUrlString(""),
-      },
-      <String, dynamic>{
-        "icon": FontAwesome.people_line_solid,
-        "callback": () async => await launchUrlString(""),
-      },
-      <String, dynamic>{
-        "icon": FontAwesome.equals_solid,
-        "callback": () async => await launchUrlString(""),
-      },
-    ];
-    super.initState();
-  }
+  final List<IconData> _icons = <IconData>[
+    FontAwesome.creative_commons_brand,
+    FontAwesome.circle_dollar_to_slot_solid,
+    FontAwesome.people_line_solid,
+    FontAwesome.equals_solid,
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: oddDarkBgColor,
       alignment: Alignment.center,
-      height: MediaQuery.sizeOf(context).height * .15,
+      height: MediaQuery.sizeOf(context).height * .2,
       padding: const EdgeInsets.symmetric(vertical: 24),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -55,13 +37,10 @@ class _FooterState extends State<Footer> {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              for (final Map<String, dynamic> icon in _icons)
-                Tooltip(
-                  message: icon["tooltip"],
-                  child: IconButton(
-                    onPressed: icon["callback"],
-                    icon: Icon(icon["icon"], color: lightBlueColor, size: 25),
-                  ),
+              for (final IconData icon in _icons)
+                IconButton(
+                  onPressed: () async => await launchUrlString("https://creativecommons.org/licenses/by-nc-nd/4.0/"),
+                  icon: Icon(icon, color: lightBlueColor, size: 25),
                 ),
             ],
           ),

@@ -36,7 +36,7 @@ class _ContactState extends State<Contact> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text("Contact", style: GoogleFonts.jura(fontSize: 64, color: whiteColor, fontWeight: FontWeight.w500)),
+          Text("Contact", style: GoogleFonts.jura(fontSize: 35, color: whiteColor, fontWeight: FontWeight.w500)),
           const SizedBox(width: 40),
           Expanded(
             child: Column(
@@ -116,7 +116,7 @@ class _ContactState extends State<Contact> {
                 const SizedBox(height: 20),
                 Row(
                   children: <Widget>[
-                    const Icon(FontAwesome.envelope, size: 25, color: whiteColor),
+                    const Icon(FontAwesome.envelope, size: 25, color: lightBlueColor),
                     const SizedBox(width: 10),
                     StatefulBuilder(
                       builder: (BuildContext context, void Function(void Function()) _) {
@@ -143,7 +143,7 @@ class _ContactState extends State<Contact> {
                 const SizedBox(height: 20),
                 Row(
                   children: <Widget>[
-                    const Icon(FontAwesome.envelope, size: 25, color: whiteColor),
+                    const Icon(FontAwesome.map_location_solid, size: 25, color: whiteColor),
                     const SizedBox(width: 10),
                     StatefulBuilder(
                       builder: (BuildContext context, void Function(void Function()) _) {
@@ -157,9 +157,9 @@ class _ContactState extends State<Contact> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
-                              Text("Ariana, Tunis", style: GoogleFonts.jura(fontSize: 18, color: lightBlueColor, fontWeight: FontWeight.w500)),
+                              Text("Ariana, Tunis", style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500)),
                               const SizedBox(height: 5),
-                              AnimatedContainer(duration: 300.ms, color: lightBlueColor, width: _emailState ? "Ariana, Tunis".length * 10 : 0, height: 1),
+                              AnimatedContainer(duration: 300.ms, color: whiteColor, width: _emailState ? "Ariana, Tunis".length * 8.5 : 0, height: 1),
                             ],
                           ),
                         );
