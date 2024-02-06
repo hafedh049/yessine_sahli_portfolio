@@ -68,7 +68,7 @@ class _HeaderState extends State<Header> {
                 onHover: (bool value) => _(() => _titleState = value),
                 child: Text(
                   "Personal Website | Yassine Sahli",
-                  style: GoogleFonts.jura(fontSize: 35, color: _titleState ? lightBlueColor : whiteColor, fontWeight: FontWeight.w500),
+                  style: GoogleFonts.jura(fontSize: 25, color: _titleState ? lightBlueColor : whiteColor, fontWeight: FontWeight.w500),
                 ),
               );
             },
@@ -88,7 +88,7 @@ class _HeaderState extends State<Header> {
                     onHover: (bool value) => _(() => section["state"] = value),
                     child: Text(
                       section["title"],
-                      style: GoogleFonts.jura(fontSize: 20, color: section["state"] ? lightBlueColor : whiteColor, fontWeight: FontWeight.w500),
+                      style: GoogleFonts.jura(fontSize: 16, color: section["state"] ? lightBlueColor : whiteColor, fontWeight: FontWeight.w500),
                     ),
                   ),
                 );
