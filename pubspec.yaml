@@ -18,10 +18,9 @@ dependencies:
   url_launcher: ^6.2.4
   cloud_firestore: ^4.15.3
   fluttertoast: ^8.2.4
-  lottie: ^3.0.0
-  comment_tree: ^0.3.0
   icons_plus: ^5.0.0
   url_strategy: ^0.2.0
+  easy_stepper: ^0.8.3
 
 dev_dependencies:
   flutter_test:
