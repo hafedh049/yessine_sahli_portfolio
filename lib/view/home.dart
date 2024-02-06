@@ -77,7 +77,7 @@ class _HomeState extends State<Home> {
                 const SizedBox(height: 20),
                 Text("Yassine Sahli", style: GoogleFonts.jura(fontSize: 30, color: whiteColor, fontWeight: FontWeight.w500)),
                 const SizedBox(height: 20),
-                Text("IT Student Specialized In Network Security", style: GoogleFonts.jura(fontSize: 25, color: garkGreyColor, fontWeight: FontWeight.w500)),
+                Text("IT Student Specialized In Network Security", style: GoogleFonts.jura(fontSize: 25, color: darkGreyColor, fontWeight: FontWeight.w500)),
                 const SizedBox(height: 20),
                 StatefulBuilder(
                   builder: (BuildContext context, void Function(void Function()) _) {
