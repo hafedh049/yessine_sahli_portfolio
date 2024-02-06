@@ -12,7 +12,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   bool _linkState = false;
   late final List<Map<String, dynamic>> _icons;
-
+  final List<String> _interests = <String>["CyberSecurity", "Information Security"];
   @override
   void initState() {
     _icons = <Map<String, dynamic>>[
@@ -49,7 +49,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.sizeOf(context).height,
-      padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 64),
+      padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 128),
       color: evenDarkBgColor,
       child: Column(
         children: <Widget>[
@@ -86,6 +86,26 @@ class _HomeState extends State<Home> {
                   ),
                 ),
             ],
+          ),
+          const SizedBox(height: 20),
+          Text(
+            "I am currently working on several certifications to enhance my knowledge in different IT-related fields ; First thing worth mentionning, I am part of the AWS re/start cohort 7 program offered by both AWS and RBK Tunis (ReBootKamp) to train individuals and bring them closer to the Cloud Computing world, getting them ready for the “AWS Cloud Practionner” Certificate and offering them a FREE voucher. Along with that, I’ve been dedicating my time to write a fully detailed walkthrough for TryHackMe Jr Penetration Tester Pathway. In addition to those two, I’ve been studying for another certification ; “Microsoft Security, Compliance, and Identity Fundamentals” or for short “MS SC-900” and getting ready to sit for the exam as soon as possible. And finally, I’m also studying for the HCIA 5G certification. If you want to know more, my latest achievements are displayed in my linkedin account in the “Featured” Section ! Don’t hesitate to take a look !",
+            style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500),
+          ),
+          RichText(
+            text: TextSpan(
+              children: <TextSpan>[
+                TextSpan(
+                  text: "Interests :",
+                  style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500, decoration: TextDecoration.underline),
+                ),
+                for (final String interest in _interests)
+                  TextSpan(
+                    text: "$interest${_interests.last == interest ? "" : " - "}",
+                    style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500),
+                  ),
+              ],
+            ),
           ),
         ],
       ),
