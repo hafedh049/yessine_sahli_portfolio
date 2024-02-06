@@ -72,7 +72,7 @@ class _HomeState extends State<Home> {
                   duration: 500.ms,
                   width: 140,
                   height: 140,
-                  decoration: BoxDecoration(shape: BoxShape.circle, image: DecorationImage(image: AssetImage("assets/images/home_logo.png"))),
+                  decoration: const BoxDecoration(shape: BoxShape.circle, image: DecorationImage(image: AssetImage("assets/images/home_logo.png"))),
                 ),
                 const SizedBox(height: 20),
                 Text("Yassine Sahli", style: GoogleFonts.jura(fontSize: 30, color: whiteColor, fontWeight: FontWeight.w500)),
