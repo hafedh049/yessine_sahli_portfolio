@@ -1,8 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_strategy/url_strategy.dart';
+import 'package:yessine/shared/callbacks.dart';
 
 import 'holder.dart';
+import 'view/blue_sod.dart';
 
 void main() {
   setPathUrlStrategy();
@@ -15,11 +18,21 @@ class Main extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: "Yassine Sahli",
-      debugShowCheckedModeBanner: false,
-      routes: <String, Widget Function(BuildContext)>{
-        "/": (BuildContext context) => const Holder(),
+    return FutureBuilder<FirebaseApp>(
+      future: load(),
+      builder: (BuildContext context, AsyncSnapshot<FirebaseApp> snapshot) {
+        if (snapshot.hasData) {
+          return GetMaterialApp(
+            title: "Yassine Sahli",
+            debugShowCheckedModeBanner: false,
+            routes: <String, Widget Function(BuildContext)>{
+              "/": (BuildContext context) => const Holder(),
+            },
+          );
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Loading();
+        }
+        return BlueScreenOfDeath(error: snapshot.error.toString());
       },
     );
   }
