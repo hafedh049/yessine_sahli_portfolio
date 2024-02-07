@@ -102,29 +102,15 @@ class _HeaderState extends State<Header> {
                         );
                 },
               ),
-              const Spacer(),
-              LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-                  return window.innerWidth! > 900 || window.innerWidth! <= 600
-                      ? const SizedBox()
-                      : Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            IconButton(onPressed: () async => await launchUrlString("https://twitter.com/Yassine___S"), icon: const Icon(FontAwesome.x_twitter_brand, size: 20, color: whiteColor)),
-                            IconButton(onPressed: () {}, icon: const Icon(FontAwesome.moon_solid, size: 20, color: whiteColor)),
-                          ],
-                        );
-                },
-              ),
             ],
           ),
           if (_menuState) ...<Widget>[
-            const SizedBox(height: 10),
             SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  const SizedBox(height: 10),
                   for (final String section_ in _sections) ...<Widget>[
                     AnimatedScale(
                       duration: 500.ms,
@@ -151,7 +137,10 @@ class _HeaderState extends State<Header> {
                     hoverColor: transparent,
                     splashColor: transparent,
                     highlightColor: transparent,
-                    onTap: () async => await launchUrlString("http://www.google.com"),
+                    onTap: () async {
+                      await launchUrlString("http://www.google.com");
+                      setState(() => _menuState = !_menuState);
+                    },
                     child: Text("CV", style: GoogleFonts.jura(fontSize: 16, color: whiteColor, fontWeight: FontWeight.w500)),
                   ),
                 ],
