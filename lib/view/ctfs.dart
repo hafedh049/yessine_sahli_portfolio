@@ -24,7 +24,7 @@ class _CTFsState extends State<CTFs> {
       color: oddDarkBgColor,
       alignment: Alignment.center,
       height: MediaQuery.sizeOf(context).height,
-      padding: const EdgeInsets.symmetric(vertical: 24),
+      padding: const EdgeInsets.all(24),
       child: FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
         future: FirebaseFirestore.instance.collection("ctfs").get(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
@@ -55,12 +55,12 @@ class _CTFsState extends State<CTFs> {
                             width: 250,
                             height: 250,
                             duration: 300.ms,
-                            padding: const EdgeInsets.all(48),
+                            padding: const EdgeInsets.all(24),
                             alignment: Alignment.bottomCenter,
                             decoration: BoxDecoration(
                               border: Border.all(color: blueColor),
                               borderRadius: BorderRadius.circular(15),
-                              image: (item["image"] == null || item["image"].isEmpty)
+                              image: (item["image"] == null || item["image"].isEmpty || item["image"] == '""' || item["image"] == "''")
                                   ? const DecorationImage(
                                       image: AssetImage("assets/images/home_logo.png"),
                                       fit: BoxFit.cover,
@@ -76,7 +76,7 @@ class _CTFsState extends State<CTFs> {
                                 Text(item["name"], style: GoogleFonts.jura(fontSize: 20, color: whiteColor, fontWeight: FontWeight.bold)),
                                 const SizedBox(height: 10),
                                 Text(
-                                  item["difficulty"] == null ? "EASY" : item["difficulty"].toUpperCase(),
+                                  item["difficulty"] == null || item["difficulty"].isEmpty || item["difficulty"] == '""' || item["difficulty"] == "''" ? "EASY" : item["difficulty"].toUpperCase(),
                                   style: GoogleFonts.jura(
                                     fontSize: 20,
                                     color: item["difficulty"] == null || item["difficulty"].isEmpty || item["difficulty"].toUpperCase() == "EASY"
@@ -86,7 +86,7 @@ class _CTFsState extends State<CTFs> {
                                             : item["difficulty"].toUpperCase() == "HARD"
                                                 ? Colors.red
                                                 : Colors.purple.shade900,
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ],
