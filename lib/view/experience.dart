@@ -18,6 +18,7 @@ class _ExperienceState extends State<Experience> {
       "logo": "",
       "title": "Cybersecurity Intern",
       "first_subtitle": "Venari Security",
+      "url": "https://www.venarisecurity.com",
       "second_subtitle": "October 2022 – December 2022  Tunisia, Lac II",
       "description": """
 Enhancing the client identification process based solely on the fields in the “Client Hello” message during a TLS handshake, by creating a custom function that works with Levenshtein distances and takes as input unique TLSv1.3 fields ;
@@ -32,6 +33,7 @@ Enhancing the client identification process based solely on the fields in the �
       "logo": "",
       "title": "Cybersecurity Intern / Student Advanced Training Internship",
       "first_subtitle": "Resys-Consultants",
+      "url": "http://www.resys-consultants.com",
       "second_subtitle": "June 2022 – July 2022  Tunisia, Ariana",
       "description": """
 – Web Applications Vulnerabilities Analysis
@@ -51,6 +53,7 @@ Enhancing the client identification process based solely on the fields in the �
       "logo": "",
       "title": "Web Developer Intern / Student Initiation Internship",
       "first_subtitle": "Little Big Connections",
+      "url": "https://www.littlebigconnection.com/en/",
       "second_subtitle": "June 2021 – July 2021  Tunisia, Ariana",
       "description": "Web Development Fundamentals ; Personal Website Development",
     },
@@ -96,10 +99,11 @@ Enhancing the client identification process based solely on the fields in the �
                         Text("Yassine Sahli", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
                         const SizedBox(height: 20),
                         InkWell(
-                          onTap: () async => await launchUrlString(""),
-                          child: Text("Yassine Sahli", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                          onTap: () async => await launchUrlString(stepData.content["url"]),
+                          child: Text("Yassine Sahli", style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500)),
                         ),
                         const SizedBox(height: 20),
+                        Text("Yassine Sahli", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
                       ],
                     ),
                   ],
