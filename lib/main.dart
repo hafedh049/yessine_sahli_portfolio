@@ -15,10 +15,12 @@ class Main extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
-      home: Holder(),
+    return GetMaterialApp(
       title: "Yassine Sahli",
       debugShowCheckedModeBanner: false,
+      routes: <String, Widget Function(BuildContext)>{
+        "/": (BuildContext context) => const Holder(),
+      },
     );
   }
 }

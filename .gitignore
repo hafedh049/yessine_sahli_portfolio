@@ -13,6 +13,8 @@ pubspec.lock
 doc/api/
 auto_commit.py
 web/index.html
+lib/shared/callbacks.dart
+web/index.html
 
 # dotenv environment variables file
 .env*
