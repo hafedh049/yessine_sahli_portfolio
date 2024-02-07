@@ -94,7 +94,7 @@ class _HeaderState extends State<Header> {
                               hoverColor: transparent,
                               splashColor: transparent,
                               highlightColor: transparent,
-                              onTap: () async => await launchUrlString("http://www.google.com"),
+                              onTap: () async => await launchUrlString("https://drive.google.com/file/d/1O0oq8qSvUini1w0MOy8FmqXQ9FdpSWWU/view?usp=sharing"),
                               child: Text("CV", style: GoogleFonts.jura(fontSize: 16, color: whiteColor, fontWeight: FontWeight.w500)),
                             ),
                           ],
@@ -141,7 +141,7 @@ class _HeaderState extends State<Header> {
                       splashColor: transparent,
                       highlightColor: transparent,
                       onTap: () async {
-                        await launchUrlString("http://www.google.com");
+                        await launchUrlString("https://drive.google.com/file/d/1O0oq8qSvUini1w0MOy8FmqXQ9FdpSWWU/view?usp=sharing");
                         setState(() => _menuState = !_menuState);
                       },
                       child: Text("CV", style: GoogleFonts.jura(fontSize: 16, color: whiteColor, fontWeight: FontWeight.w500)),
