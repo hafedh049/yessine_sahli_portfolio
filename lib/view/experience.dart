@@ -32,16 +32,16 @@ Enhancing the client identification process based solely on the fields in the �
       "first_subtitle": "Resys-Consultants",
       "second_subtitle": "June 2022 – July 2022  Tunisia, Ariana",
       "description": """
-– Web Applications Vulnerabilities ;
-– Web Applications Exploitation ;
-– Basic Pentesting ;
-– Brute forcing ;
-– Service enumeration ;
-– Linux Enumeration ;
-– OWASP TOP 10 ;
-– Python Security Oriented ;
-– Performing Training Sessions : Programming With Python ;
-– Nmap Automated Scanner Tool Development From Scratch ;
+– Web Applications Vulnerabilities Analysis
+– Web Applications Exploitation
+– Basic Pentesting
+– Brute forcing
+– Service enumeration
+– Linux Enumeration
+– OWASP TOP 10
+– Python Security Oriented
+– Performing Training Sessions : Programming With Python
+– Nmap Automated Scanner Tool Development From Scratch
 – Reporting Vulnerabilities and Bugs.
 """,
     },
@@ -62,41 +62,21 @@ Enhancing the client identification process based solely on the fields in the �
       padding: const EdgeInsets.symmetric(vertical: 24),
       child: StepperListView(
         showStepperInLast: true,
-        stepperData: _stepperData,
-        stepAvatar: (_, data) {
-          final stepData = data as StepperItemData;
+        stepperData: _experiences.map((Map<String, dynamic> e) => StepperItemData(content: e)).toList(),
+        stepAvatar: (BuildContext _, dynamic __) {
           return PreferredSize(
             preferredSize: const Size.fromRadius(20),
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(
-                stepData.avatar!,
-              ),
+            child: Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(width: 2, color: blueColor)),
+              child: Container(decoration: const BoxDecoration(shape: BoxShape.circle, color: blueColor)),
             ),
           );
         },
-        stepWidget: (_, data) {
-          final stepData = data as StepperItemData;
-          return PreferredSize(
-            preferredSize: const Size.fromWidth(30),
-            child: Text(
-              stepData.content['born_date'] ?? '',
-              style: TextStyle(
-                color: theme.primaryColor,
-                fontSize: 13,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          );
-        },
-        stepContentWidget: (_, data) {
-          final stepData = data as StepperItemData;
+        stepContentWidget: (BuildContext _, dynamic data) {
+          final StepperItemData stepData = data as StepperItemData;
           return Container(
-            margin: const EdgeInsets.only(
-              top: 20,
-            ),
-            padding: const EdgeInsets.all(
-              15,
-            ),
+            padding: const EdgeInsets.all(24),
             child: ListTile(
               contentPadding: const EdgeInsets.all(7),
               visualDensity: const VisualDensity(
