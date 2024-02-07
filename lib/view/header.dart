@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,7 +20,7 @@ class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: 300.ms,
+      duration: 100.ms,
       width: MediaQuery.sizeOf(context).width,
       height: MediaQuery.sizeOf(context).height * .1,
       padding: const EdgeInsets.all(24),
@@ -32,7 +34,7 @@ class _HeaderState extends State<Header> {
             children: <Widget>[
               LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
-                  return constraints.maxWidth < 300 ? const SizedBox() : IconButton(onPressed: () {}, icon: const Icon(FontAwesome.list_ul_solid, size: 25, color: whiteColor));
+                  return window.innerWidth! > 900 ? const SizedBox() : IconButton(onPressed: () {}, icon: const Icon(FontAwesome.list_ul_solid, size: 20, color: whiteColor));
                 },
               ),
               StatefulBuilder(
@@ -48,53 +50,60 @@ class _HeaderState extends State<Header> {
                 },
               ),
               const SizedBox(width: 30),
-              StatefulBuilder(
-                builder: (BuildContext context, void Function(void Function()) _) {
-                  return Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      for (final String section_ in _sections) ...<Widget>[
-                        AnimatedScale(
-                          duration: 500.ms,
-                          scale: section_ == section ? 1.01 : 1,
-                          child: InkWell(
-                            hoverColor: transparent,
-                            splashColor: transparent,
-                            highlightColor: transparent,
-                            onTap: () async {
-                              controller.animateTo(MediaQuery.sizeOf(context).height * _sections.indexOf(section_) + MediaQuery.sizeOf(context).height * .1, duration: 300.milliseconds, curve: Curves.linear);
-                              _(() => section = section_);
-                            },
-                            child: Text(section_, style: GoogleFonts.jura(fontSize: 16, color: section_ == section ? lightBlueColor : whiteColor, fontWeight: FontWeight.w500)),
-                          ),
-                        ),
-                        const SizedBox(width: 20),
-                      ],
-                    ],
-                  );
-                },
-              ),
-              StatefulBuilder(
-                builder: (BuildContext context, void Function(void Function()) _) {
-                  return InkWell(
-                    hoverColor: transparent,
-                    splashColor: transparent,
-                    highlightColor: transparent,
-                    onTap: () async => await launchUrlString("http://www.google.com"),
-                    child: Text("CV", style: GoogleFonts.jura(fontSize: 16, color: whiteColor, fontWeight: FontWeight.w500)),
-                  );
+              LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  return window.innerWidth! <= 900
+                      ? const SizedBox()
+                      : Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            StatefulBuilder(
+                              builder: (BuildContext context, void Function(void Function()) _) {
+                                return Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    for (final String section_ in _sections) ...<Widget>[
+                                      AnimatedScale(
+                                        duration: 500.ms,
+                                        scale: section_ == section ? 1.01 : 1,
+                                        child: InkWell(
+                                          hoverColor: transparent,
+                                          splashColor: transparent,
+                                          highlightColor: transparent,
+                                          onTap: () async {
+                                            controller.animateTo(MediaQuery.sizeOf(context).height * _sections.indexOf(section_) + MediaQuery.sizeOf(context).height * .1, duration: 300.milliseconds, curve: Curves.linear);
+                                            _(() => section = section_);
+                                          },
+                                          child: Text(section_, style: GoogleFonts.jura(fontSize: 16, color: section_ == section ? lightBlueColor : whiteColor, fontWeight: FontWeight.w500)),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 20),
+                                    ],
+                                  ],
+                                );
+                              },
+                            ),
+                            InkWell(
+                              hoverColor: transparent,
+                              splashColor: transparent,
+                              highlightColor: transparent,
+                              onTap: () async => await launchUrlString("http://www.google.com"),
+                              child: Text("CV", style: GoogleFonts.jura(fontSize: 16, color: whiteColor, fontWeight: FontWeight.w500)),
+                            ),
+                          ],
+                        );
                 },
               ),
               const Spacer(),
               LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
-                  return constraints.maxWidth < 300
+                  return window.innerWidth! > 900 || window.innerWidth! <= 400
                       ? const SizedBox()
                       : Row(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            IconButton(onPressed: () async => await launchUrlString("https://twitter.com/Yassine___S"), icon: const Icon(FontAwesome.x_twitter_brand, size: 25, color: whiteColor)),
-                            IconButton(onPressed: () {}, icon: const Icon(FontAwesome.moon_solid, size: 25, color: whiteColor)),
+                            IconButton(onPressed: () async => await launchUrlString("https://twitter.com/Yassine___S"), icon: const Icon(FontAwesome.x_twitter_brand, size: 20, color: whiteColor)),
+                            IconButton(onPressed: () {}, icon: const Icon(FontAwesome.moon_solid, size: 20, color: whiteColor)),
                           ],
                         );
                 },
