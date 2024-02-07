@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stepper_list_view/stepper_list_view.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../shared/globals.dart';
@@ -65,25 +64,10 @@ Enhancing the client identification process based solely on the fields in the â€
       alignment: Alignment.center,
       constraints: BoxConstraints(minHeight: MediaQuery.sizeOf(context).height),
       padding: const EdgeInsets.symmetric(vertical: 24),
-      child: SizedBox(
-        width: MediaQuery.sizeOf(context).width * .6,
-        child: StepperListView(
-          shrinkWrap: true,
-          showStepperInLast: false,
-          stepperData: _experiences.map((Map<String, dynamic> e) => StepperItemData(content: e)).toList(),
-          stepAvatar: (BuildContext _, dynamic __) {
-            return PreferredSize(
-              preferredSize: const Size.fromRadius(30),
-              child: Container(
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(width: 2, color: blueColor)),
-                child: Container(decoration: const BoxDecoration(shape: BoxShape.circle, color: blueColor)),
-              ),
-            );
-          },
-          stepContentWidget: (BuildContext _, dynamic data) {
-            final StepperItemData stepData = data as StepperItemData;
-            return Container(
+      child: Column(
+        children: <Widget>[
+          for (final Map<String, dynamic> item in _experiences)
+            Container(
               margin: const EdgeInsets.only(left: 24, bottom: 24),
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: darkGreyColor.withOpacity(.2)),
@@ -94,35 +78,32 @@ Enhancing the client identification process based solely on the fields in the â€
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      Image.asset("assets/images/${stepData.content["logo"]}.png", width: 80, height: 80),
+                      Image.asset("assets/images/${item["logo"]}.png", width: 80, height: 80),
                       const SizedBox(width: 20),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            Text(stepData.content["title"], style: GoogleFonts.jura(fontSize: 20, color: whiteColor, fontWeight: FontWeight.w500)),
+                            Text(item["title"], style: GoogleFonts.jura(fontSize: 20, color: whiteColor, fontWeight: FontWeight.w500)),
                             const SizedBox(height: 5),
                             InkWell(
-                              onTap: () async => await launchUrlString(stepData.content["url"]),
-                              child: Text(stepData.content["first_subtitle"], style: GoogleFonts.jura(fontSize: 16, color: blueColor, fontWeight: FontWeight.w500)),
+                              onTap: () async => await launchUrlString(item["url"]),
+                              child: Text(item["first_subtitle"], style: GoogleFonts.jura(fontSize: 16, color: blueColor, fontWeight: FontWeight.w500)),
                             ),
                             const SizedBox(height: 5),
-                            Text(stepData.content["second_subtitle"], style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500)),
+                            Text(item["second_subtitle"], style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500)),
                           ],
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 20),
-                  Text(stepData.content["description"], style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500)),
+                  Text(item["description"], style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500)),
                 ],
               ),
-            );
-          },
-          stepperThemeData: const StepperThemeData(lineColor: blueColor, lineWidth: 5),
-          physics: const BouncingScrollPhysics(),
-        ),
+            ),
+        ],
       ),
     );
   }
