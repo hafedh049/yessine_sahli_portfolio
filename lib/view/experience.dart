@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:stepper_list_view/stepper_list_view.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../shared/globals.dart';
 
@@ -58,7 +60,7 @@ Enhancing the client identification process based solely on the fields in the â€
     return Container(
       color: oddDarkBgColor,
       alignment: Alignment.center,
-      height: MediaQuery.sizeOf(context).height,
+      constraints: BoxConstraints(minHeight: MediaQuery.sizeOf(context).height),
       padding: const EdgeInsets.symmetric(vertical: 24),
       child: StepperListView(
         showStepperInLast: true,
@@ -77,157 +79,36 @@ Enhancing the client identification process based solely on the fields in the â€
           final StepperItemData stepData = data as StepperItemData;
           return Container(
             padding: const EdgeInsets.all(24),
-            child: ListTile(
-              contentPadding: const EdgeInsets.all(7),
-              visualDensity: const VisualDensity(
-                vertical: -4,
-                horizontal: -4,
-              ),
-              title: Text(stepData.content['name'] ?? ''),
-              subtitle: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      const Expanded(
-                        flex: 3,
-                        child: Icon(Icons.work),
-                      ),
-                      Expanded(
-                        flex: 7,
-                        child: Text(stepData.content['occupation'] ?? ''),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      const Expanded(
-                        flex: 3,
-                        child: Icon(Icons.phone),
-                      ),
-                      Expanded(
-                        flex: 7,
-                        child: Text(stepData.content['mobileNumber'] ?? ''),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      const Expanded(
-                        flex: 3,
-                        child: Icon(Icons.email),
-                      ),
-                      Expanded(
-                        flex: 7,
-                        child: Text(stepData.content['email'] ?? ''),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'Contact Link',
-                    style: theme.textTheme.titleMedium,
-                  ),
-                  const SizedBox(
-                    height: 7,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: darkGreyColor),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Image.asset("assets/images/${stepData.content["logo"]}", width: 80, height: 80),
+                    const SizedBox(width: 20),
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              flex: 3,
-                              child: Text(
-                                'Linked-In',
-                                style: theme.textTheme.caption,
-                              ),
-                            ),
-                            Expanded(
-                              flex: 7,
-                              child: GestureDetector(
-                                onTap: () {
-                                  _launchURL(stepData.content['contact_list']['LinkedIn']);
-                                },
-                                child: Text(
-                                  stepData.content['contact_list']['LinkedIn'] ?? '',
-                                  style: theme.textTheme.titleMedium?.copyWith(
-                                    color: Colors.blue,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Text("Yassine Sahli", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                        const SizedBox(height: 20),
+                        InkWell(
+                          onTap: () async => await launchUrlString(""),
+                          child: Text("Yassine Sahli", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              flex: 3,
-                              child: Text(
-                                'Portfolio',
-                                style: theme.textTheme.caption,
-                              ),
-                            ),
-                            Expanded(
-                              flex: 7,
-                              child: GestureDetector(
-                                onTap: () {
-                                  _launchURL(stepData.content['contact_list']['Portfolio']);
-                                },
-                                child: Text(
-                                  stepData.content['contact_list']['Portfolio'] ?? '',
-                                  style: theme.textTheme.titleMedium?.copyWith(
-                                    color: Colors.blue,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                        const SizedBox(height: 20),
                       ],
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                ],
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-                side: BorderSide(
-                  color: theme.dividerColor,
-                  width: 0.8,
+                  ],
                 ),
-              ),
+              ],
             ),
           );
         },
-        stepperThemeData: StepperThemeData(
-          lineColor: theme.primaryColor,
-          lineWidth: 5,
-        ),
+        stepperThemeData: const StepperThemeData(lineColor: blueColor, lineWidth: 5),
         physics: const BouncingScrollPhysics(),
       ),
     );
