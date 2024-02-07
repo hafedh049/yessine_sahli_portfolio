@@ -40,27 +40,32 @@ class _HeaderState extends State<Header> {
             },
           ),
           const SizedBox(width: 30),
-          for (final String section_ in _sections) ...<Widget>[
-            StatefulBuilder(
-              builder: (BuildContext context, void Function(void Function()) _) {
-                return AnimatedScale(
-                  duration: 500.ms,
-                  scale: section_ == section ? 1.01 : 1,
-                  child: InkWell(
-                    hoverColor: transparent,
-                    splashColor: transparent,
-                    highlightColor: transparent,
-                    onTap: () async {
-                      controller.animateTo(MediaQuery.sizeOf(context).height * _sections.indexOf(section_) + MediaQuery.sizeOf(context).height * .1, duration: 300.milliseconds, curve: Curves.bounceIn);
-                      _(() => section = section_);
-                    },
-                    child: Text(section_, style: GoogleFonts.jura(fontSize: 16, color: section_ == section ? lightBlueColor : whiteColor, fontWeight: FontWeight.w500)),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(width: 20),
-          ],
+          StatefulBuilder(
+            builder: (BuildContext context, void Function(void Function()) _) {
+              return Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  for (final String section_ in _sections) ...<Widget>[
+                    AnimatedScale(
+                      duration: 500.ms,
+                      scale: section_ == section ? 1.01 : 1,
+                      child: InkWell(
+                        hoverColor: transparent,
+                        splashColor: transparent,
+                        highlightColor: transparent,
+                        onTap: () async {
+                          controller.animateTo(MediaQuery.sizeOf(context).height * _sections.indexOf(section_) + MediaQuery.sizeOf(context).height * .1, duration: 300.milliseconds, curve: Curves.linear);
+                          _(() => section = section_);
+                        },
+                        child: Text(section_, style: GoogleFonts.jura(fontSize: 16, color: section_ == section ? lightBlueColor : whiteColor, fontWeight: FontWeight.w500)),
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                  ],
+                ],
+              );
+            },
+          ),
           StatefulBuilder(
             builder: (BuildContext context, void Function(void Function()) _) {
               return InkWell(

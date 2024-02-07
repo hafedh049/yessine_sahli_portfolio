@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../shared/globals.dart';
 
@@ -146,7 +147,7 @@ class _ContactState extends State<Contact> {
                     hoverColor: transparent,
                     splashColor: transparent,
                     highlightColor: transparent,
-                    onTap: () => true,
+                    onTap: () async => await launchUrlString("mailto:<email address>?subject=<subject>&body=<body>"),
                     onHover: (bool value) => _(() => _emailState = value),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

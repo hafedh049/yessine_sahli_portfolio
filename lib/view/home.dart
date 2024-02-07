@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:yessine/shared/globals.dart';
 
 class Home extends StatefulWidget {
@@ -31,7 +32,7 @@ class _HomeState extends State<Home> {
       <String, dynamic>{
         "icon": FontAwesome.envelope_solid,
         "tooltip": "Send me an E-mail!",
-        "callback": () {},
+        "callback": () async => await launchUrlString("mailto:hafedhgunichi@gmail.com"),
       },
       <String, dynamic>{
         "icon": FontAwesome.x_twitter_brand,
@@ -96,7 +97,7 @@ class _HomeState extends State<Home> {
                       hoverColor: transparent,
                       splashColor: transparent,
                       highlightColor: transparent,
-                      onTap: () => true,
+                      onTap: () async => await launchUrlString("https://www.isetcom.tn/public/home.faces"),
                       onHover: (bool value) => _(() => _linkState = value),
                       child: Text(
                         "Higher Institute of Technological Studies in Communications of Tunis",

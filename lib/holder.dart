@@ -17,14 +17,7 @@ class Holder extends StatefulWidget {
 }
 
 class _HolderState extends State<Holder> {
-  final List<Widget> _sections = const <Widget>[
-    Space(),
-    Home(),
-    Experience(),
-    Contact(),
-    CTFs(),
-    Footer(),
-  ];
+  final List<Widget> _sections = const <Widget>[Space(), Home(), Experience(), Contact(), CTFs(), Footer()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
