@@ -30,9 +30,9 @@ class _HeaderState extends State<Header> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              StatefulBuilder(
-                builder: (BuildContext context, void Function(void Function()) _) {
-                  return IconButton(onPressed: () {}, icon: const Icon(FontAwesome.list_ul_solid, size: 25, color: whiteColor));
+              LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  return constraints.maxWidth < 300 ? const SizedBox() : IconButton(onPressed: () {}, icon: const Icon(FontAwesome.list_ul_solid, size: 25, color: whiteColor));
                 },
               ),
               StatefulBuilder(
@@ -86,6 +86,19 @@ class _HeaderState extends State<Header> {
                 },
               ),
               const Spacer(),
+              LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  return constraints.maxWidth < 300
+                      ? const SizedBox()
+                      : Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            IconButton(onPressed: () async => await launchUrlString("https://twitter.com/Yassine___S"), icon: const Icon(FontAwesome.x_twitter_brand, size: 25, color: whiteColor)),
+                            IconButton(onPressed: () {}, icon: const Icon(FontAwesome.moon_solid, size: 25, color: whiteColor)),
+                          ],
+                        );
+                },
+              ),
             ],
           ),
         ],
