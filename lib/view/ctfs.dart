@@ -21,7 +21,7 @@ class _CTFsState extends State<CTFs> {
       constraints: BoxConstraints(minHeight: MediaQuery.sizeOf(context).height),
       padding: const EdgeInsets.symmetric(vertical: 24),
       child: _items.isEmpty
-          ? Center(child: Text(item["title"], style: GoogleFonts.jura(fontSize: 20, color: whiteColor, fontWeight: FontWeight.w500)))
+          ? Center(child: Text("No CTFs yet.", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)))
           : Wrap(
               alignment: WrapAlignment.center,
               crossAxisAlignment: WrapCrossAlignment.center,
