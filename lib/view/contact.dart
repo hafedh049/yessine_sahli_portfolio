@@ -93,7 +93,12 @@ class _ContactState extends State<Contact> {
           const SizedBox(height: 20),
           InkWell(
             onTap: () async {
-              await launchUrlString("mailto:<email address>?subject=<subject>&body=<body>");
+              if (_emailController.text.trim().isNotEmpty && _nameController.text.trim().isNotEmpty && _messageController.text.trim().isNotEmpty) {
+                EmailSender emailsender = EmailSender();
+                var response = await emailsender.sendMessage("toemail@gmail.com", "title", "subject", "body");
+
+                await launchUrlString("mailto:${_emailController.text.trim()}?subject=${_nameController.text.trim()}&body=${_messageController.text.trim()}");
+              }
             },
             highlightColor: transparent,
             hoverColor: transparent,
