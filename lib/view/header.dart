@@ -23,7 +23,7 @@ class _HeaderState extends State<Header> {
     return AnimatedContainer(
       duration: 300.ms,
       width: MediaQuery.sizeOf(context).width,
-      height: MediaQuery.sizeOf(context).height * (_menuState ? .3 : .1),
+      height: MediaQuery.sizeOf(context).height * (_menuState ? .27 : .1),
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(color: headerBgColor, boxShadow: <BoxShadow>[BoxShadow(blurStyle: BlurStyle.outer, color: whiteColor.withOpacity(.6), offset: const Offset(0, 1))]),
       child: Column(

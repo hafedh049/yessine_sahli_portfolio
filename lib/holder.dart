@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:yessine/view/contact.dart';
 import 'package:yessine/view/ctfs.dart';
 import 'package:yessine/view/experience.dart';
-import 'package:yessine/view/footer.dart';
 import 'package:yessine/view/home.dart';
 import 'package:yessine/view/space.dart';
 
@@ -17,7 +16,7 @@ class Holder extends StatefulWidget {
 }
 
 class _HolderState extends State<Holder> {
-  final List<Widget> _sections = const <Widget>[Space(), Home(), Experience(), Contact(), CTFs(), Footer()];
+  final List<Widget> _sections = const <Widget>[Space(), Home(), Experience(), Contact(), CTFs()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
