@@ -15,6 +15,42 @@ class _ExperienceState extends State<Experience> {
     <String, dynamic>{
       "logo": "",
       "title": "Cybersecurity Intern",
+      "first_subtitle": "Venari Security",
+      "second_subtitle": "October 2022 – December 2022  Tunisia, Lac II",
+      "description": """
+Enhancing the client identification process based solely on the fields in the “Client Hello” message during a TLS handshake, by creating a custom function that works with Levenshtein distances and takes as input unique TLSv1.3 fields ;
+– Studying key differences between TLSv1.2 and TLSv1.3 to determine new available methods to identify a client without decryption ;
+– Preparing a Pre-Processing unit that applies different filtering operations on several pcap files to output an ideal data set of TLS sessions in a CSV File ;
+– Developing a JA3 Fingerprinting Calculator from scratch using Python in Jupyter ;
+– Implementing the SSdeep and Levenshtein to identifty clients based on JA3 fields and comparing the results with Heatmaps ;
+– Creating a Custom Function that will work with Levenshtein and take as input specefic TLSv1.3 fields that will identify clients in an even more reliable way.
+""",
+    },
+    <String, dynamic>{
+      "logo": "",
+      "title": "Cybersecurity Intern / Student Advanced Training Internship",
+      "first_subtitle": "Resys-Consultants",
+      "second_subtitle": "June 2022 – July 2022  Tunisia, Ariana",
+      "description": """
+– Web Applications Vulnerabilities ;
+– Web Applications Exploitation ;
+– Basic Pentesting ;
+– Brute forcing ;
+– Service enumeration ;
+– Linux Enumeration ;
+– OWASP TOP 10 ;
+– Python Security Oriented ;
+– Performing Training Sessions : Programming With Python ;
+– Nmap Automated Scanner Tool Development From Scratch ;
+– Reporting Vulnerabilities and Bugs.
+""",
+    },
+    <String, dynamic>{
+      "logo": "",
+      "title": "Web Developer Intern / Student Initiation Internship",
+      "first_subtitle": "Little Big Connections",
+      "second_subtitle": "June 2021 – July 2021  Tunisia, Ariana",
+      "description": "Web Development Fundamentals ; Personal Website Development",
     },
   ];
   @override
