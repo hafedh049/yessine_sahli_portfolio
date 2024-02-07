@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../shared/globals.dart';
@@ -68,43 +69,58 @@ Enhancing the client identification process based solely on the fields in the â€
         children: <Widget>[
           Text("Experience", style: GoogleFonts.jura(fontSize: 35, color: whiteColor, fontWeight: FontWeight.w500)),
           const SizedBox(width: 25),
-          for (final Map<String, dynamic> item in _experiences)
-            Container(
-              margin: const EdgeInsets.all(24),
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: darkGreyColor.withOpacity(.2)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Row(
+          _experiences.isEmpty
+              ? Center(
+                  child: Column(
                     mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Image.asset("assets/images/${item["logo"]}.png", width: 80, height: 80),
-                      const SizedBox(width: 20),
-                      Expanded(
+                      LottieBuilder.asset("assets/lotties/empty.json"),
+                      Text("No CTFs yet.", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                    ],
+                  ),
+                )
+              : Column(
+                  children: <Widget>[
+                    for (final Map<String, dynamic> item in _experiences)
+                      Container(
+                        margin: const EdgeInsets.all(24),
+                        padding: const EdgeInsets.all(24),
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: darkGreyColor.withOpacity(.2)),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            Text(item["title"], style: GoogleFonts.jura(fontSize: 20, color: whiteColor, fontWeight: FontWeight.w500)),
-                            const SizedBox(height: 5),
-                            InkWell(
-                              onTap: () async => await launchUrlString(item["url"]),
-                              child: Text(item["first_subtitle"], style: GoogleFonts.jura(fontSize: 16, color: blueColor, fontWeight: FontWeight.w500)),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Image.asset("assets/images/${item["logo"]}.png", width: 80, height: 80),
+                                const SizedBox(width: 20),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      Text(item["title"], style: GoogleFonts.jura(fontSize: 20, color: whiteColor, fontWeight: FontWeight.w500)),
+                                      const SizedBox(height: 5),
+                                      InkWell(
+                                        onTap: () async => await launchUrlString(item["url"]),
+                                        child: Text(item["first_subtitle"], style: GoogleFonts.jura(fontSize: 16, color: blueColor, fontWeight: FontWeight.w500)),
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Text(item["second_subtitle"], style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500)),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(height: 5),
-                            Text(item["second_subtitle"], style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500)),
+                            const SizedBox(height: 20),
+                            Text(item["description"], style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500)),
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Text(item["description"], style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500)),
-                ],
-              ),
-            ),
+                  ],
+                ),
         ],
       ),
     );

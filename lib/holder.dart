@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yessine/view/contact.dart';
+import 'package:yessine/view/ctfs.dart';
 import 'package:yessine/view/experience.dart';
 import 'package:yessine/view/footer.dart';
 import 'package:yessine/view/home.dart';
@@ -20,6 +21,7 @@ class _HolderState extends State<Holder> {
     Home(),
     Experience(),
     Contact(),
+    CTFs(),
     Footer(),
   ];
 
