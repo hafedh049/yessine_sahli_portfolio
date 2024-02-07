@@ -11,13 +11,15 @@ class BlueScreenOfDeath extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: evenDarkBgColor,
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          LottieBuilder.asset("assets/lotties/error.json"),
-          Text(error, style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            LottieBuilder.asset("assets/lotties/error.json"),
+            Text(error, style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+          ],
+        ),
       ),
     );
   }
