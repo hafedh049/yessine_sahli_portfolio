@@ -45,8 +45,10 @@ class _FooterState extends State<Footer> {
             ],
           ),
           const SizedBox(height: 10),
-          Row(
-            mainAxisSize: MainAxisSize.min,
+          Wrap(
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            runAlignment: WrapAlignment.center,
             children: <Widget>[
               Text("Published with ", style: GoogleFonts.jura(fontSize: 16, color: darkGreyColor, fontWeight: FontWeight.w500)),
               StatefulBuilder(

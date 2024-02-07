@@ -66,9 +66,11 @@ Enhancing the client identification process based solely on the fields in the â€
       padding: const EdgeInsets.symmetric(vertical: 24),
       child: Column(
         children: <Widget>[
+          Text("Experience", style: GoogleFonts.jura(fontSize: 35, color: whiteColor, fontWeight: FontWeight.w500)),
+          const SizedBox(width: 25),
           for (final Map<String, dynamic> item in _experiences)
             Container(
-              margin: const EdgeInsets.only(left: 24, bottom: 24),
+              margin: const EdgeInsets.all(24),
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: darkGreyColor.withOpacity(.2)),
               child: Column(
