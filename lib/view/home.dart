@@ -61,7 +61,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 128),
+      padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 64),
       color: evenDarkBgColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,7 +116,7 @@ class _HomeState extends State<Home> {
                         message: icon["tooltip"],
                         child: IconButton(
                           onPressed: icon["callback"],
-                          icon: Icon(icon["icon"], color: lightBlueColor, size: 25),
+                          icon: Icon(icon["icon"], color: lightBlueColor, size: 20),
                         ),
                       ),
                   ],

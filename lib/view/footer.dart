@@ -26,7 +26,7 @@ class _FooterState extends State<Footer> {
     return Container(
       color: oddDarkBgColor,
       alignment: Alignment.center,
-      height: MediaQuery.sizeOf(context).height * .2,
+      height: MediaQuery.sizeOf(context).height * .25,
       padding: const EdgeInsets.symmetric(vertical: 24),
       child: Column(
         mainAxisSize: MainAxisSize.min,
