@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:yessine/view/blue_sod.dart';
 import 'package:yessine/view/loading.dart';
 
@@ -48,20 +49,42 @@ class _CTFsState extends State<CTFs> {
                     spacing: 20,
                     children: <Widget>[
                       for (final Map<String, dynamic> item in data)
-                        Stack(
-                          alignment: Alignment.bottomCenter,
-                          children: <Widget>[
-                            AnimatedContainer(
-                              width: 250,
-                              height: 250,
-                              duration: 300.ms,
-                              padding: const EdgeInsets.all(48),
-                              alignment: Alignment.bottomCenter,
-                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), image: DecorationImage(image: CachedNetworkImageProvider(item["image"]))),
-                              child: Text(item["name"], style: GoogleFonts.jura(fontSize: 20, color: whiteColor, fontWeight: FontWeight.w500)),
-                            ),
-                            Container(decoration: const BoxDecoration(boxShadow: <BoxShadow>[BoxShadow(color: Colors.black, blurStyle: BlurStyle.inner, spreadRadius: 40)])),
-                          ],
+                        InkWell(
+                          onTap: () => launchUrlString(item["url"]),
+                          child: Stack(
+                            alignment: Alignment.bottomCenter,
+                            children: <Widget>[
+                              AnimatedContainer(
+                                width: 250,
+                                height: 250,
+                                duration: 300.ms,
+                                padding: const EdgeInsets.all(48),
+                                alignment: Alignment.bottomCenter,
+                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), image: DecorationImage(image: CachedNetworkImageProvider(item["image"]))),
+                                child: Column(
+                                  children: <Widget>[
+                                    Text(item["name"], style: GoogleFonts.jura(fontSize: 20, color: whiteColor, fontWeight: FontWeight.bold)),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      item["difficulty"] == null ? "EASY" : item["difficulty"].toUpperCase(),
+                                      style: GoogleFonts.jura(
+                                        fontSize: 20,
+                                        color: item["difficulty"] == null || item["difficulty"].isEmpty || item["difficulty"].toUpperCase() == "EASY"
+                                            ? Colors.green
+                                            : item["difficulty"].toUpperCase() == "MEDIUM"
+                                                ? Colors.orange
+                                                : item["difficulty"].toUpperCase() == "HARD"
+                                                    ? Colors.red
+                                                    : Colors.purple.shade900,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(decoration: const BoxDecoration(boxShadow: <BoxShadow>[BoxShadow(color: Colors.black, blurStyle: BlurStyle.inner, spreadRadius: 40)])),
+                            ],
+                          ),
                         ),
                     ],
                   );
