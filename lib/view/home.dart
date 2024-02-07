@@ -1,5 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -71,32 +69,20 @@ class _HomeState extends State<Home> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                FutureBuilder<Map<String, dynamic>>(
-                  future: FirebaseFirestore.instance.collection("users"),
-                  builder: (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
-                    return snapshot.hasData
-                        ? StatefulBuilder(
-                            builder: (BuildContext context, void Function(void Function()) _) {
-                              return InkWell(
-                                hoverColor: transparent,
-                                splashColor: transparent,
-                                highlightColor: transparent,
-                                onTap: () => _(() => _pictureState = !_pictureState),
-                                child: AnimatedContainer(
-                                  duration: 500.ms,
-                                  width: 140,
-                                  height: 140,
-                                  decoration: BoxDecoration(shape: BoxShape.circle, image: _pictureState ? DecorationImage(image: CachedNetworkImageProvider(snapshot.data!["image"])) : const DecorationImage(image: AssetImage("assets/images/home_logo.png"))),
-                                ).animate(onComplete: (AnimationController controller) => controller.repeat(reverse: false)).shimmer(color: whiteColor.withOpacity(.1), duration: 3.5.seconds),
-                              );
-                            },
-                          )
-                        : AnimatedContainer(
-                            duration: 500.ms,
-                            width: 140,
-                            height: 140,
-                            decoration: const BoxDecoration(shape: BoxShape.circle, image: DecorationImage(image: AssetImage("assets/images/home_logo.png"))),
-                          ).animate(onComplete: (AnimationController controller) => controller.repeat(reverse: false)).shimmer(color: whiteColor.withOpacity(.1), duration: 3.5.seconds);
+                StatefulBuilder(
+                  builder: (BuildContext context, void Function(void Function()) _) {
+                    return InkWell(
+                      hoverColor: transparent,
+                      splashColor: transparent,
+                      highlightColor: transparent,
+                      onTap: () => _(() => _pictureState = !_pictureState),
+                      child: AnimatedContainer(
+                        duration: 500.ms,
+                        width: 140,
+                        height: 140,
+                        decoration: BoxDecoration(shape: BoxShape.circle, image: DecorationImage(image: AssetImage("assets/images/${_pictureState ? 'yassine_sahli' : 'home_logo'}.png"))),
+                      ).animate(onComplete: (AnimationController controller) => controller.repeat(reverse: false)).shimmer(color: whiteColor.withOpacity(.1), duration: 3.5.seconds),
+                    );
                   },
                 ),
                 const SizedBox(height: 20),
