@@ -22,12 +22,10 @@ class Main extends StatelessWidget {
       future: load(),
       builder: (BuildContext context, AsyncSnapshot<FirebaseApp> snapshot) {
         if (snapshot.hasData) {
-          return GetMaterialApp(
+          return const GetMaterialApp(
             title: "Yassine Sahli",
+            home: Holder(),
             debugShowCheckedModeBanner: false,
-            routes: <String, Widget Function(BuildContext)>{
-              "/": (BuildContext context) => const Holder(),
-            },
           );
         } else if (snapshot.connectionState == ConnectionState.waiting) {
           return const Loading();

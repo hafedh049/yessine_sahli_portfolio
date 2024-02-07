@@ -66,10 +66,7 @@ class _HeaderState extends State<Header> {
                 highlightColor: transparent,
                 onTap: () => true,
                 onHover: (bool value) => _(() => _titleState = value),
-                child: Text(
-                  "Personal Website | Yassine Sahli",
-                  style: GoogleFonts.jura(fontSize: 25, color: _titleState ? lightBlueColor : whiteColor, fontWeight: FontWeight.w500),
-                ),
+                child: Text("Personal Website | Yassine Sahli", style: GoogleFonts.jura(fontSize: 25, color: _titleState ? lightBlueColor : whiteColor, fontWeight: FontWeight.w500)),
               );
             },
           ),
