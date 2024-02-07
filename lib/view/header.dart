@@ -56,10 +56,11 @@ class _HeaderState extends State<Header> {
                         await launchUrlString("www.google.com");
                       } else if (pageController.page!.toInt() != _sections.indexOf(section)) {
                         pageController.jumpToPage(_sections.indexOf(section));
+                        _(() => section = section_);
                       }
                     },
                     onHover: (bool value) => _(() => _sectionState = value),
-                    child: Text(section_, style: GoogleFonts.jura(fontSize: 16, color: section_ == section ? lightBlueColor : whiteColor, fontWeight: FontWeight.w500)),
+                    child: Text(section_, style: GoogleFonts.jura(fontSize: 16, color: section_ == section || _sectionState ? lightBlueColor : whiteColor, fontWeight: FontWeight.w500)),
                   ),
                 );
               },
