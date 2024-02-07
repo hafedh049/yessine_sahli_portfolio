@@ -6,10 +6,12 @@ import 'package:yessine/shared/callbacks.dart';
 
 import 'holder.dart';
 import 'view/blue_sod.dart';
+import 'view/loading.dart';
 
 void main() {
   setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
+  ErrorWidget.builder = (FlutterErrorDetails details) => BlueScreenOfDeath(error: details.exception.toString());
   runApp(const Main());
 }
 
@@ -18,20 +20,20 @@ class Main extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<FirebaseApp>(
-      future: load(),
-      builder: (BuildContext context, AsyncSnapshot<FirebaseApp> snapshot) {
-        if (snapshot.hasData) {
-          return const GetMaterialApp(
-            title: "Yassine Sahli",
-            home: Holder(),
-            debugShowCheckedModeBanner: false,
-          );
-        } else if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Loading();
-        }
-        return BlueScreenOfDeath(error: snapshot.error.toString());
-      },
+    return GetMaterialApp(
+      title: "Yassine Sahli",
+      debugShowCheckedModeBanner: false,
+      home: FutureBuilder<FirebaseApp>(
+        future: load(),
+        builder: (BuildContext context, AsyncSnapshot<FirebaseApp> snapshot) {
+          if (snapshot.hasData) {
+            return const Holder();
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Loading();
+          }
+          return BlueScreenOfDeath(error: snapshot.error.toString());
+        },
+      ),
     );
   }
 }
