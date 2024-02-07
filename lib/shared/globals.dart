@@ -9,3 +9,5 @@ const Color whiteColor = Color.fromARGB(255, 248, 248, 242);
 const Color blueColor = Color.fromARGB(255, 112, 156, 255);
 const Color darkGreyColor = Color.fromARGB(255, 154, 155, 160);
 const Color oddDarkBgColor = Color.fromARGB(255, 39, 41, 53);
+
+String section = "Home";

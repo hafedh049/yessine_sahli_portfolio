@@ -4,46 +4,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:yessine/shared/globals.dart';
 
 class Header extends StatefulWidget {
-  const Header({super.key});
-
+  const Header({super.key, required this.callback});
+  final Function() callback;
   @override
   State<Header> createState() => _HeaderState();
 }
 
 class _HeaderState extends State<Header> {
   bool _titleState = false;
-  late final List<Map<String, dynamic>> _sections;
-  @override
-  void initState() {
-    _sections = <Map<String, dynamic>>[
-      <String, dynamic>{
-        "title": "Home",
-        "state": false,
-        "callback": () {},
-      },
-      <String, dynamic>{
-        "title": "Experience",
-        "state": false,
-        "callback": () {},
-      },
-      <String, dynamic>{
-        "title": "Contact",
-        "state": false,
-        "callback": () {},
-      },
-      <String, dynamic>{
-        "title": "CTFs",
-        "state": false,
-        "callback": () {},
-      },
-      <String, dynamic>{
-        "title": "CV",
-        "state": false,
-        "callback": () {},
-      },
-    ];
-    super.initState();
-  }
+  bool _sectionState = false;
 
   @override
   Widget build(BuildContext context) {
@@ -71,28 +40,41 @@ class _HeaderState extends State<Header> {
             },
           ),
           const SizedBox(width: 30),
-          for (Map<String, dynamic> section in _sections) ...<Widget>[
+          for (final String section_ in _sections) ...<Widget>[
             StatefulBuilder(
               builder: (BuildContext context, void Function(void Function()) _) {
                 return AnimatedScale(
                   duration: 500.ms,
-                  scale: section["state"] ? 1.01 : 1,
+                  scale: section_ == section || _sectionState ? 1.01 : 1,
                   child: InkWell(
                     hoverColor: transparent,
                     splashColor: transparent,
                     highlightColor: transparent,
-                    onTap: () => true,
-                    onHover: (bool value) => _(() => section["state"] = value),
-                    child: Text(
-                      section["title"],
-                      style: GoogleFonts.jura(fontSize: 16, color: section["state"] ? lightBlueColor : whiteColor, fontWeight: FontWeight.w500),
-                    ),
+                    onTap: widget.callback,
+                    onHover: (bool value) => _(() => _sectionState = value),
+                    child: Text(section_, style: GoogleFonts.jura(fontSize: 16, color: section_ == section ? lightBlueColor : whiteColor, fontWeight: FontWeight.w500)),
                   ),
                 );
               },
             ),
             const SizedBox(width: 20),
           ],
+          StatefulBuilder(
+            builder: (BuildContext context, void Function(void Function()) _) {
+              return AnimatedScale(
+                duration: 500.ms,
+                scale: _sectionState ? 1.01 : 1,
+                child: InkWell(
+                  hoverColor: transparent,
+                  splashColor: transparent,
+                  highlightColor: transparent,
+                  onTap: widget.callback,
+                  onHover: (bool value) => _(() => _sectionState = value),
+                  child: Text("CV", style: GoogleFonts.jura(fontSize: 16, color: whiteColor, fontWeight: FontWeight.w500)),
+                ),
+              );
+            },
+          ),
           const Spacer(),
         ],
       ),
