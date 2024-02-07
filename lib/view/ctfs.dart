@@ -5,7 +5,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:yessine/view/blue_sod.dart';
 import 'package:yessine/view/loading.dart';
 
 import '../shared/globals.dart';
@@ -97,10 +96,8 @@ class _CTFsState extends State<CTFs> {
                       ],
                     ),
                   );
-          } else if (snapshot.connectionState == ConnectionState.done) {
-            return const Loading();
           }
-          return BlueScreenOfDeath(error: snapshot.error.toString());
+          return const Loading();
         },
       ),
     );

@@ -32,27 +32,27 @@ class _HomeState extends State<Home> {
       <String, dynamic>{
         "icon": FontAwesome.envelope_solid,
         "tooltip": "Send me an E-mail!",
-        "callback": () async => await launchUrlString("mailto:hafedhgunichi@gmail.com"),
+        "callback": () async => controller.animateTo(MediaQuery.sizeOf(context).height * 2 + MediaQuery.sizeOf(context).height * .1, duration: 300.milliseconds, curve: Curves.linear),
       },
       <String, dynamic>{
         "icon": FontAwesome.x_twitter_brand,
         "tooltip": "Follow me on X",
-        "callback": () {},
+        "callback": () async => await launchUrlString("https://twitter.com/Yassine___S"),
       },
       <String, dynamic>{
         "icon": FontAwesome.github_brand,
         "tooltip": "Visit my Github !",
-        "callback": () {},
+        "callback": () async => await launchUrlString("https://github.com/yassinSahli"),
       },
       <String, dynamic>{
         "icon": FontAwesome.linkedin_brand,
         "tooltip": "Let's connect on LinkedIn !",
-        "callback": () {},
+        "callback": () async => await launchUrlString("https://www.linkedin.com/in/yassine-s/"),
       },
       <String, dynamic>{
         "icon": Icons.view_timeline_sharp,
         "tooltip": "Download my CV here!",
-        "callback": () {},
+        "callback": () async => await launchUrlString("http://www.google.com"),
       },
     ];
     super.initState();
@@ -81,7 +81,7 @@ class _HomeState extends State<Home> {
                         duration: 500.ms,
                         width: 140,
                         height: 140,
-                        decoration: BoxDecoration(shape: BoxShape.circle, image: DecorationImage(image: AssetImage("assets/images/${_pictureState ? 'yassine_sahli' : 'home_logo'}.png"))),
+                        decoration: BoxDecoration(shape: BoxShape.circle, image: DecorationImage(image: AssetImage("assets/images/${_pictureState ? 'yassine.jpg' : 'home_logo.png'}"))),
                       ).animate(onComplete: (AnimationController controller) => controller.repeat(reverse: false)).shimmer(color: whiteColor.withOpacity(.1), duration: 3.5.seconds),
                     );
                   },

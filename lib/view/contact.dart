@@ -92,7 +92,9 @@ class _ContactState extends State<Contact> {
           ),
           const SizedBox(height: 20),
           InkWell(
-            onTap: () {},
+            onTap: () async {
+              await launchUrlString("mailto:<email address>?subject=<subject>&body=<body>");
+            },
             highlightColor: transparent,
             hoverColor: transparent,
             splashColor: transparent,
@@ -147,7 +149,7 @@ class _ContactState extends State<Contact> {
                     hoverColor: transparent,
                     splashColor: transparent,
                     highlightColor: transparent,
-                    onTap: () async => await launchUrlString("mailto:<email address>?subject=<subject>&body=<body>"),
+                    onTap: () => true,
                     onHover: (bool value) => _(() => _emailState = value),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
