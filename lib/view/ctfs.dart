@@ -60,7 +60,10 @@ class _CTFsState extends State<CTFs> {
                                 duration: 300.ms,
                                 padding: const EdgeInsets.all(48),
                                 alignment: Alignment.bottomCenter,
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), image: DecorationImage(image: CachedNetworkImageProvider(item["image"]))),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  image: (item["url"] == null || item["url"].isEmpty) ? const DecorationImage(image: AssetImage("assets/images/home_logo.png"), fit: BoxFit.cover) : DecorationImage(image: CachedNetworkImageProvider(item["image"]), fit: BoxFit.cover),
+                                ),
                                 child: Column(
                                   children: <Widget>[
                                     Text(item["name"], style: GoogleFonts.jura(fontSize: 20, color: whiteColor, fontWeight: FontWeight.bold)),
