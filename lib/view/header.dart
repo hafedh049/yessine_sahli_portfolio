@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:yessine/shared/globals.dart';
 
 class Header extends StatefulWidget {
-  const Header({super.key, required this.callback});
-  final Function() callback;
+  const Header({super.key});
   @override
   State<Header> createState() => _HeaderState();
 }
@@ -14,6 +14,7 @@ class _HeaderState extends State<Header> {
   bool _titleState = false;
   bool _sectionState = false;
 
+  final List<String> _sections = <String>["Home", "Experience", "Contact", "CTFs", "CV"];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,7 +51,13 @@ class _HeaderState extends State<Header> {
                     hoverColor: transparent,
                     splashColor: transparent,
                     highlightColor: transparent,
-                    onTap: widget.callback,
+                    onTap: () async {
+                      if (pageController.page!.toInt() == _sections.length - 1) {
+                        await launchUrlString("www.google.com");
+                      } else if (pageController.page!.toInt() != _sections.indexOf(section)) {
+                        pageController.jumpToPage(_sections.indexOf(section));
+                      }
+                    },
                     onHover: (bool value) => _(() => _sectionState = value),
                     child: Text(section_, style: GoogleFonts.jura(fontSize: 16, color: section_ == section ? lightBlueColor : whiteColor, fontWeight: FontWeight.w500)),
                   ),
@@ -59,22 +66,6 @@ class _HeaderState extends State<Header> {
             ),
             const SizedBox(width: 20),
           ],
-          StatefulBuilder(
-            builder: (BuildContext context, void Function(void Function()) _) {
-              return AnimatedScale(
-                duration: 500.ms,
-                scale: _sectionState ? 1.01 : 1,
-                child: InkWell(
-                  hoverColor: transparent,
-                  splashColor: transparent,
-                  highlightColor: transparent,
-                  onTap: widget.callback,
-                  onHover: (bool value) => _(() => _sectionState = value),
-                  child: Text("CV", style: GoogleFonts.jura(fontSize: 16, color: whiteColor, fontWeight: FontWeight.w500)),
-                ),
-              );
-            },
-          ),
           const Spacer(),
         ],
       ),

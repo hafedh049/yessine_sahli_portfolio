@@ -6,6 +6,7 @@ import 'package:yessine/view/footer.dart';
 import 'package:yessine/view/home.dart';
 import 'package:yessine/view/space.dart';
 
+import 'shared/globals.dart';
 import 'view/header.dart';
 
 class Holder extends StatefulWidget {
@@ -16,14 +17,7 @@ class Holder extends StatefulWidget {
 }
 
 class _HolderState extends State<Holder> {
-  final List<Widget> _sections = const <Widget>[
-    Space(),
-    Home(),
-    Experience(),
-    Contact(),
-    CTFs(),
-    Footer(),
-  ];
+  final List<Widget> _sections = const <Widget>[Space(), Home(), Experience(), Contact(), CTFs(), Footer()];
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +25,8 @@ class _HolderState extends State<Holder> {
       body: Stack(
         alignment: Alignment.topCenter,
         children: <Widget>[
-          ListView.builder(
-            padding: EdgeInsets.zero,
+          PageView.builder(
+            controller: pageController,
             itemCount: _sections.length,
             itemBuilder: (BuildContext context, int index) => _sections[index],
           ),
