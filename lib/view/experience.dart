@@ -15,7 +15,7 @@ class Experience extends StatefulWidget {
 class _ExperienceState extends State<Experience> {
   final List<Map<String, dynamic>> _experiences = <Map<String, dynamic>>[
     <String, dynamic>{
-      "logo": "",
+      "logo": "venari",
       "title": "Cybersecurity Intern",
       "first_subtitle": "Venari Security",
       "url": "https://www.venarisecurity.com",
@@ -30,7 +30,7 @@ Enhancing the client identification process based solely on the fields in the â€
 """,
     },
     <String, dynamic>{
-      "logo": "",
+      "logo": "resys",
       "title": "Cybersecurity Intern / Student Advanced Training Internship",
       "first_subtitle": "Resys-Consultants",
       "url": "http://www.resys-consultants.com",
@@ -50,7 +50,7 @@ Enhancing the client identification process based solely on the fields in the â€
 """,
     },
     <String, dynamic>{
-      "logo": "",
+      "logo": "little",
       "title": "Web Developer Intern / Student Initiation Internship",
       "first_subtitle": "Little Big Connections",
       "url": "https://www.littlebigconnection.com/en/",
@@ -65,55 +65,64 @@ Enhancing the client identification process based solely on the fields in the â€
       alignment: Alignment.center,
       constraints: BoxConstraints(minHeight: MediaQuery.sizeOf(context).height),
       padding: const EdgeInsets.symmetric(vertical: 24),
-      child: StepperListView(
-        showStepperInLast: true,
-        stepperData: _experiences.map((Map<String, dynamic> e) => StepperItemData(content: e)).toList(),
-        stepAvatar: (BuildContext _, dynamic __) {
-          return PreferredSize(
-            preferredSize: const Size.fromRadius(20),
-            child: Container(
-              padding: const EdgeInsets.all(4),
-              decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(width: 2, color: blueColor)),
-              child: Container(decoration: const BoxDecoration(shape: BoxShape.circle, color: blueColor)),
-            ),
-          );
-        },
-        stepContentWidget: (BuildContext _, dynamic data) {
-          final StepperItemData stepData = data as StepperItemData;
-          return Container(
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: darkGreyColor),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Image.asset("assets/images/${stepData.content["logo"]}", width: 80, height: 80),
-                    const SizedBox(width: 20),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Text("Yassine Sahli", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
-                        const SizedBox(height: 20),
-                        InkWell(
-                          onTap: () async => await launchUrlString(stepData.content["url"]),
-                          child: Text("Yassine Sahli", style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500)),
+      child: SizedBox(
+        width: MediaQuery.sizeOf(context).width * .6,
+        child: StepperListView(
+          shrinkWrap: true,
+          showStepperInLast: false,
+          stepperData: _experiences.map((Map<String, dynamic> e) => StepperItemData(content: e)).toList(),
+          stepAvatar: (BuildContext _, dynamic __) {
+            return PreferredSize(
+              preferredSize: const Size.fromRadius(30),
+              child: Container(
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(width: 2, color: blueColor)),
+                child: Container(decoration: const BoxDecoration(shape: BoxShape.circle, color: blueColor)),
+              ),
+            );
+          },
+          stepContentWidget: (BuildContext _, dynamic data) {
+            final StepperItemData stepData = data as StepperItemData;
+            return Container(
+              margin: const EdgeInsets.only(left: 24, bottom: 24),
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: darkGreyColor.withOpacity(.2)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Image.asset("assets/images/${stepData.content["logo"]}.png", width: 80, height: 80),
+                      const SizedBox(width: 20),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(stepData.content["title"], style: GoogleFonts.jura(fontSize: 20, color: whiteColor, fontWeight: FontWeight.w500)),
+                            const SizedBox(height: 5),
+                            InkWell(
+                              onTap: () async => await launchUrlString(stepData.content["url"]),
+                              child: Text(stepData.content["first_subtitle"], style: GoogleFonts.jura(fontSize: 16, color: blueColor, fontWeight: FontWeight.w500)),
+                            ),
+                            const SizedBox(height: 5),
+                            Text(stepData.content["second_subtitle"], style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500)),
+                          ],
                         ),
-                        const SizedBox(height: 20),
-                        Text("Yassine Sahli", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          );
-        },
-        stepperThemeData: const StepperThemeData(lineColor: blueColor, lineWidth: 5),
-        physics: const BouncingScrollPhysics(),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Text(stepData.content["description"], style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500)),
+                ],
+              ),
+            );
+          },
+          stepperThemeData: const StepperThemeData(lineColor: blueColor, lineWidth: 5),
+          physics: const BouncingScrollPhysics(),
+        ),
       ),
     );
   }
