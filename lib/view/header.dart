@@ -12,9 +12,8 @@ class Header extends StatefulWidget {
 
 class _HeaderState extends State<Header> {
   bool _titleState = false;
-  bool _sectionState = false;
 
-  final List<String> _sections = <String>["Home", "Experience", "Contact", "CTFs", "CV"];
+  final List<String> _sections = <String>["Home", "Experience", "Contact", "CTFs"];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,27 +45,33 @@ class _HeaderState extends State<Header> {
               builder: (BuildContext context, void Function(void Function()) _) {
                 return AnimatedScale(
                   duration: 500.ms,
-                  scale: section_ == section || _sectionState ? 1.01 : 1,
+                  scale: section_ == section ? 1.01 : 1,
                   child: InkWell(
                     hoverColor: transparent,
                     splashColor: transparent,
                     highlightColor: transparent,
                     onTap: () async {
-                      if (pageController.page!.toInt() == _sections.length - 1) {
-                        await launchUrlString("www.google.com");
-                      } else if (pageController.page!.toInt() != _sections.indexOf(section)) {
-                        pageController.jumpToPage(_sections.indexOf(section));
-                        _(() => section = section_);
-                      }
+                      controller.animateTo(MediaQuery.sizeOf(context).height * _sections.indexOf(section_) + MediaQuery.sizeOf(context).height * .1, duration: 300.milliseconds, curve: Curves.bounceIn);
+                      _(() => section = section_);
                     },
-                    onHover: (bool value) => _(() => _sectionState = value),
-                    child: Text(section_, style: GoogleFonts.jura(fontSize: 16, color: section_ == section || _sectionState ? lightBlueColor : whiteColor, fontWeight: FontWeight.w500)),
+                    child: Text(section_, style: GoogleFonts.jura(fontSize: 16, color: section_ == section ? lightBlueColor : whiteColor, fontWeight: FontWeight.w500)),
                   ),
                 );
               },
             ),
             const SizedBox(width: 20),
           ],
+          StatefulBuilder(
+            builder: (BuildContext context, void Function(void Function()) _) {
+              return InkWell(
+                hoverColor: transparent,
+                splashColor: transparent,
+                highlightColor: transparent,
+                onTap: () async => await launchUrlString("http://www.google.com"),
+                child: Text("CV", style: GoogleFonts.jura(fontSize: 16, color: whiteColor, fontWeight: FontWeight.w500)),
+              );
+            },
+          ),
           const Spacer(),
         ],
       ),

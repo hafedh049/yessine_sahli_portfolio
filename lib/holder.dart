@@ -17,16 +17,23 @@ class Holder extends StatefulWidget {
 }
 
 class _HolderState extends State<Holder> {
-  final List<Widget> _sections = const <Widget>[Space(), Home(), Experience(), Contact(), CTFs(), Footer()];
-
+  final List<Widget> _sections = const <Widget>[
+    Space(),
+    Home(),
+    Experience(),
+    Contact(),
+    CTFs(),
+    Footer(),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         alignment: Alignment.topCenter,
         children: <Widget>[
-          PageView.builder(
-            controller: pageController,
+          ListView.builder(
+            controller: controller,
+            padding: EdgeInsets.zero,
             itemCount: _sections.length,
             itemBuilder: (BuildContext context, int index) => _sections[index],
           ),
