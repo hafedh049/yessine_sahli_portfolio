@@ -47,7 +47,8 @@ class _CTFsState extends State<CTFs> {
                     final TextEditingController secretKeyController = TextEditingController();
                     final TextEditingController nameController = TextEditingController();
                     File? image;
-
+                    String difficulty = "EASY";
+                    final List<String> difficulties = <String>["EASY", "MEDIUM", "HARD", "INSANE"];
                     showModalBottomSheet(
                       backgroundColor: evenDarkBgColor,
                       context: context,
@@ -165,7 +166,20 @@ class _CTFsState extends State<CTFs> {
                             Text("Difficulty", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
                             const SizedBox(height: 10),
                             Wrap(
-                              children: <Widget>[],
+                              alignment: WrapAlignment.start,
+                              crossAxisAlignment: WrapCrossAlignment.start,
+                              runAlignment: WrapAlignment.start,
+                              runSpacing: 10,
+                              spacing: 10,
+                              children: <Widget>[
+                                for (final String diff in difficulties)
+                                  AnimatedContainer(
+                                    duration: 300.ms,
+                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
+                                    padding: const EdgeInsets.all(4),
+                                    child: Text(diff, style: GoogleFonts.jura(fontSize: 16, color: whiteColor, fontWeight: FontWeight.w500)),
+                                  ),
+                              ],
                             ),
                           ],
                         ),
@@ -207,8 +221,8 @@ class _CTFsState extends State<CTFs> {
                                 InkWell(
                                   onTap: () => launchUrlString(item["url"]),
                                   onLongPress: () {
-                                    //delete
-                                    showModalBottomSheet(
+                                    final TextEditingController secretKeyController = TextEditingController();
+                                    showModalBottomSheet<void>(
                                       backgroundColor: evenDarkBgColor,
                                       context: context,
                                       builder: (BuildContext context) => Container(
@@ -245,7 +259,7 @@ class _CTFsState extends State<CTFs> {
                                           ],
                                         ),
                                       ),
-                                    );
+                                    ).then((void value) => secretKeyController.dispose());
                                   },
                                   child: Column(
                                     children: <Widget>[
