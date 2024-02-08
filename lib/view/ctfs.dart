@@ -25,7 +25,6 @@ class CTFs extends StatefulWidget {
 }
 
 class _CTFsState extends State<CTFs> {
-  final _magicWord = "kaizen";
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -47,8 +46,11 @@ class _CTFsState extends State<CTFs> {
                     final TextEditingController secretKeyController = TextEditingController();
                     final TextEditingController nameController = TextEditingController();
                     File? image;
+                    File? file;
                     String difficulty = "EASY";
                     final List<String> difficulties = <String>["EASY", "MEDIUM", "HARD", "INSANE"];
+                    const String magicWord = "kaizen";
+
                     showModalBottomSheet(
                       backgroundColor: evenDarkBgColor,
                       context: context,
@@ -62,7 +64,14 @@ class _CTFsState extends State<CTFs> {
                             const SizedBox(height: 10),
                             TextField(
                               controller: secretKeyController,
-                              onSubmitted: (String value) async {},
+                              onSubmitted: (String value) {
+                                if (sha512.convert(utf8.encode(magicWord)) == sha512.convert(utf8.encode(value))) {
+                                  Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                  Navigator.pop(context);
+                                } else {
+                                  Fluttertoast.showToast(msg: "WRONG CREDENTIALS", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                }
+                              },
                               style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
                               decoration: InputDecoration(
                                 hintText: "Enter the secret passphrase",
@@ -116,13 +125,12 @@ class _CTFsState extends State<CTFs> {
                                   },
                                   child: TextField(
                                     readOnly: true,
-                                    style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
                                     decoration: InputDecoration(
                                       prefixIcon: Icon(image == null ? FontAwesome.image_solid : FontAwesome.check_double_solid, size: 15, color: image == null ? whiteColor : Colors.green),
                                       suffixIcon: image == null ? null : IconButton(onPressed: () => _(() => image = null), icon: const Icon(FontAwesome.x_solid, size: 15, color: Colors.green)),
                                       hintText: "CTF's image",
                                       hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
+                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide(color: image == null ? blueColor : Colors.green)),
                                       contentPadding: const EdgeInsets.all(8),
                                     ),
                                   ),
@@ -132,22 +140,26 @@ class _CTFsState extends State<CTFs> {
                             const SizedBox(height: 10),
                             Text("CTF", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
                             const SizedBox(height: 10),
-                            InkWell(
-                              splashColor: transparent,
-                              highlightColor: transparent,
-                              focusColor: transparent,
-                              onTap: () async {},
-                              child: TextField(
-                                readOnly: true,
-                                style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                decoration: InputDecoration(
-                                  hintText: "PDF",
-                                  hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                  prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
-                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
-                                  contentPadding: const EdgeInsets.all(8),
-                                ),
-                              ),
+                            StatefulBuilder(
+                              builder: (BuildContext context, void Function(void Function()) _) {
+                                return InkWell(
+                                  splashColor: transparent,
+                                  highlightColor: transparent,
+                                  focusColor: transparent,
+                                  onTap: () async {},
+                                  child: TextField(
+                                    readOnly: true,
+                                    decoration: InputDecoration(
+                                      prefixIcon: Icon(file == null ? FontAwesome.file_code_solid : FontAwesome.check_double_solid, size: 15, color: file == null ? whiteColor : Colors.green),
+                                      suffixIcon: file == null ? null : IconButton(onPressed: () => _(() => file = null), icon: const Icon(FontAwesome.x_solid, size: 15, color: Colors.green)),
+                                      hintText: "PDF",
+                                      hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide(color: file == null ? blueColor : Colors.green)),
+                                      contentPadding: const EdgeInsets.all(8),
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                             const SizedBox(height: 10),
                             Text("Difficulty", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
@@ -191,7 +203,7 @@ class _CTFsState extends State<CTFs> {
                                   highlightColor: transparent,
                                   focusColor: transparent,
                                   onTap: () async {
-                                    if (sha512.convert(utf8.encode(_magicWord)) == sha512.convert(utf8.encode(value))) {
+                                    if (true) {
                                       Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
                                       final XFile? image_ = await ImagePicker().pickImage(source: ImageSource.gallery);
                                       if (image_ != null) {
