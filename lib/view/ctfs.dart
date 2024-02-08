@@ -47,7 +47,6 @@ class _CTFsState extends State<CTFs> {
                     final TextEditingController secretKeyController = TextEditingController();
                     final TextEditingController nameController = TextEditingController();
                     File? image;
-                    final TextEditingController secretKeyController = TextEditingController();
 
                     showModalBottomSheet(
                       backgroundColor: evenDarkBgColor,
@@ -92,8 +91,8 @@ class _CTFsState extends State<CTFs> {
                                   onTap: () async {
                                     if (sha512.convert(utf8.encode(_magicWord)) == sha512.convert(utf8.encode(value))) {
                                       Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-                                      final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
-                                      if (image != null) {
+                                      final XFile? image_ = await ImagePicker().pickImage(source: ImageSource.gallery);
+                                      if (image_ != null) {
                                         Fluttertoast.showToast(msg: "IMAGE PICKED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
                                         if (true) {
                                           await FirebaseStorage.instance.ref().child("ctfs/images/").putFile(__image).then((TaskSnapshot task) => 0);
@@ -114,6 +113,60 @@ class _CTFsState extends State<CTFs> {
                               ],
                             ),
                             const SizedBox(height: 10),
+                            Text("Name", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                            const SizedBox(height: 10),
+                            TextField(
+                              controller: secretKeyController,
+                              onSubmitted: (String value) async {},
+                              style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                              decoration: InputDecoration(
+                                hintText: "The CTF name",
+                                hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
+                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
+                                contentPadding: const EdgeInsets.all(8),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text("Image", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                            const SizedBox(height: 10),
+                            InkWell(
+                              onTap: () async {},
+                              child: TextField(
+                                readOnly: true,
+                                style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                decoration: InputDecoration(
+                                  hintText: "CTF's image",
+                                  hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                  prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
+                                  contentPadding: const EdgeInsets.all(8),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text("CTF", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                            const SizedBox(height: 10),
+                            InkWell(
+                              onTap: () async {},
+                              child: TextField(
+                                readOnly: true,
+                                style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                decoration: InputDecoration(
+                                  hintText: "PDF",
+                                  hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                  prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
+                                  contentPadding: const EdgeInsets.all(8),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text("Difficulty", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                            const SizedBox(height: 10),
+                            Wrap(
+                              children: <Widget>[],
+                            ),
                           ],
                         ),
                       ),
@@ -167,7 +220,7 @@ class _CTFsState extends State<CTFs> {
                                             Text("Enter the magic word.", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
                                             const SizedBox(height: 10),
                                             TextField(
-                                              controller: _secretKeyController,
+                                              controller: secretKeyController,
                                               onSubmitted: (String value) async {
                                                 if (sha512.convert(utf8.encode(_magicWord)) == sha512.convert(utf8.encode(value))) {
                                                   Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
