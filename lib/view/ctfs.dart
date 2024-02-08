@@ -51,6 +51,22 @@ class _CTFsState extends State<CTFs> {
                         for (final Map<String, dynamic> item in data)
                           InkWell(
                             onTap: () => launchUrlString(item["url"]),
+                            onLongPress: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (BuildContext context) => Container(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      Text("No CTFs yet.", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                                      const SizedBox(height: 10),
+                                      TextField(_secretKeyController),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
                             child: Column(
                               children: <Widget>[
                                 Container(
