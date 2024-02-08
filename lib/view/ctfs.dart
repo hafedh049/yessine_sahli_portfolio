@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -24,14 +25,7 @@ class CTFs extends StatefulWidget {
 }
 
 class _CTFsState extends State<CTFs> {
-  final TextEditingController _secretKeyController = TextEditingController();
   final _magicWord = "kaizen";
-  @override
-  void dispose() {
-    _secretKeyController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,6 +43,12 @@ class _CTFsState extends State<CTFs> {
                 const SizedBox(width: 20),
                 IconButton(
                   onPressed: () async {
+                    bool verifier = false;
+                    final TextEditingController secretKeyController = TextEditingController();
+                    final TextEditingController nameController = TextEditingController();
+                    File? image;
+                    final TextEditingController secretKeyController = TextEditingController();
+
                     showModalBottomSheet(
                       backgroundColor: evenDarkBgColor,
                       context: context,
@@ -61,22 +61,8 @@ class _CTFsState extends State<CTFs> {
                             Text("Enter the magic word.", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
                             const SizedBox(height: 10),
                             TextField(
-                              controller: _secretKeyController,
-                              onSubmitted: (String value) async {
-                                if (sha512.convert(utf8.encode(_magicWord)) == sha512.convert(utf8.encode(value))) {
-                                  Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-                                  final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
-                                  if (image != null) {
-                                    Fluttertoast.showToast(msg: "IMAGE PICKED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-                                    if (true) {
-                                      await FirebaseStorage.instance.ref().child("ctfs/images/").putFile(__image).then((TaskSnapshot task) => 0);
-                                    }
-                                    await FirebaseFirestore.instance.collection("ctfs").add(<String, dynamic>{});
-                                  }
-                                } else {
-                                  Fluttertoast.showToast(msg: "WRONG CREDENTIALS", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-                                }
-                              },
+                              controller: secretKeyController,
+                              onSubmitted: (String value) async {},
                               style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
                               decoration: InputDecoration(
                                 hintText: "Enter the secret passphrase",
@@ -102,11 +88,32 @@ class _CTFsState extends State<CTFs> {
                             Row(
                               children: <Widget>[
                                 const Spacer(),
-                                Container(
-                                  child: Text("ADD", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                                InkWell(
+                                  onTap: () async {
+                                    if (sha512.convert(utf8.encode(_magicWord)) == sha512.convert(utf8.encode(value))) {
+                                      Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                      final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
+                                      if (image != null) {
+                                        Fluttertoast.showToast(msg: "IMAGE PICKED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                        if (true) {
+                                          await FirebaseStorage.instance.ref().child("ctfs/images/").putFile(__image).then((TaskSnapshot task) => 0);
+                                        }
+                                        await FirebaseFirestore.instance.collection("ctfs").add(<String, dynamic>{});
+                                      }
+                                    } else {
+                                      Fluttertoast.showToast(msg: "WRONG CREDENTIALS", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                    }
+                                  },
+                                  child: AnimatedContainer(
+                                    duration: 300.ms,
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: verifier ? blueColor : Colors.red),
+                                    child: Text("ADD", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                                  ),
                                 ),
                               ],
                             ),
+                            const SizedBox(height: 10),
                           ],
                         ),
                       ),
