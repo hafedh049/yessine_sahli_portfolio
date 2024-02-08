@@ -186,24 +186,28 @@ class _CTFsState extends State<CTFs> {
                                                 highlightColor: transparent,
                                                 focusColor: transparent,
                                                 onTap: () async {
-                                                  if(nameController.text.trim().isEmpty ){                                                    Fluttertoast.showToast(msg: "NAME IS MANDATORY", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-}else if(file == null){                                                    Fluttertoast.showToast(msg: "WRONG CREDENTIALS", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-
-
-}
-
-                                                  else  {
-                                                    Fluttertoast.showToast(msg: "PLEASE WAIT", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-                                                    final XFile? image_ = await ImagePicker().pickImage(source: ImageSource.gallery);
-                                                    if (image_ != null) {
-                                                      Fluttertoast.showToast(msg: "IMAGE PICKED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-                                                      if (image != null) {
-                                                        await FirebaseStorage.instance.ref().child("ctfs/images/").putFile(image!).then((TaskSnapshot task) => 0);
-                                                      }
-                                                      await FirebaseFirestore.instance.collection("ctfs").add(<String, dynamic>{});
-                                                    }
+                                                  if (nameController.text.trim().isEmpty) {
+                                                    Fluttertoast.showToast(msg: "NAME IS MANDATORY", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                                  } else if (file == null) {
+                                                    Fluttertoast.showToast(msg: "YOU FORGOT TO PUT THE PDF", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
                                                   } else {
-                                                    Fluttertoast.showToast(msg: "WRONG CREDENTIALS", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                                    Fluttertoast.showToast(msg: "PLEASE WAIT", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                                    String imageUrl = "";
+                                                    String fileUrl = "";
+
+                                                    if (image != null) {
+                                                      await FirebaseStorage.instance.ref().child("ctfs/images/").putFile(image!).then((TaskSnapshot task) async => imageUrl = await task.ref.getDownloadURL());
+                                                    }
+                                                    await FirebaseStorage.instance.ref().child("ctfs/pdfs/").putFile(file!).then((TaskSnapshot task) async => fileUrl = await task.ref.getDownloadURL());
+
+                                                    await FirebaseFirestore.instance.collection("ctfs").add(
+                                                      <String, dynamic>{
+                                                        "name": nameController.text.trim(),
+                                                        "url": fileUrl,
+                                                        "image": image == null ? "assets/images/home_logo.png" : imageUrl,
+                                                        "difficulty": difficulty,
+                                                      },
+                                                    );
                                                   }
                                                 },
                                                 child: AnimatedContainer(
