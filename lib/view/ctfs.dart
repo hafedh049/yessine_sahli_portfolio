@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:yessine/view/loading.dart';
@@ -17,6 +18,14 @@ class CTFs extends StatefulWidget {
 }
 
 class _CTFsState extends State<CTFs> {
+  final TextEditingController _secretKeyController = TextEditingController();
+
+  @override
+  void dispose() {
+    _secretKeyController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -61,7 +70,14 @@ class _CTFsState extends State<CTFs> {
                                     children: <Widget>[
                                       Text("No CTFs yet.", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
                                       const SizedBox(height: 10),
-                                      TextField(_secretKeyController),
+                                      TextField(
+                                        _secretKeyController,
+                                        decoration: InputDecoration(
+                                          prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
+                                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
+                                          contentPadding: const EdgeInsets.all(8),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
