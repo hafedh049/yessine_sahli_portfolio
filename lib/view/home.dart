@@ -134,14 +134,13 @@ class _HomeState extends State<Home> {
             text: TextSpan(
               children: <TextSpan>[
                 TextSpan(
-                  text: "Interests :",
+                  text: "Current Education :",
                   style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500, decoration: TextDecoration.underline),
                 ),
-                for (final String interest in _interests)
-                  TextSpan(
-                    text: " $interest${_interests.last == interest ? "" : "  - "}",
-                    style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500),
-                  ),
+                TextSpan(
+                  text: " Engineer's degree, Security of Computer Systems and Networks\nOct 2023 - Jul 2026",
+                  style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500),
+                ),
               ],
             ),
           ),
@@ -150,13 +149,14 @@ class _HomeState extends State<Home> {
             text: TextSpan(
               children: <TextSpan>[
                 TextSpan(
-                  text: "Current Education :",
+                  text: "Interests :",
                   style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500, decoration: TextDecoration.underline),
                 ),
-                TextSpan(
-                  text: " Engineer's degree, Security of Computer Systems and Networks\nOct 2023 - Jul 2026",
-                  style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500),
-                ),
+                for (final String interest in _interests)
+                  TextSpan(
+                    text: " $interest${_interests.last == interest ? "" : "  - "}",
+                    style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500),
+                  ),
               ],
             ),
           ),

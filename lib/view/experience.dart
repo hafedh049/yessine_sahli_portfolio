@@ -16,6 +16,18 @@ class _ExperienceState extends State<Experience> {
   final List<Map<String, dynamic>> _experiences = <Map<String, dynamic>>[
     <String, dynamic>{
       "logo": "Tawasol_Tech.png",
+      "title": "Junior Cybersecurity and Networking Consultant",
+      "first_subtitle": "Tawasol Technology",
+      "url": "https://www.tawasoltec.com/",
+      "second_subtitle": "June 2023 – August 2023  Tunisia, Tunis",
+      "description": """
+During this professional experience, I adeptly provided expert supervision and guidance to clients, while also educating
+staff on security risk recognition. My proficiency extends to accurate cost estimations for IT projects and delivering
+insightful technical reports on test findings, enhancing strategic decision-making.
+""",
+    },
+    <String, dynamic>{
+      "logo": "Tawasol_Tech.png",
       "title": "Network Security Specialist Intern",
       "first_subtitle": "Tawasol Technology",
       "url": "https://www.tawasoltec.com/",
