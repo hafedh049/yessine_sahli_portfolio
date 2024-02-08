@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -43,7 +44,6 @@ class _CTFsState extends State<CTFs> {
                 const SizedBox(width: 20),
                 IconButton(
                   onPressed: () async {
-                    bool verifier = false;
                     final TextEditingController secretKeyController = TextEditingController();
                     final TextEditingController nameController = TextEditingController();
                     File? image;
@@ -64,6 +64,7 @@ class _CTFsState extends State<CTFs> {
                             const SizedBox(height: 10),
                             TextField(
                               controller: secretKeyController,
+                              obscureText: true,
                               onSubmitted: (String value) {
                                 if (sha512.convert(utf8.encode(_magicWord)) == sha512.convert(utf8.encode(value))) {
                                   Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
@@ -81,6 +82,7 @@ class _CTFsState extends State<CTFs> {
                                           const SizedBox(height: 10),
                                           TextField(
                                             controller: secretKeyController,
+                                            obscureText: true,
                                             onChanged: (String value) {
                                               if (value.length <= 1) {
                                                 verifierKey.currentState!.setState(() {});
@@ -116,7 +118,14 @@ class _CTFsState extends State<CTFs> {
                                                   readOnly: true,
                                                   decoration: InputDecoration(
                                                     prefixIcon: Icon(image == null ? FontAwesome.image_solid : FontAwesome.check_double_solid, size: 15, color: image == null ? whiteColor : Colors.green),
-                                                    suffixIcon: image == null ? null : IconButton(onPressed: () => _(() => image = null), icon: const Icon(FontAwesome.x_solid, size: 15, color: Colors.green)),
+                                                    suffixIcon: image == null
+                                                        ? null
+                                                        : IconButton(
+                                                            onPressed: () {
+                                                              _(() => image = null);
+                                                              verifierKey.currentState!.setState(() {});
+                                                            },
+                                                            icon: const Icon(FontAwesome.x_solid, size: 15, color: Colors.green)),
                                                     hintText: "CTF's image",
                                                     hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
                                                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide(color: image == null ? blueColor : Colors.green)),
@@ -135,12 +144,30 @@ class _CTFsState extends State<CTFs> {
                                                 splashColor: transparent,
                                                 highlightColor: transparent,
                                                 focusColor: transparent,
-                                                onTap: () async {},
+                                                onTap: () async {
+                                                  final FilePickerResult? result = await FilePicker.platform.pickFiles(
+                                                    dialogTitle: "Pick CTF's PDF",
+                                                    allowCompression: true,
+                                                    allowMultiple: false,
+                                                    allowedExtensions: const <String>["pdf,doc"],
+                                                    type: FileType.custom,
+                                                  );
+                                                  if (result != null) {
+                                                    file = File(result.files.single.path!);
+                                                  }
+                                                },
                                                 child: TextField(
                                                   readOnly: true,
                                                   decoration: InputDecoration(
                                                     prefixIcon: Icon(file == null ? FontAwesome.file_code_solid : FontAwesome.check_double_solid, size: 15, color: file == null ? whiteColor : Colors.green),
-                                                    suffixIcon: file == null ? null : IconButton(onPressed: () => _(() => file = null), icon: const Icon(FontAwesome.x_solid, size: 15, color: Colors.green)),
+                                                    suffixIcon: file == null
+                                                        ? null
+                                                        : IconButton(
+                                                            onPressed: () {
+                                                              _(() => file = null);
+                                                              verifierKey.currentState!.setState(() {});
+                                                            },
+                                                            icon: const Icon(FontAwesome.x_solid, size: 15, color: Colors.green)),
                                                     hintText: "PDF",
                                                     hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
                                                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide(color: file == null ? blueColor : Colors.green)),
@@ -191,7 +218,7 @@ class _CTFsState extends State<CTFs> {
                                                 splashColor: transparent,
                                                 highlightColor: transparent,
                                                 focusColor: transparent,
-                                                onTap: !verifier
+                                                onTap: nameController.text.trim().isEmpty && file == null
                                                     ? null
                                                     : () async {
                                                         if (nameController.text.trim().isEmpty) {
@@ -224,8 +251,8 @@ class _CTFsState extends State<CTFs> {
                                                     return AnimatedContainer(
                                                       duration: 300.ms,
                                                       padding: const EdgeInsets.all(8),
-                                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: verifier ? blueColor : Colors.red),
-                                                      child: Text("ADD", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: nameController.text.trim().isEmpty && file == null ? blueColor : Colors.red),
+                                                      child: Text("ADD", style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500)),
                                                     );
                                                   },
                                                 ),
