@@ -85,10 +85,101 @@ class _CTFsState extends State<CTFs> {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
+                            Text("Name", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                            const SizedBox(height: 10),
+                            TextField(
+                              controller: secretKeyController,
+                              onSubmitted: (String value) async {},
+                              style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                              decoration: InputDecoration(
+                                hintText: "The CTF name",
+                                hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
+                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
+                                contentPadding: const EdgeInsets.all(8),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text("Image", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                            const SizedBox(height: 10),
+                            InkWell(
+                              splashColor: transparent,
+                              highlightColor: transparent,
+                              focusColor: transparent,
+                              onTap: () async {},
+                              child: TextField(
+                                readOnly: true,
+                                style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                decoration: InputDecoration(
+                                  hintText: "CTF's image",
+                                  hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                  prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
+                                  contentPadding: const EdgeInsets.all(8),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text("CTF", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                            const SizedBox(height: 10),
+                            InkWell(
+                              splashColor: transparent,
+                              highlightColor: transparent,
+                              focusColor: transparent,
+                              onTap: () async {},
+                              child: TextField(
+                                readOnly: true,
+                                style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                decoration: InputDecoration(
+                                  hintText: "PDF",
+                                  hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                  prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
+                                  contentPadding: const EdgeInsets.all(8),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text("Difficulty", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                            const SizedBox(height: 10),
+                            StatefulBuilder(
+                              builder: (BuildContext context, void Function(void Function()) _) {
+                                return Wrap(
+                                  alignment: WrapAlignment.start,
+                                  crossAxisAlignment: WrapCrossAlignment.start,
+                                  runAlignment: WrapAlignment.start,
+                                  runSpacing: 10,
+                                  spacing: 10,
+                                  children: <Widget>[
+                                    for (final String diff in difficulties)
+                                      InkWell(
+                                        splashColor: transparent,
+                                        highlightColor: transparent,
+                                        focusColor: transparent,
+                                        onTap: () {
+                                          if (diff != difficulty) {
+                                            _(() => difficulty = diff);
+                                          }
+                                        },
+                                        child: AnimatedContainer(
+                                          duration: 300.ms,
+                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: diff == difficulty ? blueColor : darkGreyColor.withOpacity(.1)),
+                                          padding: const EdgeInsets.all(4),
+                                          child: Text(diff, style: GoogleFonts.jura(fontSize: 16, color: whiteColor, fontWeight: FontWeight.w500)),
+                                        ),
+                                      ),
+                                  ],
+                                );
+                              },
+                            ),
+                            const SizedBox(height: 10),
                             Row(
                               children: <Widget>[
                                 const Spacer(),
                                 InkWell(
+                                  splashColor: transparent,
+                                  highlightColor: transparent,
+                                  focusColor: transparent,
                                   onTap: () async {
                                     if (sha512.convert(utf8.encode(_magicWord)) == sha512.convert(utf8.encode(value))) {
                                       Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
@@ -111,74 +202,6 @@ class _CTFsState extends State<CTFs> {
                                     child: Text("ADD", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
                                   ),
                                 ),
-                              ],
-                            ),
-                            const SizedBox(height: 10),
-                            Text("Name", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
-                            const SizedBox(height: 10),
-                            TextField(
-                              controller: secretKeyController,
-                              onSubmitted: (String value) async {},
-                              style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                              decoration: InputDecoration(
-                                hintText: "The CTF name",
-                                hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
-                                contentPadding: const EdgeInsets.all(8),
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Text("Image", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
-                            const SizedBox(height: 10),
-                            InkWell(
-                              onTap: () async {},
-                              child: TextField(
-                                readOnly: true,
-                                style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                decoration: InputDecoration(
-                                  hintText: "CTF's image",
-                                  hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                  prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
-                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
-                                  contentPadding: const EdgeInsets.all(8),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Text("CTF", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
-                            const SizedBox(height: 10),
-                            InkWell(
-                              onTap: () async {},
-                              child: TextField(
-                                readOnly: true,
-                                style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                decoration: InputDecoration(
-                                  hintText: "PDF",
-                                  hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                  prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
-                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
-                                  contentPadding: const EdgeInsets.all(8),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Text("Difficulty", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
-                            const SizedBox(height: 10),
-                            Wrap(
-                              alignment: WrapAlignment.start,
-                              crossAxisAlignment: WrapCrossAlignment.start,
-                              runAlignment: WrapAlignment.start,
-                              runSpacing: 10,
-                              spacing: 10,
-                              children: <Widget>[
-                                for (final String diff in difficulties)
-                                  AnimatedContainer(
-                                    duration: 300.ms,
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
-                                    padding: const EdgeInsets.all(4),
-                                    child: Text(diff, style: GoogleFonts.jura(fontSize: 16, color: whiteColor, fontWeight: FontWeight.w500)),
-                                  ),
                               ],
                             ),
                           ],
