@@ -27,6 +27,13 @@ class CTFs extends StatefulWidget {
 
 class _CTFsState extends State<CTFs> {
   final String _magicWord = "kaizen";
+  final FocusNode _node = FocusNode();
+  @override
+  void dispose() {
+    _node.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -67,7 +74,9 @@ class _CTFsState extends State<CTFs> {
                               builder: (BuildContext context, void Function(void Function()) _) {
                                 return TextField(
                                   controller: secretKeyController,
-                                  obscureText: seen,
+                                  obscureText: !seen,
+                                  autofocus: true,
+                                  focusNode: _node,
                                   onSubmitted: (String value) {
                                     if (sha512.convert(utf8.encode(_magicWord)) == sha512.convert(utf8.encode(value))) {
                                       Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
@@ -267,13 +276,14 @@ class _CTFsState extends State<CTFs> {
                                       );
                                     } else {
                                       Fluttertoast.showToast(msg: "WRONG CREDENTIALS", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                      _node.requestFocus();
                                     }
                                   },
                                   style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
                                   decoration: InputDecoration(
                                     hintText: "Enter the secret passphrase",
                                     hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                    suffixIcon: IconButton(onPressed: () => _(() => seen = !seen), icon: Icon(!seen ? FontAwesome.eye_solid : FontAwesome.eye_slash_solid, size: 15)),
+                                    suffixIcon: IconButton(onPressed: () => _(() => seen = !seen), icon: Icon(seen ? FontAwesome.eye_solid : FontAwesome.eye_slash_solid, size: 15)),
                                     prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
                                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
                                     contentPadding: const EdgeInsets.all(8),
@@ -286,7 +296,6 @@ class _CTFsState extends State<CTFs> {
                       ),
                     ).then(
                       (void value) {
-                        nameController.dispose();
                         secretKeyController.dispose();
                       },
                     );
@@ -343,7 +352,9 @@ class _CTFsState extends State<CTFs> {
                                               builder: (BuildContext context, void Function(void Function()) _) {
                                                 return TextField(
                                                   controller: secretKeyController,
-                                                  obscureText: seen,
+                                                  obscureText: !seen,
+                                                  autofocus: true,
+                                                  focusNode: _node,
                                                   onSubmitted: (String value) async {
                                                     if (sha512.convert(utf8.encode(_magicWord)) == sha512.convert(utf8.encode(value))) {
                                                       Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
@@ -354,13 +365,14 @@ class _CTFsState extends State<CTFs> {
                                                       Fluttertoast.showToast(msg: "CTF DELETED SUCCESSFULLY", webBgColor: "rgb(0,255,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
                                                     } else {
                                                       Fluttertoast.showToast(msg: "WRONG CREDENTIALS", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                                      _node.requestFocus();
                                                     }
                                                   },
                                                   style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
                                                   decoration: InputDecoration(
                                                     hintText: "Enter the secret passphrase",
                                                     hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                                    suffixIcon: IconButton(onPressed: () => _(() => seen = !seen), icon: Icon(!seen ? FontAwesome.eye_solid : FontAwesome.eye_slash_solid, size: 15)),
+                                                    suffixIcon: IconButton(onPressed: () => _(() => seen = !seen), icon: Icon(seen ? FontAwesome.eye_solid : FontAwesome.eye_slash_solid, size: 15)),
                                                     prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
                                                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
                                                     contentPadding: const EdgeInsets.all(8),
