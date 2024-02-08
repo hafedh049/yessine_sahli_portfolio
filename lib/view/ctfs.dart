@@ -51,6 +51,7 @@ class _CTFsState extends State<CTFs> {
                     String difficulty = "EASY";
                     final List<String> difficulties = <String>["EASY", "MEDIUM", "HARD", "INSANE"];
                     final GlobalKey<State> verifierKey = GlobalKey<State>();
+                    bool seen = false;
                     showModalBottomSheet(
                       backgroundColor: evenDarkBgColor,
                       context: context,
@@ -62,227 +63,233 @@ class _CTFsState extends State<CTFs> {
                           children: <Widget>[
                             Text("Enter the magic word.", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
                             const SizedBox(height: 10),
-                            TextField(
-                              controller: secretKeyController,
-                              obscureText: true,
-                              onSubmitted: (String value) {
-                                if (sha512.convert(utf8.encode(_magicWord)) == sha512.convert(utf8.encode(value))) {
-                                  Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-                                  Navigator.pop(context);
-                                  showModalBottomSheet(
-                                    backgroundColor: evenDarkBgColor,
-                                    context: context,
-                                    builder: (BuildContext context) => Container(
-                                      padding: const EdgeInsets.all(24),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Text("Name", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
-                                          const SizedBox(height: 10),
-                                          TextField(
-                                            controller: secretKeyController,
-                                            obscureText: true,
-                                            onChanged: (String value) {
-                                              if (value.length <= 1) {
-                                                verifierKey.currentState!.setState(() {});
-                                              }
-                                            },
-                                            style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                            decoration: InputDecoration(
-                                              hintText: "The CTF name",
-                                              hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                              prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
-                                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
-                                              contentPadding: const EdgeInsets.all(8),
-                                            ),
-                                          ),
-                                          const SizedBox(height: 10),
-                                          Text("Image", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
-                                          const SizedBox(height: 10),
-                                          StatefulBuilder(
-                                            builder: (BuildContext context, void Function(void Function()) _) {
-                                              return InkWell(
-                                                splashColor: transparent,
-                                                highlightColor: transparent,
-                                                focusColor: transparent,
-                                                onTap: () async {
-                                                  final XFile? image_ = await ImagePicker().pickImage(source: ImageSource.gallery);
-                                                  if (image_ != null) {
-                                                    image = File(image_.path);
-                                                    _(() {});
+                            StatefulBuilder(
+                              builder: (BuildContext context, void Function(void Function()) _) {
+                                return TextField(
+                                  controller: secretKeyController,
+                                  obscureText: seen,
+                                  onSubmitted: (String value) {
+                                    if (sha512.convert(utf8.encode(_magicWord)) == sha512.convert(utf8.encode(value))) {
+                                      Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                      Navigator.pop(context);
+                                      showModalBottomSheet(
+                                        backgroundColor: evenDarkBgColor,
+                                        context: context,
+                                        builder: (BuildContext context) => Container(
+                                          padding: const EdgeInsets.all(24),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Text("Name", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                                              const SizedBox(height: 10),
+                                              TextField(
+                                                controller: nameController,
+                                                onChanged: (String value) {
+                                                  if (value.length <= 1) {
                                                     verifierKey.currentState!.setState(() {});
                                                   }
                                                 },
-                                                child: TextField(
-                                                  readOnly: true,
-                                                  decoration: InputDecoration(
-                                                    prefixIcon: Icon(image == null ? FontAwesome.image_solid : FontAwesome.check_double_solid, size: 15, color: image == null ? whiteColor : Colors.green),
-                                                    suffixIcon: image == null
-                                                        ? null
-                                                        : IconButton(
-                                                            onPressed: () {
-                                                              _(() => image = null);
-                                                              verifierKey.currentState!.setState(() {});
-                                                            },
-                                                            icon: const Icon(FontAwesome.x_solid, size: 15, color: Colors.green)),
-                                                    hintText: "CTF's image",
-                                                    hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide(color: image == null ? blueColor : Colors.green)),
-                                                    contentPadding: const EdgeInsets.all(8),
-                                                  ),
+                                                style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                                decoration: InputDecoration(
+                                                  hintText: "The CTF name",
+                                                  hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                                  prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
+                                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
+                                                  contentPadding: const EdgeInsets.all(8),
                                                 ),
-                                              );
-                                            },
-                                          ),
-                                          const SizedBox(height: 10),
-                                          Text("CTF", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
-                                          const SizedBox(height: 10),
-                                          StatefulBuilder(
-                                            builder: (BuildContext context, void Function(void Function()) _) {
-                                              return InkWell(
-                                                splashColor: transparent,
-                                                highlightColor: transparent,
-                                                focusColor: transparent,
-                                                onTap: () async {
-                                                  final FilePickerResult? result = await FilePicker.platform.pickFiles(
-                                                    dialogTitle: "Pick CTF's PDF",
-                                                    allowCompression: true,
-                                                    allowMultiple: false,
-                                                    allowedExtensions: const <String>["pdf,doc"],
-                                                    type: FileType.custom,
-                                                  );
-                                                  if (result != null) {
-                                                    file = File(result.files.single.path!);
-                                                  }
-                                                },
-                                                child: TextField(
-                                                  readOnly: true,
-                                                  decoration: InputDecoration(
-                                                    prefixIcon: Icon(file == null ? FontAwesome.file_code_solid : FontAwesome.check_double_solid, size: 15, color: file == null ? whiteColor : Colors.green),
-                                                    suffixIcon: file == null
-                                                        ? null
-                                                        : IconButton(
-                                                            onPressed: () {
-                                                              _(() => file = null);
-                                                              verifierKey.currentState!.setState(() {});
-                                                            },
-                                                            icon: const Icon(FontAwesome.x_solid, size: 15, color: Colors.green)),
-                                                    hintText: "PDF",
-                                                    hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide(color: file == null ? blueColor : Colors.green)),
-                                                    contentPadding: const EdgeInsets.all(8),
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                          const SizedBox(height: 10),
-                                          Text("Difficulty", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
-                                          const SizedBox(height: 10),
-                                          StatefulBuilder(
-                                            builder: (BuildContext context, void Function(void Function()) _) {
-                                              return Wrap(
-                                                alignment: WrapAlignment.start,
-                                                crossAxisAlignment: WrapCrossAlignment.start,
-                                                runAlignment: WrapAlignment.start,
-                                                runSpacing: 10,
-                                                spacing: 10,
-                                                children: <Widget>[
-                                                  for (final String diff in difficulties)
-                                                    InkWell(
-                                                      splashColor: transparent,
-                                                      highlightColor: transparent,
-                                                      focusColor: transparent,
-                                                      onTap: () {
-                                                        if (diff != difficulty) {
-                                                          _(() => difficulty = diff);
-                                                        }
-                                                      },
-                                                      child: AnimatedContainer(
-                                                        duration: 300.ms,
-                                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: diff == difficulty ? blueColor : darkGreyColor.withOpacity(.1)),
-                                                        padding: const EdgeInsets.all(4),
-                                                        child: Text(diff, style: GoogleFonts.jura(fontSize: 16, color: whiteColor, fontWeight: FontWeight.w500)),
+                                              ),
+                                              const SizedBox(height: 10),
+                                              Text("Image", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                                              const SizedBox(height: 10),
+                                              StatefulBuilder(
+                                                builder: (BuildContext context, void Function(void Function()) _) {
+                                                  return InkWell(
+                                                    splashColor: transparent,
+                                                    highlightColor: transparent,
+                                                    focusColor: transparent,
+                                                    onTap: () async {
+                                                      final XFile? image_ = await ImagePicker().pickImage(source: ImageSource.gallery);
+                                                      if (image_ != null) {
+                                                        image = File(image_.path);
+                                                        _(() {});
+                                                        verifierKey.currentState!.setState(() {});
+                                                      }
+                                                    },
+                                                    child: TextField(
+                                                      readOnly: true,
+                                                      decoration: InputDecoration(
+                                                        prefixIcon: Icon(image == null ? FontAwesome.image_solid : FontAwesome.check_double_solid, size: 15, color: image == null ? whiteColor : Colors.green),
+                                                        suffixIcon: image == null
+                                                            ? null
+                                                            : IconButton(
+                                                                onPressed: () {
+                                                                  _(() => image = null);
+                                                                  verifierKey.currentState!.setState(() {});
+                                                                },
+                                                                icon: const Icon(FontAwesome.x_solid, size: 15, color: Colors.green)),
+                                                        hintText: "CTF's image",
+                                                        hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide(color: image == null ? blueColor : Colors.green)),
+                                                        contentPadding: const EdgeInsets.all(8),
                                                       ),
                                                     ),
-                                                ],
-                                              );
-                                            },
-                                          ),
-                                          const SizedBox(height: 10),
-                                          Row(
-                                            children: <Widget>[
-                                              const Spacer(),
-                                              InkWell(
-                                                splashColor: transparent,
-                                                highlightColor: transparent,
-                                                focusColor: transparent,
-                                                onTap: nameController.text.trim().isEmpty && file == null
-                                                    ? null
-                                                    : () async {
-                                                        if (nameController.text.trim().isEmpty) {
-                                                          Fluttertoast.showToast(msg: "NAME IS MANDATORY", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-                                                        } else if (file == null) {
-                                                          Fluttertoast.showToast(msg: "YOU FORGOT TO PUT THE PDF", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-                                                        } else {
-                                                          Fluttertoast.showToast(msg: "PLEASE WAIT", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-                                                          String imageUrl = "";
-                                                          String fileUrl = "";
+                                                  );
+                                                },
+                                              ),
+                                              const SizedBox(height: 10),
+                                              Text("CTF", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                                              const SizedBox(height: 10),
+                                              StatefulBuilder(
+                                                builder: (BuildContext context, void Function(void Function()) _) {
+                                                  return InkWell(
+                                                    splashColor: transparent,
+                                                    highlightColor: transparent,
+                                                    focusColor: transparent,
+                                                    onTap: () async {
+                                                      final FilePickerResult? result = await FilePicker.platform.pickFiles(
+                                                        dialogTitle: "Pick CTF's PDF",
+                                                        allowCompression: true,
+                                                        allowMultiple: false,
+                                                        allowedExtensions: const <String>["pdf,doc"],
+                                                        type: FileType.custom,
+                                                      );
+                                                      if (result != null) {
+                                                        file = File(result.files.single.path!);
+                                                      }
+                                                    },
+                                                    child: TextField(
+                                                      readOnly: true,
+                                                      decoration: InputDecoration(
+                                                        prefixIcon: Icon(file == null ? FontAwesome.file_code_solid : FontAwesome.check_double_solid, size: 15, color: file == null ? whiteColor : Colors.green),
+                                                        suffixIcon: file == null
+                                                            ? null
+                                                            : IconButton(
+                                                                onPressed: () {
+                                                                  _(() => file = null);
+                                                                  verifierKey.currentState!.setState(() {});
+                                                                },
+                                                                icon: const Icon(FontAwesome.x_solid, size: 15, color: Colors.green)),
+                                                        hintText: "PDF",
+                                                        hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide(color: file == null ? blueColor : Colors.green)),
+                                                        contentPadding: const EdgeInsets.all(8),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                              const SizedBox(height: 10),
+                                              Text("Difficulty", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                                              const SizedBox(height: 10),
+                                              StatefulBuilder(
+                                                builder: (BuildContext context, void Function(void Function()) _) {
+                                                  return Wrap(
+                                                    alignment: WrapAlignment.start,
+                                                    crossAxisAlignment: WrapCrossAlignment.start,
+                                                    runAlignment: WrapAlignment.start,
+                                                    runSpacing: 10,
+                                                    spacing: 10,
+                                                    children: <Widget>[
+                                                      for (final String diff in difficulties)
+                                                        InkWell(
+                                                          splashColor: transparent,
+                                                          highlightColor: transparent,
+                                                          focusColor: transparent,
+                                                          onTap: () {
+                                                            if (diff != difficulty) {
+                                                              _(() => difficulty = diff);
+                                                            }
+                                                          },
+                                                          child: AnimatedContainer(
+                                                            duration: 300.ms,
+                                                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: diff == difficulty ? blueColor : darkGreyColor.withOpacity(.1)),
+                                                            padding: const EdgeInsets.all(4),
+                                                            child: Text(diff, style: GoogleFonts.jura(fontSize: 16, color: whiteColor, fontWeight: FontWeight.w500)),
+                                                          ),
+                                                        ),
+                                                    ],
+                                                  );
+                                                },
+                                              ),
+                                              const SizedBox(height: 10),
+                                              Row(
+                                                children: <Widget>[
+                                                  const Spacer(),
+                                                  InkWell(
+                                                    splashColor: transparent,
+                                                    highlightColor: transparent,
+                                                    focusColor: transparent,
+                                                    onTap: nameController.text.trim().isEmpty && file == null
+                                                        ? null
+                                                        : () async {
+                                                            if (nameController.text.trim().isEmpty) {
+                                                              Fluttertoast.showToast(msg: "NAME IS MANDATORY", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                                            } else if (file == null) {
+                                                              Fluttertoast.showToast(msg: "YOU FORGOT TO PUT THE PDF", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                                            } else {
+                                                              Fluttertoast.showToast(msg: "PLEASE WAIT", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                                              String imageUrl = "";
+                                                              String fileUrl = "";
 
-                                                          if (image != null) {
-                                                            await FirebaseStorage.instance.ref().child("ctfs/images/").putFile(image!).then((TaskSnapshot task) async => imageUrl = await task.ref.getDownloadURL());
-                                                          }
-                                                          await FirebaseStorage.instance.ref().child("ctfs/pdfs/").putFile(file!).then((TaskSnapshot task) async => fileUrl = await task.ref.getDownloadURL());
+                                                              if (image != null) {
+                                                                await FirebaseStorage.instance.ref().child("ctfs/images/").putFile(image!).then((TaskSnapshot task) async => imageUrl = await task.ref.getDownloadURL());
+                                                              }
+                                                              await FirebaseStorage.instance.ref().child("ctfs/pdfs/").putFile(file!).then((TaskSnapshot task) async => fileUrl = await task.ref.getDownloadURL());
 
-                                                          await FirebaseFirestore.instance.collection("ctfs").add(
-                                                            <String, dynamic>{
-                                                              "name": nameController.text.trim(),
-                                                              "url": fileUrl,
-                                                              "image": image == null ? "assets/images/home_logo.png" : imageUrl,
-                                                              "difficulty": difficulty,
-                                                            },
-                                                          );
-                                                        }
+                                                              await FirebaseFirestore.instance.collection("ctfs").add(
+                                                                <String, dynamic>{
+                                                                  "name": nameController.text.trim(),
+                                                                  "url": fileUrl,
+                                                                  "image": image == null ? "assets/images/home_logo.png" : imageUrl,
+                                                                  "difficulty": difficulty,
+                                                                },
+                                                              );
+                                                            }
+                                                          },
+                                                    child: StatefulBuilder(
+                                                      key: verifierKey,
+                                                      builder: (BuildContext context, void Function(void Function()) _) {
+                                                        return AnimatedContainer(
+                                                          duration: 300.ms,
+                                                          padding: const EdgeInsets.all(8),
+                                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: nameController.text.trim().isEmpty && file == null ? blueColor : Colors.red),
+                                                          child: Text("ADD", style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500)),
+                                                        );
                                                       },
-                                                child: StatefulBuilder(
-                                                  key: verifierKey,
-                                                  builder: (BuildContext context, void Function(void Function()) _) {
-                                                    return AnimatedContainer(
-                                                      duration: 300.ms,
-                                                      padding: const EdgeInsets.all(8),
-                                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: nameController.text.trim().isEmpty && file == null ? blueColor : Colors.red),
-                                                      child: Text("ADD", style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500)),
-                                                    );
-                                                  },
-                                                ),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ],
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                } else {
-                                  Fluttertoast.showToast(msg: "WRONG CREDENTIALS", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-                                }
+                                        ),
+                                      );
+                                    } else {
+                                      Fluttertoast.showToast(msg: "WRONG CREDENTIALS", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                    }
+                                  },
+                                  style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                  decoration: InputDecoration(
+                                    hintText: "Enter the secret passphrase",
+                                    hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                    suffixIcon: IconButton(onPressed: () => _(() => seen = !seen), icon: Icon(!seen ? FontAwesome.eye_solid : FontAwesome.eye_slash_solid, size: 15)),
+                                    prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
+                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
+                                    contentPadding: const EdgeInsets.all(8),
+                                  ),
+                                );
                               },
-                              style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                              decoration: InputDecoration(
-                                hintText: "Enter the secret passphrase",
-                                hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
-                                contentPadding: const EdgeInsets.all(8),
-                              ),
                             ),
                           ],
                         ),
                       ),
-                    ).then((void value) {
-                      nameController.dispose();
-                      secretKeyController.dispose();
-                    });
+                    ).then(
+                      (void value) {
+                        nameController.dispose();
+                        secretKeyController.dispose();
+                      },
+                    );
                   },
                   icon: const Icon(FontAwesome.plus_solid, size: 25, color: whiteColor),
                 ),
@@ -320,6 +327,7 @@ class _CTFsState extends State<CTFs> {
                                   onTap: () => launchUrlString(item["url"]),
                                   onLongPress: () {
                                     final TextEditingController secretKeyController = TextEditingController();
+                                    bool seen = false;
                                     showModalBottomSheet<void>(
                                       backgroundColor: evenDarkBgColor,
                                       context: context,
@@ -331,28 +339,34 @@ class _CTFsState extends State<CTFs> {
                                           children: <Widget>[
                                             Text("Enter the magic word.", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
                                             const SizedBox(height: 10),
-                                            TextField(
-                                              controller: secretKeyController,
-                                              onSubmitted: (String value) async {
-                                                if (sha512.convert(utf8.encode(_magicWord)) == sha512.convert(utf8.encode(value))) {
-                                                  Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-                                                  await snapshot.data!.docs[data.indexOf(item)].reference.delete();
-                                                  if (item["image"] != null || item["image"].isNotEmpty || item["image"] != '""' || item["image"] != "''") {
-                                                    FirebaseStorage.instance.refFromURL(item["image"]).delete();
-                                                  }
-                                                  Fluttertoast.showToast(msg: "CTF DELETED SUCCESSFULLY", webBgColor: "rgb(0,255,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-                                                } else {
-                                                  Fluttertoast.showToast(msg: "WRONG CREDENTIALS", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-                                                }
+                                            StatefulBuilder(
+                                              builder: (BuildContext context, void Function(void Function()) _) {
+                                                return TextField(
+                                                  controller: secretKeyController,
+                                                  obscureText: seen,
+                                                  onSubmitted: (String value) async {
+                                                    if (sha512.convert(utf8.encode(_magicWord)) == sha512.convert(utf8.encode(value))) {
+                                                      Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                                      await snapshot.data!.docs[data.indexOf(item)].reference.delete();
+                                                      if (item["image"] != null || item["image"].isNotEmpty || item["image"] != '""' || item["image"] != "''") {
+                                                        FirebaseStorage.instance.refFromURL(item["image"]).delete();
+                                                      }
+                                                      Fluttertoast.showToast(msg: "CTF DELETED SUCCESSFULLY", webBgColor: "rgb(0,255,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                                    } else {
+                                                      Fluttertoast.showToast(msg: "WRONG CREDENTIALS", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                                    }
+                                                  },
+                                                  style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                                  decoration: InputDecoration(
+                                                    hintText: "Enter the secret passphrase",
+                                                    hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                                    suffixIcon: IconButton(onPressed: () => _(() => seen = !seen), icon: Icon(!seen ? FontAwesome.eye_solid : FontAwesome.eye_slash_solid, size: 15)),
+                                                    prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
+                                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
+                                                    contentPadding: const EdgeInsets.all(8),
+                                                  ),
+                                                );
                                               },
-                                              style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                              decoration: InputDecoration(
-                                                hintText: "Enter the secret passphrase",
-                                                hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                                prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
-                                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
-                                                contentPadding: const EdgeInsets.all(8),
-                                              ),
                                             ),
                                           ],
                                         ),
