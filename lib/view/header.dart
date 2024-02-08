@@ -78,7 +78,7 @@ class _HeaderState extends State<Header> {
                                           splashColor: transparent,
                                           highlightColor: transparent,
                                           onTap: () async {
-                                            controller.animateTo(MediaQuery.sizeOf(context).height * _sections.indexOf(section_) + MediaQuery.sizeOf(context).height * .2, duration: 300.milliseconds, curve: Curves.linear);
+                                            controller.animateTo(MediaQuery.sizeOf(context).height * (_sections.indexOf(section_) + .6) + MediaQuery.sizeOf(context).height * 1.1, duration: 300.milliseconds, curve: Curves.linear);
                                             _(() => section = section_);
                                           },
                                           child: Text(section_, style: GoogleFonts.jura(fontSize: 16, color: section_ == section ? lightBlueColor : whiteColor, fontWeight: FontWeight.w500)),
@@ -123,7 +123,7 @@ class _HeaderState extends State<Header> {
                           splashColor: transparent,
                           highlightColor: transparent,
                           onTap: () async {
-                            controller.animateTo(MediaQuery.sizeOf(context).height * _sections.indexOf(section_) + MediaQuery.sizeOf(context).height * .2, duration: 300.milliseconds, curve: Curves.linear);
+                            controller.animateTo(MediaQuery.sizeOf(context).height * (_sections.indexOf(section_) + .6) + MediaQuery.sizeOf(context).height * 1.1, duration: 300.milliseconds, curve: Curves.linear);
                             setState(
                               () {
                                 section = section_;
