@@ -26,6 +26,8 @@ class CTFs extends StatefulWidget {
 }
 
 class _CTFsState extends State<CTFs> {
+  final TextEditingController _secretKeyController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   final String _magicWord = "kaizen";
   final FocusNode _node = FocusNode();
   @override
@@ -51,8 +53,6 @@ class _CTFsState extends State<CTFs> {
                 const SizedBox(width: 20),
                 IconButton(
                   onPressed: () async {
-                    final TextEditingController secretKeyController = TextEditingController();
-                    final TextEditingController nameController = TextEditingController();
                     File? image;
                     File? file;
                     String difficulty = "EASY";
@@ -73,7 +73,7 @@ class _CTFsState extends State<CTFs> {
                             StatefulBuilder(
                               builder: (BuildContext context, void Function(void Function()) _) {
                                 return TextField(
-                                  controller: secretKeyController,
+                                  controller: _secretKeyController,
                                   obscureText: !seen,
                                   autofocus: true,
                                   focusNode: _node,
@@ -93,7 +93,7 @@ class _CTFsState extends State<CTFs> {
                                               Text("Name", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
                                               const SizedBox(height: 10),
                                               TextField(
-                                                controller: nameController,
+                                                controller: _nameController,
                                                 onChanged: (String value) {
                                                   if (value.length <= 1) {
                                                     verifierKey.currentState!.setState(() {});
@@ -229,10 +229,10 @@ class _CTFsState extends State<CTFs> {
                                                     splashColor: transparent,
                                                     highlightColor: transparent,
                                                     focusColor: transparent,
-                                                    onTap: nameController.text.trim().isEmpty && file == null
+                                                    onTap: _nameController.text.trim().isEmpty && file == null
                                                         ? null
                                                         : () async {
-                                                            if (nameController.text.trim().isEmpty) {
+                                                            if (_nameController.text.trim().isEmpty) {
                                                               Fluttertoast.showToast(msg: "NAME IS MANDATORY", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
                                                             } else if (file == null) {
                                                               Fluttertoast.showToast(msg: "YOU FORGOT TO PUT THE PDF", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
@@ -248,7 +248,7 @@ class _CTFsState extends State<CTFs> {
 
                                                               await FirebaseFirestore.instance.collection("ctfs").add(
                                                                 <String, dynamic>{
-                                                                  "name": nameController.text.trim(),
+                                                                  "name": _nameController.text.trim(),
                                                                   "url": fileUrl,
                                                                   "image": image == null ? "assets/images/home_logo.png" : imageUrl,
                                                                   "difficulty": difficulty,
@@ -261,8 +261,8 @@ class _CTFsState extends State<CTFs> {
                                                       builder: (BuildContext context, void Function(void Function()) _) {
                                                         return AnimatedContainer(
                                                           duration: 300.ms,
-                                                          padding: const EdgeInsets.all(8),
-                                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: nameController.text.trim().isEmpty && file == null ? blueColor : Colors.red),
+                                                          padding: const EdgeInsets.all(10),
+                                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: _nameController.text.trim().isEmpty && file == null ? Colors.red : blueColor),
                                                           child: Text("ADD", style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500)),
                                                         );
                                                       },
@@ -294,10 +294,6 @@ class _CTFsState extends State<CTFs> {
                           ],
                         ),
                       ),
-                    ).then(
-                      (void value) {
-                        secretKeyController.dispose();
-                      },
                     );
                   },
                   icon: const Icon(FontAwesome.plus_solid, size: 25, color: whiteColor),
@@ -335,7 +331,6 @@ class _CTFsState extends State<CTFs> {
                                 InkWell(
                                   onTap: () => launchUrlString(item["url"]),
                                   onLongPress: () {
-                                    final TextEditingController secretKeyController = TextEditingController();
                                     bool seen = false;
                                     showModalBottomSheet<void>(
                                       backgroundColor: evenDarkBgColor,
@@ -351,7 +346,7 @@ class _CTFsState extends State<CTFs> {
                                             StatefulBuilder(
                                               builder: (BuildContext context, void Function(void Function()) _) {
                                                 return TextField(
-                                                  controller: secretKeyController,
+                                                  controller: _secretKeyController,
                                                   obscureText: !seen,
                                                   autofocus: true,
                                                   focusNode: _node,
@@ -383,7 +378,7 @@ class _CTFsState extends State<CTFs> {
                                           ],
                                         ),
                                       ),
-                                    ).then((void value) => secretKeyController.dispose());
+                                    );
                                   },
                                   child: Column(
                                     children: <Widget>[
