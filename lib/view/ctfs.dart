@@ -8,6 +8,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:yessine/view/loading.dart';
@@ -78,14 +79,18 @@ class _CTFsState extends State<CTFs> {
                                       const SizedBox(height: 10),
                                       TextField(
                                         controller: _secretKeyController,
-                                        onSubmitted: (String value) {
+                                        onSubmitted: (String value) async {
                                           if (sha512.convert(utf8.encode(_magicWord)) == sha512.convert(utf8.encode(value))) {
                                             Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rbg(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2);
+                                            final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
                                           } else {
                                             Fluttertoast.showToast(msg: "WRONG CREDENTIALS", webBgColor: "rbg(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2);
                                           }
                                         },
+                                        style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
                                         decoration: InputDecoration(
+                                          hintText: "Enter the secret passphrase",
+                                          hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
                                           prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
                                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
                                           contentPadding: const EdgeInsets.all(8),
