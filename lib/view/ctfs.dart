@@ -64,13 +64,17 @@ class _CTFsState extends State<CTFs> {
                               controller: _secretKeyController,
                               onSubmitted: (String value) async {
                                 if (sha512.convert(utf8.encode(_magicWord)) == sha512.convert(utf8.encode(value))) {
-                                  Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rbg(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                  Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
                                   final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
                                   if (image != null) {
-                                    Fluttertoast.showToast(msg: "IMAGE PICKED", webBgColor: "rbg(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                    Fluttertoast.showToast(msg: "IMAGE PICKED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                    if (true) {
+                                      await FirebaseStorage.instance.ref().child("ctfs/images/").putFile(__image).then((TaskSnapshot task) => 0);
+                                    }
+                                    await FirebaseFirestore.instance.collection("ctfs").add(<String, dynamic>{});
                                   }
                                 } else {
-                                  Fluttertoast.showToast(msg: "WRONG CREDENTIALS", webBgColor: "rbg(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                  Fluttertoast.showToast(msg: "WRONG CREDENTIALS", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
                                 }
                               },
                               style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
@@ -81,6 +85,27 @@ class _CTFsState extends State<CTFs> {
                                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
                                 contentPadding: const EdgeInsets.all(8),
                               ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                    showModalBottomSheet(
+                      backgroundColor: evenDarkBgColor,
+                      context: context,
+                      builder: (BuildContext context) => Container(
+                        padding: const EdgeInsets.all(24),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                const Spacer(),
+                                Container(
+                                  child: Text("ADD", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -138,14 +163,14 @@ class _CTFsState extends State<CTFs> {
                                               controller: _secretKeyController,
                                               onSubmitted: (String value) async {
                                                 if (sha512.convert(utf8.encode(_magicWord)) == sha512.convert(utf8.encode(value))) {
-                                                  Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rbg(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                                  Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
                                                   await snapshot.data!.docs[data.indexOf(item)].reference.delete();
                                                   if (item["image"] != null || item["image"].isNotEmpty || item["image"] != '""' || item["image"] != "''") {
                                                     FirebaseStorage.instance.refFromURL(item["image"]).delete();
                                                   }
-                                                  Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rbg(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                                  Fluttertoast.showToast(msg: "CTF DELETED SUCCESSFULLY", webBgColor: "rgb(0,255,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
                                                 } else {
-                                                  Fluttertoast.showToast(msg: "WRONG CREDENTIALS", webBgColor: "rbg(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                                  Fluttertoast.showToast(msg: "WRONG CREDENTIALS", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
                                                 }
                                               },
                                               style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
