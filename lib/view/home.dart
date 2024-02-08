@@ -126,7 +126,7 @@ class _HomeState extends State<Home> {
           ),
           const SizedBox(height: 20),
           Text(
-            "I am currently working on several certifications to enhance my knowledge in different IT-related fields ; First thing worth mentionning, I am part of the AWS re/start cohort 7 program offered by both AWS and RBK Tunis (ReBootKamp) to train individuals and bring them closer to the Cloud Computing world, getting them ready for the “AWS Cloud Practionner” Certificate and offering them a FREE voucher. Along with that, I’ve been dedicating my time to write a fully detailed walkthrough for TryHackMe Jr Penetration Tester Pathway. In addition to those two, I’ve been studying for another certification ; “Microsoft Security, Compliance, and Identity Fundamentals” or for short “MS SC-900” and getting ready to sit for the exam as soon as possible. And finally, I’m also studying for the HCIA 5G certification. If you want to know more, my latest achievements are displayed in my linkedin account in the “Featured” Section ! Don’t hesitate to take a look !",
+            "Dedicated Cyber Security engineering Student with a strong academic foundation in network security principles, security protocols, risk mitigation strategies, and system administration.",
             style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500),
           ),
           const SizedBox(height: 20),
@@ -154,7 +154,7 @@ class _HomeState extends State<Home> {
                   style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500, decoration: TextDecoration.underline),
                 ),
                 TextSpan(
-                  text: " Bachelor Degree in IT, Network Security\nOct 2020 - Jul 2023",
+                  text: " Engineer's degree, Security of Computer Systems and Networks\nOct 2023 - Jul 2026",
                   style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500),
                 ),
               ],

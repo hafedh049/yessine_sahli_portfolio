@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
 import 'package:file_picker/file_picker.dart';
@@ -273,7 +272,7 @@ class _CTFsState extends State<CTFs> {
                                             ],
                                           ),
                                         ),
-                                      );
+                                      ).then((void value) => _secretKeyController.clear());
                                     } else {
                                       Fluttertoast.showToast(msg: "WRONG CREDENTIALS", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
                                       _node.requestFocus();
@@ -378,7 +377,7 @@ class _CTFsState extends State<CTFs> {
                                           ],
                                         ),
                                       ),
-                                    );
+                                    ).then((void value) => _secretKeyController.clear());
                                   },
                                   child: Column(
                                     children: <Widget>[
@@ -396,7 +395,7 @@ class _CTFsState extends State<CTFs> {
                                                   fit: BoxFit.cover,
                                                 )
                                               : DecorationImage(
-                                                  image: CachedNetworkImageProvider(item["image"]),
+                                                  image: NetworkImage(item["image"]),
                                                   fit: BoxFit.cover,
                                                 ),
                                         ),
