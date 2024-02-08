@@ -126,22 +126,25 @@ class _CTFsState extends State<CTFs> {
                                                         verifierKey.currentState!.setState(() {});
                                                       }
                                                     },
-                                                    child: TextField(
-                                                      readOnly: true,
-                                                      decoration: InputDecoration(
-                                                        prefixIcon: Icon(image == null ? FontAwesome.image_solid : FontAwesome.check_double_solid, size: 15, color: image == null ? whiteColor : Colors.green),
-                                                        suffixIcon: image == null
-                                                            ? null
-                                                            : IconButton(
-                                                                onPressed: () {
-                                                                  _(() => image = null);
-                                                                  verifierKey.currentState!.setState(() {});
-                                                                },
-                                                                icon: const Icon(FontAwesome.x_solid, size: 15, color: Colors.green)),
-                                                        hintText: "CTF's image",
-                                                        hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide(color: image == null ? blueColor : Colors.green)),
-                                                        contentPadding: const EdgeInsets.all(8),
+                                                    child: IgnorePointer(
+                                                      ignoring: true,
+                                                      child: TextField(
+                                                        readOnly: true,
+                                                        decoration: InputDecoration(
+                                                          prefixIcon: Icon(image == null ? FontAwesome.image_solid : FontAwesome.check_double_solid, size: 15, color: image == null ? whiteColor : Colors.green),
+                                                          suffixIcon: image == null
+                                                              ? null
+                                                              : IconButton(
+                                                                  onPressed: () {
+                                                                    _(() => image = null);
+                                                                    verifierKey.currentState!.setState(() {});
+                                                                  },
+                                                                  icon: const Icon(FontAwesome.x_solid, size: 15, color: Colors.green)),
+                                                          hintText: "CTF's image",
+                                                          hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide(color: image == null ? blueColor : Colors.green)),
+                                                          contentPadding: const EdgeInsets.all(8),
+                                                        ),
                                                       ),
                                                     ),
                                                   );
@@ -168,22 +171,25 @@ class _CTFsState extends State<CTFs> {
                                                         file = File(result.files.single.path!);
                                                       }
                                                     },
-                                                    child: TextField(
-                                                      readOnly: true,
-                                                      decoration: InputDecoration(
-                                                        prefixIcon: Icon(file == null ? FontAwesome.file_code_solid : FontAwesome.check_double_solid, size: 15, color: file == null ? whiteColor : Colors.green),
-                                                        suffixIcon: file == null
-                                                            ? null
-                                                            : IconButton(
-                                                                onPressed: () {
-                                                                  _(() => file = null);
-                                                                  verifierKey.currentState!.setState(() {});
-                                                                },
-                                                                icon: const Icon(FontAwesome.x_solid, size: 15, color: Colors.green)),
-                                                        hintText: "PDF",
-                                                        hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide(color: file == null ? blueColor : Colors.green)),
-                                                        contentPadding: const EdgeInsets.all(8),
+                                                    child: IgnorePointer(
+                                                      ignoring: true,
+                                                      child: TextField(
+                                                        readOnly: true,
+                                                        decoration: InputDecoration(
+                                                          prefixIcon: Icon(file == null ? FontAwesome.file_code_solid : FontAwesome.check_double_solid, size: 15, color: file == null ? whiteColor : Colors.green),
+                                                          suffixIcon: file == null
+                                                              ? null
+                                                              : IconButton(
+                                                                  onPressed: () {
+                                                                    _(() => file = null);
+                                                                    verifierKey.currentState!.setState(() {});
+                                                                  },
+                                                                  icon: const Icon(FontAwesome.x_solid, size: 15, color: Colors.green)),
+                                                          hintText: "PDF",
+                                                          hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: BorderSide(color: file == null ? blueColor : Colors.green)),
+                                                          contentPadding: const EdgeInsets.all(8),
+                                                        ),
                                                       ),
                                                     ),
                                                   );
@@ -251,7 +257,7 @@ class _CTFsState extends State<CTFs> {
                                                                 <String, dynamic>{
                                                                   "name": _nameController.text.trim(),
                                                                   "url": fileUrl,
-                                                                  "image": image == null ? "assets/images/home_logo.png" : imageUrl,
+                                                                  "image": image == null ? "" : imageUrl,
                                                                   "difficulty": difficulty,
                                                                 },
                                                               );
