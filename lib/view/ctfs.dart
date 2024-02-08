@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:lottie/lottie.dart';
@@ -19,7 +23,7 @@ class CTFs extends StatefulWidget {
 
 class _CTFsState extends State<CTFs> {
   final TextEditingController _secretKeyController = TextEditingController();
-
+  final _magicWord = "kaizen";
   @override
   void dispose() {
     _secretKeyController.dispose();
@@ -62,16 +66,25 @@ class _CTFsState extends State<CTFs> {
                             onTap: () => launchUrlString(item["url"]),
                             onLongPress: () {
                               showModalBottomSheet(
+                                backgroundColor: evenDarkBgColor,
                                 context: context,
                                 builder: (BuildContext context) => Container(
+                                  padding: const EdgeInsets.all(16),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
-                                      Text("No CTFs yet.", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                                      Text("Enter the magic word.", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
                                       const SizedBox(height: 10),
                                       TextField(
-                                        _secretKeyController,
+                                        controller: _secretKeyController,
+                                        onSubmitted: (String value) {
+                                          if (sha512.convert(utf8.encode(_magicWord)) == sha512.convert(utf8.encode(value))) {
+                                            Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rbg(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2);
+                                          } else {
+                                            Fluttertoast.showToast(msg: "WRONG CREDENTIALS", webBgColor: "rbg(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2);
+                                          }
+                                        },
                                         decoration: InputDecoration(
                                           prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
                                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
