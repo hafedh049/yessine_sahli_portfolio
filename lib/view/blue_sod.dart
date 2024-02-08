@@ -16,7 +16,7 @@ class BlueScreenOfDeath extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            LottieBuilder.asset("assets/lotties/error.json"),
+            Flexible(child: LottieBuilder.asset("assets/lotties/error.json")),
             Text(error, style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
           ],
         ),
