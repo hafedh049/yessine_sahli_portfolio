@@ -59,6 +59,7 @@ class _CTFsState extends State<CTFs> {
                     final GlobalKey<State> verifierKey = GlobalKey<State>();
                     bool seen = false;
                     showModalBottomSheet(
+                      enableDrag: false,
                       backgroundColor: evenDarkBgColor,
                       context: context,
                       builder: (BuildContext context) => Container(
@@ -81,6 +82,7 @@ class _CTFsState extends State<CTFs> {
                                       Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
                                       Navigator.pop(context);
                                       showModalBottomSheet(
+                                        enableDrag: false,
                                         backgroundColor: evenDarkBgColor,
                                         context: context,
                                         builder: (BuildContext context) => Container(
