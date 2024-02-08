@@ -89,7 +89,6 @@ class _CTFsState extends State<CTFs> {
                             const SizedBox(height: 10),
                             TextField(
                               controller: secretKeyController,
-                              onSubmitted: (String value) async {},
                               style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
                               decoration: InputDecoration(
                                 hintText: "The CTF name",
@@ -102,22 +101,33 @@ class _CTFsState extends State<CTFs> {
                             const SizedBox(height: 10),
                             Text("Image", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
                             const SizedBox(height: 10),
-                            InkWell(
-                              splashColor: transparent,
-                              highlightColor: transparent,
-                              focusColor: transparent,
-                              onTap: () async {},
-                              child: TextField(
-                                readOnly: true,
-                                style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                decoration: InputDecoration(
-                                  hintText: "CTF's image",
-                                  hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                  prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
-                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
-                                  contentPadding: const EdgeInsets.all(8),
-                                ),
-                              ),
+                            StatefulBuilder(
+                              builder: (BuildContext context, void Function(void Function()) _) {
+                                return InkWell(
+                                  splashColor: transparent,
+                                  highlightColor: transparent,
+                                  focusColor: transparent,
+                                  onTap: () async {
+                                    final XFile? image_ = await ImagePicker().pickImage(source: ImageSource.gallery);
+                                    if (image_ != null) {
+                                      image = File(image_.path);
+                                      _(() {});
+                                    }
+                                  },
+                                  child: TextField(
+                                    readOnly: true,
+                                    style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                    decoration: InputDecoration(
+                                      prefixIcon: Icon(image == null ? FontAwesome.image_solid : FontAwesome.check_double_solid, size: 15, color: image == null ? whiteColor : Colors.green),
+                                      suffixIcon: image == null ? null : IconButton(onPressed: () => _(() => image = null), icon: const Icon(FontAwesome.x_solid, size: 15, color: Colors.green)),
+                                      hintText: "CTF's image",
+                                      hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
+                                      contentPadding: const EdgeInsets.all(8),
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                             const SizedBox(height: 10),
                             Text("CTF", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
