@@ -25,6 +25,7 @@ class CTFs extends StatefulWidget {
 }
 
 class _CTFsState extends State<CTFs> {
+  final String _magicWord = "kaizen";
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,8 +50,7 @@ class _CTFsState extends State<CTFs> {
                     File? file;
                     String difficulty = "EASY";
                     final List<String> difficulties = <String>["EASY", "MEDIUM", "HARD", "INSANE"];
-                    const String magicWord = "kaizen";
-
+                    final GlobalKey<State> verifierKey = GlobalKey<State>();
                     showModalBottomSheet(
                       backgroundColor: evenDarkBgColor,
                       context: context,
@@ -65,7 +65,7 @@ class _CTFsState extends State<CTFs> {
                             TextField(
                               controller: secretKeyController,
                               onSubmitted: (String value) {
-                                if (sha512.convert(utf8.encode(magicWord)) == sha512.convert(utf8.encode(value))) {
+                                if (sha512.convert(utf8.encode(_magicWord)) == sha512.convert(utf8.encode(value))) {
                                   Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
                                   Navigator.pop(context);
                                   showModalBottomSheet(
@@ -81,6 +81,11 @@ class _CTFsState extends State<CTFs> {
                                           const SizedBox(height: 10),
                                           TextField(
                                             controller: secretKeyController,
+                                            onChanged: (String value) {
+                                              if (value.length <= 1) {
+                                                verifierKey.currentState!.setState(() {});
+                                              }
+                                            },
                                             style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
                                             decoration: InputDecoration(
                                               hintText: "The CTF name",
@@ -104,6 +109,7 @@ class _CTFsState extends State<CTFs> {
                                                   if (image_ != null) {
                                                     image = File(image_.path);
                                                     _(() {});
+                                                    verifierKey.currentState!.setState(() {});
                                                   }
                                                 },
                                                 child: TextField(
@@ -185,36 +191,43 @@ class _CTFsState extends State<CTFs> {
                                                 splashColor: transparent,
                                                 highlightColor: transparent,
                                                 focusColor: transparent,
-                                                onTap: () async {
-                                                  if (nameController.text.trim().isEmpty) {
-                                                    Fluttertoast.showToast(msg: "NAME IS MANDATORY", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-                                                  } else if (file == null) {
-                                                    Fluttertoast.showToast(msg: "YOU FORGOT TO PUT THE PDF", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-                                                  } else {
-                                                    Fluttertoast.showToast(msg: "PLEASE WAIT", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-                                                    String imageUrl = "";
-                                                    String fileUrl = "";
+                                                onTap: !verifier
+                                                    ? null
+                                                    : () async {
+                                                        if (nameController.text.trim().isEmpty) {
+                                                          Fluttertoast.showToast(msg: "NAME IS MANDATORY", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                                        } else if (file == null) {
+                                                          Fluttertoast.showToast(msg: "YOU FORGOT TO PUT THE PDF", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                                        } else {
+                                                          Fluttertoast.showToast(msg: "PLEASE WAIT", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                                          String imageUrl = "";
+                                                          String fileUrl = "";
 
-                                                    if (image != null) {
-                                                      await FirebaseStorage.instance.ref().child("ctfs/images/").putFile(image!).then((TaskSnapshot task) async => imageUrl = await task.ref.getDownloadURL());
-                                                    }
-                                                    await FirebaseStorage.instance.ref().child("ctfs/pdfs/").putFile(file!).then((TaskSnapshot task) async => fileUrl = await task.ref.getDownloadURL());
+                                                          if (image != null) {
+                                                            await FirebaseStorage.instance.ref().child("ctfs/images/").putFile(image!).then((TaskSnapshot task) async => imageUrl = await task.ref.getDownloadURL());
+                                                          }
+                                                          await FirebaseStorage.instance.ref().child("ctfs/pdfs/").putFile(file!).then((TaskSnapshot task) async => fileUrl = await task.ref.getDownloadURL());
 
-                                                    await FirebaseFirestore.instance.collection("ctfs").add(
-                                                      <String, dynamic>{
-                                                        "name": nameController.text.trim(),
-                                                        "url": fileUrl,
-                                                        "image": image == null ? "assets/images/home_logo.png" : imageUrl,
-                                                        "difficulty": difficulty,
+                                                          await FirebaseFirestore.instance.collection("ctfs").add(
+                                                            <String, dynamic>{
+                                                              "name": nameController.text.trim(),
+                                                              "url": fileUrl,
+                                                              "image": image == null ? "assets/images/home_logo.png" : imageUrl,
+                                                              "difficulty": difficulty,
+                                                            },
+                                                          );
+                                                        }
                                                       },
+                                                child: StatefulBuilder(
+                                                  key: verifierKey,
+                                                  builder: (BuildContext context, void Function(void Function()) _) {
+                                                    return AnimatedContainer(
+                                                      duration: 300.ms,
+                                                      padding: const EdgeInsets.all(8),
+                                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: verifier ? blueColor : Colors.red),
+                                                      child: Text("ADD", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
                                                     );
-                                                  }
-                                                },
-                                                child: AnimatedContainer(
-                                                  duration: 300.ms,
-                                                  padding: const EdgeInsets.all(8),
-                                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: verifier ? blueColor : Colors.red),
-                                                  child: Text("ADD", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                                                  },
                                                 ),
                                               ),
                                             ],
