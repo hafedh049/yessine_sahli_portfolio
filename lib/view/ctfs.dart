@@ -450,13 +450,14 @@ class _CTFsState extends State<CTFs> {
               }
               return Container(
                 padding: const EdgeInsets.all(24),
+                color: oddDarkBgColor,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     for (int index = 0; index < 20; index += 1)
                       Container(
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: oddDarkBgColor),
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: evenDarkBgColor),
                       ).animate(onComplete: (AnimationController controller) => controller.repeat()).shimmer(color: whiteColor.withOpacity(.2), duration: 2.seconds),
                   ],
                 ),
