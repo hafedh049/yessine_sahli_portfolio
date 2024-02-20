@@ -7,6 +7,7 @@ import 'package:crypto/crypto.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -178,12 +179,24 @@ class _CTFsState extends State<CTFs> {
                                                     highlightColor: transparent,
                                                     focusColor: transparent,
                                                     onTap: () async {
-                                                      FilePickerResult? result = await FilePicker.platform.pickFiles();
+                                                      FilePickerResult? result;
+
+                                                      try {
+                                                        result = await FilePicker.platform.pickFiles(
+                                                          type: FileType.custom,
+                                                          allowedExtensions: ['jpg', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'txt'],
+                                                        );
+                                                      } catch (e) {
+                                                        log(e.toString());
+                                                      }
 
                                                       if (result != null) {
-                                                        file = File(result.files.single.path!);
-                                                      } else {
-                                                        log("hellow");
+                                                        try {
+                                                          _(() => file = File.fromRawPath(result!.files.single.bytes!));
+                                                          log("done");
+                                                        } catch (e) {
+                                                          log(e.toString());
+                                                        }
                                                       }
                                                     },
                                                     child: IgnorePointer(
