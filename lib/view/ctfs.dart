@@ -29,6 +29,25 @@ class _CTFsState extends State<CTFs> {
   final TextEditingController _nameController = TextEditingController();
   final String _magicWord = "kaizen";
   final FocusNode _node = FocusNode();
+
+  List<Map<String, dynamic>> _ctfs = <Map<String, dynamic>>[];
+
+  Future<void> _load() async {
+    await FirebaseFirestore.instance.collection("ctfs").get().then(
+          (QuerySnapshot<Map<String, dynamic>> value) => _ctfs = value.docs
+              .map(
+                (QueryDocumentSnapshot<Map<String, dynamic>> value) => value.data(),
+              )
+              .toList(),
+        );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   void dispose() {
     _node.dispose();
