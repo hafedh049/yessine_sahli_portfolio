@@ -123,7 +123,7 @@ class _CTFsState extends State<CTFs> {
                                                 decoration: InputDecoration(
                                                   hintText: "The CTF name",
                                                   hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                                  prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
+                                                  prefixIcon: const Icon(FontAwesome.bitcoin_brand, size: 15, color: blueColor),
                                                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
                                                   contentPadding: const EdgeInsets.all(8),
                                                 ),
@@ -264,7 +264,7 @@ class _CTFsState extends State<CTFs> {
                                                     splashColor: transparent,
                                                     highlightColor: transparent,
                                                     focusColor: transparent,
-                                                    onTap: _nameController.text.trim().isEmpty && file == null
+                                                    onTap: _nameController.text.trim().isEmpty || file == null
                                                         ? null
                                                         : () async {
                                                             if (_nameController.text.trim().isEmpty) {
@@ -297,7 +297,7 @@ class _CTFsState extends State<CTFs> {
                                                         return AnimatedContainer(
                                                           duration: 300.ms,
                                                           padding: const EdgeInsets.all(10),
-                                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: _nameController.text.trim().isEmpty && file == null ? Colors.red : blueColor),
+                                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: _nameController.text.trim().isEmpty || file == null ? Colors.red : blueColor),
                                                           child: Text("ADD", style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500)),
                                                         );
                                                       },
