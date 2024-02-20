@@ -310,7 +310,95 @@ class _CTFsState extends State<CTFs> {
             ),
           ),
           const SizedBox(height: 25),
-          FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+          Wrap(
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            runAlignment: WrapAlignment.center,
+            runSpacing: 20,
+            spacing: 20,
+            children: <Widget>[
+              for (final Map<String, dynamic> item in [])
+                InkWell(
+                  onTap: () => launchUrlString(item["url"]),
+                  onLongPress: () {
+                    bool seen = false;
+                    showModalBottomSheet<void>(
+                      backgroundColor: evenDarkBgColor,
+                      context: context,
+                      builder: (BuildContext context) => Container(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text("Enter the magic word.", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                            const SizedBox(height: 10),
+                            StatefulBuilder(
+                              builder: (BuildContext context, void Function(void Function()) _) {
+                                return TextField(
+                                  controller: _secretKeyController,
+                                  obscureText: !seen,
+                                  autofocus: true,
+                                  focusNode: _node,
+                                  onSubmitted: (String value) async {},
+                                  style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                  decoration: InputDecoration(
+                                    hintText: "Enter the secret passphrase",
+                                    hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                                    suffixIcon: IconButton(onPressed: () => _(() => seen = !seen), icon: Icon(seen ? FontAwesome.eye_solid : FontAwesome.eye_slash_solid, size: 15)),
+                                    prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
+                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
+                                    contentPadding: const EdgeInsets.all(8),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ).then((void value) => _secretKeyController.clear());
+                  },
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        width: 250,
+                        height: 250,
+                        padding: const EdgeInsets.all(24),
+                        alignment: Alignment.bottomCenter,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: blueColor),
+                          borderRadius: BorderRadius.circular(15),
+                          image: (item["image"] == null || item["image"].isEmpty || item["image"] == '""' || item["image"] == "''") ? const DecorationImage(image: AssetImage("assets/images/home_logo.png"), fit: BoxFit.cover) : DecorationImage(image: NetworkImage(item["image"]), fit: BoxFit.cover),
+                        ),
+                      ).animate(onComplete: (AnimationController controller) => controller.repeat(reverse: false)).shimmer(color: whiteColor.withOpacity(.1), duration: 3.5.seconds),
+                      const SizedBox(height: 10),
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Flexible(child: Text(item["name"], style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.bold))),
+                          const SizedBox(height: 10),
+                          Text(
+                            item["difficulty"] == null || item["difficulty"].isEmpty || item["difficulty"] == '""' || item["difficulty"] == "''" ? "EASY" : item["difficulty"].toUpperCase(),
+                            style: GoogleFonts.jura(
+                              fontSize: 16,
+                              color: item["difficulty"] == null || item["difficulty"].isEmpty || item["difficulty"].toUpperCase() == "EASY"
+                                  ? Colors.green
+                                  : item["difficulty"].toUpperCase() == "MEDIUM"
+                                      ? Colors.orange
+                                      : item["difficulty"].toUpperCase() == "HARD"
+                                          ? Colors.red
+                                          : Colors.purple.shade900,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          )
+          /*FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
             future: FirebaseFirestore.instance.collection("ctfs").get(),
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
               if (snapshot.hasData) {
@@ -342,8 +430,6 @@ class _CTFsState extends State<CTFs> {
                                   backgroundColor: evenDarkBgColor,
                                   context: context,
                                   builder: (BuildContext context) => Container(
-                                    width: 300,
-                                    height: 300,
                                     padding: const EdgeInsets.all(16),
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -431,7 +517,7 @@ class _CTFsState extends State<CTFs> {
               }
               return const Loading();
             },
-          ),
+          ),*/
         ],
       ),
     );
