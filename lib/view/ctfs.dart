@@ -179,16 +179,15 @@ class _CTFsState extends State<CTFs> {
                                                     focusColor: transparent,
                                                     onTap: () async {
                                                       final file_ = OpenFilePicker()
-                                                        ..filterSpecification = {'Word Document (*.doc)': '*.doc', 'Web Page (*.htm; *.html)': '*.htm;*.html', 'Text Document (*.txt)': '*.txt', 'All Files': '*.*'}
+                                                        ..filterSpecification = const <String, String>{/*'Word Document (*.doc)': '*.doc', 'Web Page (*.htm; *.html)': '*.htm;*.html', 'Text Document (*.txt)': '*.txt',*/ 'All Files': '*.pdf'}
                                                         ..defaultFilterIndex = 0
-                                                        ..defaultExtension = 'doc'
-                                                        ..title = 'Select a document';
+                                                        ..defaultExtension = 'pdf'
+                                                        ..title = 'Select a CTF';
 
                                                       final result = file_.getFile();
                                                       if (result != null) {
                                                         file = File(result.path);
                                                       }
-                                                      if (result != null) {}
                                                     },
                                                     child: IgnorePointer(
                                                       ignoring: true,
