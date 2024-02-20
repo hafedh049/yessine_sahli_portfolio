@@ -268,7 +268,11 @@ class _CTFsState extends State<CTFs> {
                                                         if (image != null) {
                                                           await FirebaseStorage.instance.ref().child("ctfs/images/").putFile(image!).then((TaskSnapshot task) async => imageUrl = await task.ref.getDownloadURL());
                                                         }
+                                                        Fluttertoast.showToast(msg: "IMAGE UPLOADED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+
                                                         await FirebaseStorage.instance.ref().child("ctfs/pdfs/").putFile(file!).then((TaskSnapshot task) async => fileUrl = await task.ref.getDownloadURL());
+
+                                                        Fluttertoast.showToast(msg: "PDF UPLOADED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
 
                                                         await FirebaseFirestore.instance.collection("ctfs").add(
                                                           <String, dynamic>{
@@ -278,6 +282,7 @@ class _CTFsState extends State<CTFs> {
                                                             "difficulty": difficulty,
                                                           },
                                                         );
+                                                        _nameController.clear();
                                                         Fluttertoast.showToast(msg: "DONE", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
                                                         // ignore: use_build_context_synchronously
                                                         Navigator.pop(context);
