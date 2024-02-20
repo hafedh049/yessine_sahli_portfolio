@@ -260,24 +260,12 @@ class _CTFsState extends State<CTFs> {
                                                         Fluttertoast.showToast(msg: "YOU FORGOT TO PUT THE PDF", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
                                                       } else {
                                                         Fluttertoast.showToast(msg: "PLEASE WAIT", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-                                                        String imageUrl = "";
-                                                        String fileUrl = "";
-
-                                                        if (image != null) {
-                                                          await FirebaseStorage.instance.ref().child("ctfs/images/${List<String>.generate(22, (int index) => Random().nextInt(10).toString()).join()}.png").putFile(image!).then((TaskSnapshot task) async => imageUrl = await task.ref.getDownloadURL());
-                                                        }
-
-                                                        Fluttertoast.showToast(msg: "IMAGE UPLOADED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-
-                                                        await FirebaseStorage.instance.ref().child("ctfs/pdfs/${List<String>.generate(22, (int index) => Random().nextInt(10).toString()).join()}.pdf").putBlob(file!).then((TaskSnapshot task) async => fileUrl = await task.ref.getDownloadURL());
-
-                                                        Fluttertoast.showToast(msg: "PDF UPLOADED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
 
                                                         await FirebaseFirestore.instance.collection("ctfs").add(
                                                           <String, dynamic>{
                                                             "name": _nameController.text.trim(),
-                                                            "url": fileUrl,
-                                                            "image": image == null ? "" : imageUrl,
+                                                            "url": file!.readAsBytesSync(),
+                                                            "image": image == null ? [] : image!.readAsBytesSync(),
                                                             "difficulty": difficulty,
                                                           },
                                                         );
@@ -382,7 +370,7 @@ class _CTFsState extends State<CTFs> {
                                               if (sha512.convert(utf8.encode(_magicWord)) == sha512.convert(utf8.encode(value))) {
                                                 Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
                                                 await _ctfs[data.indexOf(item)].reference.delete();
-                                                if (item["image"] != null || item["image"].isNotEmpty || item["image"] != '""' || item["image"] != "''") {
+                                                if (item["image"] != null || item["image"].isNotEmpty) {
                                                   FirebaseStorage.instance.refFromURL(item["image"]).delete();
                                                 }
                                                 Fluttertoast.showToast(msg: "CTF DELETED SUCCESSFULLY", webBgColor: "rgb(0,255,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
@@ -418,7 +406,11 @@ class _CTFsState extends State<CTFs> {
                                   decoration: BoxDecoration(
                                     border: Border.all(color: blueColor),
                                     borderRadius: BorderRadius.circular(15),
-                                    image: (item["image"] == null || item["image"].isEmpty || item["image"] == '""' || item["image"] == "''") ? const DecorationImage(image: AssetImage("assets/images/home_logo.png"), fit: BoxFit.cover) : DecorationImage(image: NetworkImage(item["image"]), fit: BoxFit.cover),
+                                    image: (item["image"] == null || item["image"].isEmpty)
+                                        ? const DecorationImage(image: AssetImage("assets/images/home_logo.png"), fit: BoxFit.cover)
+                                        : item["image"] is String
+                                            ? DecorationImage(image: NetworkImage(item["image"]), fit: BoxFit.cover)
+                                            : DecorationImage(image: MemoryImage(item["image"]), fit: BoxFit.cover),
                                   ),
                                 ).animate(onComplete: (AnimationController controller) => controller.repeat(reverse: false)).shimmer(color: whiteColor.withOpacity(.1), duration: 3.5.seconds),
                                 const SizedBox(height: 10),
