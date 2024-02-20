@@ -30,13 +30,15 @@ class _CTFsState extends State<CTFs> {
   final String _magicWord = "kaizen";
   final FocusNode _node = FocusNode();
 
-  List<Map<String, dynamic>> _ctfs = <Map<String, dynamic>>[];
+  final GlobalKey<State> _ctfsKey = GlobalKey<State>();
+
+  List<QueryDocumentSnapshot<Map<String, dynamic>>> _ctfs = <QueryDocumentSnapshot<Map<String, dynamic>>>[];
 
   Future<void> _load() async {
     await FirebaseFirestore.instance.collection("ctfs").get().then(
           (QuerySnapshot<Map<String, dynamic>> value) => _ctfs = value.docs
               .map(
-                (QueryDocumentSnapshot<Map<String, dynamic>> value) => value.data(),
+                (QueryDocumentSnapshot<Map<String, dynamic>> value) => value,
               )
               .toList(),
         );
@@ -44,7 +46,7 @@ class _CTFsState extends State<CTFs> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    _load().then((void value) => _ctfsKey.currentState!.setState(() {}));
     super.initState();
   }
 
@@ -329,59 +331,10 @@ class _CTFsState extends State<CTFs> {
             ),
           ),
           const SizedBox(height: 25),
-          Wrap(
-            alignment: WrapAlignment.center,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            runAlignment: WrapAlignment.center,
-            runSpacing: 20,
-            spacing: 20,
-            children: <Widget>[
-              for (final Map<String, dynamic> item in List<Map<String, dynamic>>.generate(20, (int index) => <String, dynamic>{"name": "AAA", "difficulty": "HARD"}))
-                InkWell(
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        width: 250,
-                        height: 250,
-                        padding: const EdgeInsets.all(24),
-                        alignment: Alignment.bottomCenter,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: blueColor),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ).animate(onComplete: (AnimationController controller) => controller.repeat(reverse: false)).shimmer(color: whiteColor.withOpacity(.1), duration: 3.5.seconds),
-                      const SizedBox(height: 10),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Flexible(child: Text(item["name"], style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.bold))),
-                          const SizedBox(height: 10),
-                          Text(
-                            item["difficulty"] == null || item["difficulty"].isEmpty || item["difficulty"] == '""' || item["difficulty"] == "''" ? "EASY" : item["difficulty"].toUpperCase(),
-                            style: GoogleFonts.jura(
-                              fontSize: 16,
-                              color: item["difficulty"] == null || item["difficulty"].isEmpty || item["difficulty"].toUpperCase() == "EASY"
-                                  ? Colors.green
-                                  : item["difficulty"].toUpperCase() == "MEDIUM"
-                                      ? Colors.orange
-                                      : item["difficulty"].toUpperCase() == "HARD"
-                                          ? Colors.red
-                                          : Colors.purple.shade900,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-            ],
-          )
-          /*FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-            future: FirebaseFirestore.instance.collection("ctfs").get(),
-            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-              if (snapshot.hasData) {
-                final List<Map<String, dynamic>> data = snapshot.data!.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> e) => e.data()).toList();
+          StatefulBuilder(
+            builder: (BuildContext context, void Function(void Function() _) snapshot) {
+              if (_ctfs.isNotEmpty) {
+                final List<Map<String, dynamic>> data = _ctfs.map((QueryDocumentSnapshot<Map<String, dynamic>> e) => e.data()).toList();
                 return data.isEmpty
                     ? Center(
                         child: Column(
@@ -426,7 +379,7 @@ class _CTFsState extends State<CTFs> {
                                               onSubmitted: (String value) async {
                                                 if (sha512.convert(utf8.encode(_magicWord)) == sha512.convert(utf8.encode(value))) {
                                                   Fluttertoast.showToast(msg: "ACCESS GRANTED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-                                                  await snapshot.data!.docs[data.indexOf(item)].reference.delete();
+                                                  await _ctfs[data.indexOf(item)].reference.delete();
                                                   if (item["image"] != null || item["image"].isNotEmpty || item["image"] != '""' || item["image"] != "''") {
                                                     FirebaseStorage.instance.refFromURL(item["image"]).delete();
                                                   }
@@ -494,9 +447,11 @@ class _CTFsState extends State<CTFs> {
                         ],
                       );
               }
-              return const Loading();
+              return Container(
+                padding: const EdgeInsets.all(24),
+              );
             },
-          ),*/
+          ),
         ],
       ),
     );
