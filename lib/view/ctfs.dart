@@ -13,7 +13,6 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:yessine/view/loading.dart';
 
 import '../shared/globals.dart';
 
@@ -35,6 +34,7 @@ class _CTFsState extends State<CTFs> {
   List<QueryDocumentSnapshot<Map<String, dynamic>>> _ctfs = <QueryDocumentSnapshot<Map<String, dynamic>>>[];
 
   Future<void> _load() async {
+    await Future.delayed(4.seconds);
     await FirebaseFirestore.instance.collection("ctfs").get().then(
           (QuerySnapshot<Map<String, dynamic>> value) => _ctfs = value.docs
               .map(
@@ -332,6 +332,7 @@ class _CTFsState extends State<CTFs> {
           ),
           const SizedBox(height: 25),
           StatefulBuilder(
+            key: _ctfsKey,
             builder: (BuildContext context, void Function(void Function() _) snapshot) {
               if (_ctfs.isNotEmpty) {
                 final List<Map<String, dynamic>> data = _ctfs.map((QueryDocumentSnapshot<Map<String, dynamic>> e) => e.data()).toList();
@@ -449,6 +450,16 @@ class _CTFsState extends State<CTFs> {
               }
               return Container(
                 padding: const EdgeInsets.all(24),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    for (int index = 0; index < 20; index += 1)
+                      Container(
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: oddDarkBgColor),
+                      ).animate(onComplete: (AnimationController controller) => controller.repeat()).shimmer(color: whiteColor.withOpacity(.2), duration: 2.seconds),
+                  ],
+                ),
               );
             },
           ),
