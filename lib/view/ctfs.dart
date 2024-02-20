@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
-import 'package:filepicker_windows/filepicker_windows.dart';
+import 'package:file_picker_pro/file_data.dart';
+import 'package:file_picker_pro/file_picker.dart';
+import 'package:file_picker_pro/files.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -178,16 +181,18 @@ class _CTFsState extends State<CTFs> {
                                                     highlightColor: transparent,
                                                     focusColor: transparent,
                                                     onTap: () async {
-                                                      final file_ = OpenFilePicker()
-                                                        ..filterSpecification = const <String, String>{/*'Word Document (*.doc)': '*.doc', 'Web Page (*.htm; *.html)': '*.htm;*.html', 'Text Document (*.txt)': '*.txt',*/ 'All Files': '*.pdf'}
-                                                        ..defaultFilterIndex = 0
-                                                        ..defaultExtension = 'pdf'
-                                                        ..title = 'Select a CTF';
-
-                                                      final result = file_.getFile();
-                                                      if (result != null) {
-                                                        file = File(result.path);
-                                                      }
+                                                      FilePicker(
+                                                        context: context,
+                                                        height: 100,
+                                                        fileData: FileData(),
+                                                        crop: true,
+                                                        maxFileSizeInMb: 10,
+                                                        allowedExtensions: const <String>[Files.pdf],
+                                                        onSelected: (FileData fileData) {},
+                                                        onCancel: (message, messageCode) {
+                                                          log("[$messageCode] $message");
+                                                        },
+                                                      );
                                                     },
                                                     child: IgnorePointer(
                                                       ignoring: true,
