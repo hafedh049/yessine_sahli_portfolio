@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
@@ -185,7 +185,7 @@ class _CTFsState extends State<CTFs> {
                                                           verifierKey.currentState!.setState(() {});
                                                         }
                                                       } catch (e) {
-                                                        log(e.toString());
+                                                        debugPrint(e.toString());
                                                       }
                                                     },
                                                     child: IgnorePointer(
@@ -264,11 +264,11 @@ class _CTFsState extends State<CTFs> {
                                                         String fileUrl = "";
 
                                                         if (image != null) {
-                                                          await FirebaseStorage.instance.ref().child("ctfs/images/").putFile(image!).then((TaskSnapshot task) async => imageUrl = await task.ref.getDownloadURL());
+                                                          await FirebaseStorage.instance.ref().child("ctfs/images/${List<String>.generate(22, (int index) => Random().nextInt(10).toString())}").putFile(image!).then((TaskSnapshot task) async => imageUrl = await task.ref.getDownloadURL());
                                                         }
                                                         Fluttertoast.showToast(msg: "IMAGE UPLOADED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
 
-                                                        await FirebaseStorage.instance.ref().child("ctfs/pdfs/").putFile(file!).then((TaskSnapshot task) async => fileUrl = await task.ref.getDownloadURL());
+                                                        await FirebaseStorage.instance.ref().child("ctfs/pdfs/${List<String>.generate(22, (int index) => Random().nextInt(10).toString())}").putFile(file!).then((TaskSnapshot task) async => fileUrl = await task.ref.getDownloadURL());
 
                                                         Fluttertoast.showToast(msg: "PDF UPLOADED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
 
