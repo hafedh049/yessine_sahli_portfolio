@@ -11,4 +11,4 @@ const Color darkGreyColor = Color.fromARGB(255, 154, 155, 160);
 const Color oddDarkBgColor = Color.fromARGB(255, 39, 41, 53);
 
 String section = "Home";
-final ScrollController controller = ScrollController();
+final PageController controller = PageController();

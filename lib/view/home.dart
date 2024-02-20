@@ -61,11 +61,13 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: MediaQuery.sizeOf(context).height,
       padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 64),
       color: evenDarkBgColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          const SizedBox(height: 80),
           Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
