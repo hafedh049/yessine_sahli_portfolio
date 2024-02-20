@@ -317,47 +317,8 @@ class _CTFsState extends State<CTFs> {
             runSpacing: 20,
             spacing: 20,
             children: <Widget>[
-              for (final Map<String, dynamic> item in [])
+              for (final Map<String, dynamic> item in List<Map<String, dynamic>>.generate(20, (int index) => <String, dynamic>{"name": "AAA", "difficulty": "HARD"}))
                 InkWell(
-                  onTap: () => launchUrlString(item["url"]),
-                  onLongPress: () {
-                    bool seen = false;
-                    showModalBottomSheet<void>(
-                      backgroundColor: evenDarkBgColor,
-                      context: context,
-                      builder: (BuildContext context) => Container(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Text("Enter the magic word.", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
-                            const SizedBox(height: 10),
-                            StatefulBuilder(
-                              builder: (BuildContext context, void Function(void Function()) _) {
-                                return TextField(
-                                  controller: _secretKeyController,
-                                  obscureText: !seen,
-                                  autofocus: true,
-                                  focusNode: _node,
-                                  onSubmitted: (String value) async {},
-                                  style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                  decoration: InputDecoration(
-                                    hintText: "Enter the secret passphrase",
-                                    hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                                    suffixIcon: IconButton(onPressed: () => _(() => seen = !seen), icon: Icon(seen ? FontAwesome.eye_solid : FontAwesome.eye_slash_solid, size: 15)),
-                                    prefixIcon: const Icon(FontAwesome.lock_solid, size: 15, color: blueColor),
-                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5), borderSide: const BorderSide(color: blueColor)),
-                                    contentPadding: const EdgeInsets.all(8),
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ).then((void value) => _secretKeyController.clear());
-                  },
                   child: Column(
                     children: <Widget>[
                       Container(
@@ -368,7 +329,6 @@ class _CTFsState extends State<CTFs> {
                         decoration: BoxDecoration(
                           border: Border.all(color: blueColor),
                           borderRadius: BorderRadius.circular(15),
-                          image: (item["image"] == null || item["image"].isEmpty || item["image"] == '""' || item["image"] == "''") ? const DecorationImage(image: AssetImage("assets/images/home_logo.png"), fit: BoxFit.cover) : DecorationImage(image: NetworkImage(item["image"]), fit: BoxFit.cover),
                         ),
                       ).animate(onComplete: (AnimationController controller) => controller.repeat(reverse: false)).shimmer(color: whiteColor.withOpacity(.1), duration: 3.5.seconds),
                       const SizedBox(height: 10),
