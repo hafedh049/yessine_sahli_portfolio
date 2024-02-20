@@ -264,11 +264,12 @@ class _CTFsState extends State<CTFs> {
                                                         String fileUrl = "";
 
                                                         if (image != null) {
-                                                          await FirebaseStorage.instance.ref().child("ctfs/images/${List<String>.generate(22, (int index) => Random().nextInt(10).toString()).join()}").putFile(image!).then((TaskSnapshot task) async => imageUrl = await task.ref.getDownloadURL());
+                                                          await FirebaseStorage.instance.ref().child("ctfs/images/${List<String>.generate(22, (int index) => Random().nextInt(10).toString()).join()}.png").putFile(image!).then((TaskSnapshot task) async => imageUrl = await task.ref.getDownloadURL());
                                                         }
+
                                                         Fluttertoast.showToast(msg: "IMAGE UPLOADED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
 
-                                                        await FirebaseStorage.instance.ref().child("ctfs/pdfs/${List<String>.generate(22, (int index) => Random().nextInt(10).toString())}".join()).putFile(file!).then((TaskSnapshot task) async => fileUrl = await task.ref.getDownloadURL());
+                                                        await FirebaseStorage.instance.ref().child("ctfs/pdfs/${List<String>.generate(22, (int index) => Random().nextInt(10).toString()).join()}.pdf").putFile(file!).then((TaskSnapshot task) async => fileUrl = await task.ref.getDownloadURL());
 
                                                         Fluttertoast.showToast(msg: "PDF UPLOADED", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
 
