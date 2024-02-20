@@ -4,7 +4,6 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:yessine/shared/globals.dart';
 
@@ -16,14 +15,13 @@ class Header extends StatefulWidget {
 
 class _HeaderState extends State<Header> {
   bool _titleState = false;
-  bool _menuState = false;
   final List<String> _sections = const <String>["Home", "Experience", "Contact", "CTFs"];
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: 300.ms,
       width: MediaQuery.sizeOf(context).width,
-      height: MediaQuery.sizeOf(context).height * (_menuState ? .27 : .1),
+      height: MediaQuery.sizeOf(context).height * .1,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(color: headerBgColor, boxShadow: <BoxShadow>[BoxShadow(blurStyle: BlurStyle.outer, color: whiteColor.withOpacity(.6), offset: const Offset(0, 1))]),
       child: Column(
@@ -32,11 +30,6 @@ class _HeaderState extends State<Header> {
         children: <Widget>[
           Row(
             children: <Widget>[
-              LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-                  return window.innerWidth! > 900 ? const SizedBox() : IconButton(onPressed: () => setState(() => _menuState = !_menuState), icon: const Icon(FontAwesome.list_ul_solid, size: 20, color: whiteColor));
-                },
-              ),
               StatefulBuilder(
                 builder: (BuildContext context, void Function(void Function()) _) {
                   return InkWell(
@@ -103,53 +96,6 @@ class _HeaderState extends State<Header> {
               ),
               const Spacer(),
             ],
-          ),
-          Expanded(
-            child: AnimatedOpacity(
-              duration: 300.ms,
-              opacity: _menuState ? 1 : 0,
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const SizedBox(height: 10),
-                    for (final String section_ in _sections) ...<Widget>[
-                      AnimatedScale(
-                        duration: 500.ms,
-                        scale: section_ == section ? 1.01 : 1,
-                        child: InkWell(
-                          hoverColor: transparent,
-                          splashColor: transparent,
-                          highlightColor: transparent,
-                          onTap: () async {
-                            controller.animateTo(MediaQuery.sizeOf(context).height * (_sections.indexOf(section_) + .6) + MediaQuery.sizeOf(context).height * 1.1, duration: 300.milliseconds, curve: Curves.linear);
-                            setState(
-                              () {
-                                section = section_;
-                                _menuState = !_menuState;
-                              },
-                            );
-                          },
-                          child: Text(section_, style: GoogleFonts.jura(fontSize: 16, color: section_ == section ? lightBlueColor : whiteColor, fontWeight: FontWeight.w500)),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                    ],
-                    InkWell(
-                      hoverColor: transparent,
-                      splashColor: transparent,
-                      highlightColor: transparent,
-                      onTap: () async {
-                        await launchUrlString("https://drive.google.com/file/d/1O0oq8qSvUini1w0MOy8FmqXQ9FdpSWWU/view?usp=sharing");
-                        setState(() => _menuState = !_menuState);
-                      },
-                      child: Text("CV", style: GoogleFonts.jura(fontSize: 16, color: whiteColor, fontWeight: FontWeight.w500)),
-                    ),
-                  ],
-                ),
-              ),
-            ),
           ),
         ],
       ),
