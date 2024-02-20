@@ -14,21 +14,13 @@ dependencies:
 
   google_fonts: ^6.1.0
   flutter_animate: ^4.5.0
-  get: ^4.6.6
   url_launcher: ^6.2.4
   cloud_firestore: ^4.15.3
   icons_plus: ^5.0.0
   url_strategy: ^0.2.0
   firebase_core: ^2.25.4
   lottie: ^3.0.0
-  mailer: ^6.0.1
-  crypto: ^3.0.3
-  fluttertoast: ^8.2.4
-  image_picker: ^1.0.7
-  firebase_storage: ^11.6.5
   flutter_native_splash: ^2.3.10
-  file_picker: ^6.1.1
-  file_selector: ^1.0.3
 
 dev_dependencies:
   flutter_test:
