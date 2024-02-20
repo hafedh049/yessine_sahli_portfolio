@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:filepicker_windows/filepicker_windows.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -36,11 +36,7 @@ class _CTFsState extends State<CTFs> {
   Future<void> _load() async {
     await Future.delayed(4.seconds);
     await FirebaseFirestore.instance.collection("ctfs").get().then(
-          (QuerySnapshot<Map<String, dynamic>> value) => _ctfs = value.docs
-              .map(
-                (QueryDocumentSnapshot<Map<String, dynamic>> value) => value,
-              )
-              .toList(),
+          (QuerySnapshot<Map<String, dynamic>> value) => _ctfs = value.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> value) => value).toList(),
         );
   }
 
@@ -182,16 +178,17 @@ class _CTFsState extends State<CTFs> {
                                                     highlightColor: transparent,
                                                     focusColor: transparent,
                                                     onTap: () async {
-                                                      final FilePickerResult? result = await FilePicker.platform.pickFiles(
-                                                        dialogTitle: "Pick CTF's PDF",
-                                                        allowCompression: true,
-                                                        allowMultiple: false,
-                                                        allowedExtensions: const <String>["pdf,doc"],
-                                                        type: FileType.custom,
-                                                      );
+                                                      final file_ = OpenFilePicker()
+                                                        ..filterSpecification = {'Word Document (*.doc)': '*.doc', 'Web Page (*.htm; *.html)': '*.htm;*.html', 'Text Document (*.txt)': '*.txt', 'All Files': '*.*'}
+                                                        ..defaultFilterIndex = 0
+                                                        ..defaultExtension = 'doc'
+                                                        ..title = 'Select a document';
+
+                                                      final result = file_.getFile();
                                                       if (result != null) {
-                                                        file = File(result.files.single.path!);
+                                                        file = File(result.path);
                                                       }
+                                                      if (result != null) {}
                                                     },
                                                     child: IgnorePointer(
                                                       ignoring: true,
