@@ -7,7 +7,6 @@ import 'package:crypto/crypto.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,7 +35,6 @@ class _CTFsState extends State<CTFs> {
   List<QueryDocumentSnapshot<Map<String, dynamic>>> _ctfs = <QueryDocumentSnapshot<Map<String, dynamic>>>[];
 
   Future<void> _load() async {
-    await Future.delayed(4.seconds);
     await FirebaseFirestore.instance.collection("ctfs").get().then((QuerySnapshot<Map<String, dynamic>> value) => _ctfs = value.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> value) => value).toList());
     _ctfsKey.currentState!.setState(() {});
   }
@@ -77,7 +75,7 @@ class _CTFsState extends State<CTFs> {
                     final List<String> difficulties = <String>["EASY", "MEDIUM", "HARD", "INSANE"];
                     final GlobalKey<State> verifierKey = GlobalKey<State>();
                     bool seen = false;
-                    showModalBottomSheet(
+                    showModalBottomSheet<void>(
                       enableDrag: false,
                       backgroundColor: evenDarkBgColor,
                       context: context,
