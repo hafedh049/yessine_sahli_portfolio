@@ -180,23 +180,14 @@ class _CTFsState extends State<CTFs> {
                                                     focusColor: transparent,
                                                     onTap: () async {
                                                       FilePickerResult? result;
-
                                                       try {
-                                                        result = await FilePicker.platform.pickFiles(
-                                                          type: FileType.custom,
-                                                          allowedExtensions: ['jpg', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'txt'],
-                                                        );
+                                                        result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: const <String>['jpg', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'txt']);
+                                                        if (result != null) {
+                                                          _(() => file = File.fromRawPath(result!.files.single.bytes!));
+                                                          verifierKey.currentState!.setState(() {});
+                                                        }
                                                       } catch (e) {
                                                         log(e.toString());
-                                                      }
-
-                                                      if (result != null) {
-                                                        try {
-                                                          _(() => file = File.fromRawPath(result!.files.single.bytes!));
-                                                          log("done");
-                                                        } catch (e) {
-                                                          log(e.toString());
-                                                        }
                                                       }
                                                     },
                                                     child: IgnorePointer(
@@ -264,33 +255,34 @@ class _CTFsState extends State<CTFs> {
                                                     splashColor: transparent,
                                                     highlightColor: transparent,
                                                     focusColor: transparent,
-                                                    onTap: _nameController.text.trim().isEmpty || file == null
-                                                        ? null
-                                                        : () async {
-                                                            if (_nameController.text.trim().isEmpty) {
-                                                              Fluttertoast.showToast(msg: "NAME IS MANDATORY", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-                                                            } else if (file == null) {
-                                                              Fluttertoast.showToast(msg: "YOU FORGOT TO PUT THE PDF", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-                                                            } else {
-                                                              Fluttertoast.showToast(msg: "PLEASE WAIT", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
-                                                              String imageUrl = "";
-                                                              String fileUrl = "";
+                                                    onTap: () async {
+                                                      if (_nameController.text.trim().isEmpty) {
+                                                        Fluttertoast.showToast(msg: "NAME IS MANDATORY", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                                      } else if (file == null) {
+                                                        Fluttertoast.showToast(msg: "YOU FORGOT TO PUT THE PDF", webBgColor: "rgb(255,0,0)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                                      } else {
+                                                        Fluttertoast.showToast(msg: "PLEASE WAIT", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                                        String imageUrl = "";
+                                                        String fileUrl = "";
 
-                                                              if (image != null) {
-                                                                await FirebaseStorage.instance.ref().child("ctfs/images/").putFile(image!).then((TaskSnapshot task) async => imageUrl = await task.ref.getDownloadURL());
-                                                              }
-                                                              await FirebaseStorage.instance.ref().child("ctfs/pdfs/").putFile(file!).then((TaskSnapshot task) async => fileUrl = await task.ref.getDownloadURL());
+                                                        if (image != null) {
+                                                          await FirebaseStorage.instance.ref().child("ctfs/images/").putFile(image!).then((TaskSnapshot task) async => imageUrl = await task.ref.getDownloadURL());
+                                                        }
+                                                        await FirebaseStorage.instance.ref().child("ctfs/pdfs/").putFile(file!).then((TaskSnapshot task) async => fileUrl = await task.ref.getDownloadURL());
 
-                                                              await FirebaseFirestore.instance.collection("ctfs").add(
-                                                                <String, dynamic>{
-                                                                  "name": _nameController.text.trim(),
-                                                                  "url": fileUrl,
-                                                                  "image": image == null ? "" : imageUrl,
-                                                                  "difficulty": difficulty,
-                                                                },
-                                                              );
-                                                            }
+                                                        await FirebaseFirestore.instance.collection("ctfs").add(
+                                                          <String, dynamic>{
+                                                            "name": _nameController.text.trim(),
+                                                            "url": fileUrl,
+                                                            "image": image == null ? "" : imageUrl,
+                                                            "difficulty": difficulty,
                                                           },
+                                                        );
+                                                        Fluttertoast.showToast(msg: "DONE", webBgColor: "rgb(112,156,255)", fontSize: 18, webPosition: 'right', webShowClose: true, timeInSecForIosWeb: 2, textColor: whiteColor);
+                                                        // ignore: use_build_context_synchronously
+                                                        Navigator.pop(context);
+                                                      }
+                                                    },
                                                     child: StatefulBuilder(
                                                       key: verifierKey,
                                                       builder: (BuildContext context, void Function(void Function()) _) {
