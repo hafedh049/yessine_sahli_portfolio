@@ -342,6 +342,8 @@ class _CTFsState extends State<CTFs> {
                                   backgroundColor: evenDarkBgColor,
                                   context: context,
                                   builder: (BuildContext context) => Container(
+                                    width: 300,
+                                    height: 300,
                                     padding: const EdgeInsets.all(16),
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -396,15 +398,7 @@ class _CTFsState extends State<CTFs> {
                                     decoration: BoxDecoration(
                                       border: Border.all(color: blueColor),
                                       borderRadius: BorderRadius.circular(15),
-                                      image: (item["image"] == null || item["image"].isEmpty || item["image"] == '""' || item["image"] == "''")
-                                          ? const DecorationImage(
-                                              image: AssetImage("assets/images/home_logo.png"),
-                                              fit: BoxFit.cover,
-                                            )
-                                          : DecorationImage(
-                                              image: NetworkImage(item["image"]),
-                                              fit: BoxFit.cover,
-                                            ),
+                                      image: (item["image"] == null || item["image"].isEmpty || item["image"] == '""' || item["image"] == "''") ? const DecorationImage(image: AssetImage("assets/images/home_logo.png"), fit: BoxFit.cover) : DecorationImage(image: NetworkImage(item["image"]), fit: BoxFit.cover),
                                     ),
                                   ).animate(onComplete: (AnimationController controller) => controller.repeat(reverse: false)).shimmer(color: whiteColor.withOpacity(.1), duration: 3.5.seconds),
                                   const SizedBox(height: 10),
@@ -438,11 +432,6 @@ class _CTFsState extends State<CTFs> {
               return const Loading();
             },
           ),
-          Container(
-            color: Colors.red,
-            width: 200,
-            height: 200,
-          )
         ],
       ),
     );

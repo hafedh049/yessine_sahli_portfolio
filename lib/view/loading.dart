@@ -10,7 +10,7 @@ class Loading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: evenDarkBgColor,
-      body: Center(child: LottieBuilder.asset("assets/lotties/loading.json")),
+      body: Center(child: LottieBuilder.asset("assets/lotties/loading.json", width: 300, height: 300)),
     );
   }
 }
