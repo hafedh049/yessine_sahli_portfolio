@@ -3,7 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:yessine/shared/globals.dart';
+import 'package:yessine/utils/globals.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -13,8 +13,9 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool _linkState = false;
+
   late final List<Map<String, dynamic>> _icons;
-  bool _pictureState = false;
+
   final List<String> _interests = <String>[
     "CyberSecurity",
     "Information Security",
@@ -32,7 +33,7 @@ class _HomeState extends State<Home> {
       <String, dynamic>{
         "icon": FontAwesome.envelope_solid,
         "tooltip": "Send me an E-mail!",
-        "callback": () async => controller.animateTo(MediaQuery.sizeOf(context).height * 2 + MediaQuery.sizeOf(context).height * .1, duration: 300.milliseconds, curve: Curves.linear),
+        "callback": () async => await launchUrlString("mailto:yassine1sehli@gmail.com?subject=Request&body=->"),
       },
       <String, dynamic>{
         "icon": FontAwesome.x_twitter_brand,
@@ -61,32 +62,22 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.sizeOf(context).height,
       padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 64),
       color: evenDarkBgColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           const SizedBox(height: 80),
           Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                StatefulBuilder(
-                  builder: (BuildContext context, void Function(void Function()) _) {
-                    return InkWell(
-                      hoverColor: transparent,
-                      splashColor: transparent,
-                      highlightColor: transparent,
-                      onTap: () => _(() => _pictureState = !_pictureState),
-                      child: AnimatedContainer(
-                        duration: 500.ms,
-                        width: 140,
-                        height: 140,
-                        decoration: BoxDecoration(shape: BoxShape.circle, image: DecorationImage(image: AssetImage("assets/images/${_pictureState ? 'yassine.jpg' : 'home_logo.png'}"))),
-                      ).animate(onComplete: (AnimationController controller) => controller.repeat(reverse: false)).shimmer(color: whiteColor.withOpacity(.1), duration: 3.5.seconds),
-                    );
-                  },
+                AnimatedContainer(
+                  duration: 500.ms,
+                  width: 140,
+                  height: 140,
+                  decoration: const BoxDecoration(shape: BoxShape.circle, image: DecorationImage(image: AssetImage("assets/images/yassine.jpg"))),
                 ),
                 const SizedBox(height: 20),
                 Text("Yassine Sahli", style: GoogleFonts.jura(fontSize: 30, color: whiteColor, fontWeight: FontWeight.w500)),

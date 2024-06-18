@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 //import 'package:yessine/shared/callbacks.dart';
 
-import '../shared/globals.dart';
+import '../utils/globals.dart';
 
 class Contact extends StatefulWidget {
   const Contact({super.key});
@@ -31,7 +31,6 @@ class _ContactState extends State<Contact> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.sizeOf(context).height - MediaQuery.sizeOf(context).height * .1,
       padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 64),
       color: evenDarkBgColor,
       child: Column(

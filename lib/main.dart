@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:url_strategy/url_strategy.dart';
-import 'package:yessine/shared/callbacks.dart';
+import 'package:yessine/utils/callbacks.dart';
 
 import 'holder.dart';
 import 'view/blue_sod.dart';

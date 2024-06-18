@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-import '../shared/globals.dart';
+import '../utils/globals.dart';
 
 class Loading extends StatelessWidget {
   const Loading({super.key});

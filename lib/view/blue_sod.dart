@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
-import '../shared/globals.dart';
+import '../utils/globals.dart';
 
 class BlueScreenOfDeath extends StatelessWidget {
   const BlueScreenOfDeath({super.key, required this.error});
