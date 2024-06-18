@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:yessine/shared/callbacks.dart';
+//import 'package:yessine/shared/callbacks.dart';
 
 import '../shared/globals.dart';
 
@@ -94,7 +94,7 @@ class _ContactState extends State<Contact> {
           InkWell(
             onTap: () async {
               if (_emailController.text.trim().isNotEmpty && _nameController.text.trim().isNotEmpty && _messageController.text.trim().isNotEmpty) {
-                sendMessage(_nameController.text.trim(), _emailController.text.trim(), _messageController.text.trim());
+                // sendMessage(_nameController.text.trim(), _emailController.text.trim(), _messageController.text.trim());
               }
             },
             highlightColor: transparent,
