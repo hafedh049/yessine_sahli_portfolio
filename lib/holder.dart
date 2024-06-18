@@ -77,9 +77,7 @@ class HolderState extends State<Holder> with SingleTickerProviderStateMixin {
                       isScrollable: true,
                       unselectedLabelColor: whiteColor,
                       labelColor: lightBlueColor,
-                      tabs: <Widget>[
-                        for (final String tab in _tabs) Text(tab, style: GoogleFonts.jura(fontSize: 16, fontWeight: FontWeight.w500)),
-                      ],
+                      tabs: <Widget>[for (final String tab in _tabs) Text(tab, style: GoogleFonts.jura(fontSize: 16, fontWeight: FontWeight.w500))],
                     ),
                     const SizedBox(width: 20),
                     InkWell(
