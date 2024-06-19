@@ -84,7 +84,7 @@ class HolderState extends State<Holder> with SingleTickerProviderStateMixin {
                       hoverColor: transparent,
                       splashColor: transparent,
                       highlightColor: transparent,
-                      onTap: () async => await launchUrlString("https://drive.google.com/file/d/1O0oq8qSvUini1w0MOy8FmqXQ9FdpSWWU/view?usp=sharing"),
+                      onTap: () async => await launchUrlString("https://drive.google.com/file/d/1cZQjkAmB5Ia7Fv5JdecrI83fnKmcaMJ_/view?usp=sharing"),
                       child: Text("CV", style: GoogleFonts.jura(fontSize: 16, color: whiteColor, fontWeight: FontWeight.w500)),
                     ),
                   ],

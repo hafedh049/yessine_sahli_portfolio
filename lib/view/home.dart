@@ -21,7 +21,7 @@ class _HomeState extends State<Home> {
     "Information Security",
     "Programming & Coding",
     "Networking",
-    "Internet of Things",
+    "Internet of Things ( IOT )",
     "Cloud Computing",
     "Mobile Networks Security",
     "Systems & Services Security",
@@ -53,7 +53,7 @@ class _HomeState extends State<Home> {
       <String, dynamic>{
         "icon": Icons.view_timeline_sharp,
         "tooltip": "Download my CV here!",
-        "callback": () async => await launchUrlString("http://www.google.com"),
+        "callback": () async => await launchUrlString("https://drive.google.com/file/d/1cZQjkAmB5Ia7Fv5JdecrI83fnKmcaMJ_/view?usp=sharing"),
       },
     ];
     super.initState();
@@ -77,12 +77,12 @@ class _HomeState extends State<Home> {
                   duration: 500.ms,
                   width: 140,
                   height: 140,
-                  decoration: const BoxDecoration(shape: BoxShape.circle, image: DecorationImage(image: AssetImage("assets/images/yassine.jpg"))),
+                  decoration: const BoxDecoration(shape: BoxShape.circle, image: DecorationImage(image: AssetImage("assets/images/yassine.png"))),
                 ),
                 const SizedBox(height: 20),
                 Text("Yassine Sahli", style: GoogleFonts.jura(fontSize: 30, color: whiteColor, fontWeight: FontWeight.w500)),
                 const SizedBox(height: 20),
-                Text("IT Student Specialized In Network Security", style: GoogleFonts.jura(fontSize: 25, color: darkGreyColor, fontWeight: FontWeight.w500)),
+                Text("Computer Science Student Specialized In Security of Computer Systems & Networks", style: GoogleFonts.jura(fontSize: 25, color: darkGreyColor, fontWeight: FontWeight.w500)),
                 const SizedBox(height: 20),
                 StatefulBuilder(
                   builder: (BuildContext context, void Function(void Function()) _) {
@@ -90,10 +90,10 @@ class _HomeState extends State<Home> {
                       hoverColor: transparent,
                       splashColor: transparent,
                       highlightColor: transparent,
-                      onTap: () async => await launchUrlString("https://www.isetcom.tn/public/home.faces"),
+                      onTap: () async => await launchUrlString("https://tek-up.de/"),
                       onHover: (bool value) => _(() => _linkState = value),
                       child: Text(
-                        "Higher Institute of Technological Studies in Communications of Tunis",
+                        "TEK-UP Private College of Engineering & Technology",
                         style: GoogleFonts.jura(fontSize: 18, color: lightBlueColor, fontWeight: FontWeight.w500, decoration: !_linkState ? TextDecoration.none : TextDecoration.underline, decorationColor: lightBlueColor, decorationThickness: 3),
                       ),
                     );
@@ -119,7 +119,10 @@ class _HomeState extends State<Home> {
           ),
           const SizedBox(height: 20),
           Text(
-            "Dedicated Cyber Security engineering Student with a strong academic foundation in network security principles, security protocols, risk mitigation strategies, and system administration.",
+            "As a network security professional, I am passionate about making the digital world a safer place and protecting sensitive data from cyber threats. "
+            "My academic journey has provided me with a solid understanding of networking principles, security protocols and effective strategies for mitigating potential risks. "
+            "With hands-on experience in penetration testing and vulnerability identification, I am enthusiastic about collaborating with professionals and contribute to build stronger security systems. "
+            "I am committed to constantly be up-to-date with the latest industry trends and best practices. If you want to learn more about my learning journey, feel free to check my personal website. ",
             style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500),
           ),
           const SizedBox(height: 20),
@@ -131,7 +134,7 @@ class _HomeState extends State<Home> {
                   style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500, decoration: TextDecoration.underline),
                 ),
                 TextSpan(
-                  text: " Engineer's degree, Security of Computer Systems and Networks\nOct 2023 - Jul 2026",
+                  text: "Engineer’s degree in Security of Computer Systems and Networks",
                   style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500),
                 ),
               ],
