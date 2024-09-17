@@ -1,18 +1,30 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+import 'globals.dart';
 
 Future<FirebaseApp> load() async {
   try {
     return Firebase.initializeApp(
       options: const FirebaseOptions(
-        apiKey: "AIzaSyB_9akJd_XmnHfw8quX7Sg9M8pgpZIxjJA",
-        authDomain: "yassine-sahli-8fbd9.firebaseapp.com",
-        projectId: "yassine-sahli-8fbd9",
-        storageBucket: "yassine-sahli-8fbd9.appspot.com",
-        messagingSenderId: "770677621396",
-        appId: "1:770677621396:web:8dc8081862af2bbcd5ea81",
+        apiKey: "AIzaSyCMNDrUXUb_ImlWCUczhvVmXEIFzuQ7ct8",
+        authDomain: "yassine-sahli.firebaseapp.com",
+        projectId: "yassine-sahli",
+        storageBucket: "yassine-sahli.appspot.com",
+        messagingSenderId: "304135892478",
+        appId: "1:304135892478:web:c787b0f0be35eda0caa4af",
+        measurementId: "G-JXL6D39VCN",
       ),
     );
-  } on Exception catch (e) {
+  } catch (e) {
     return Future.error(e);
   }
 }
+
+void showToast(String msg) => Fluttertoast.showToast(
+      msg: msg,
+      timeInSecForIosWeb: 3,
+      textColor: whiteColor,
+      webShowClose: true,
+      webBgColor: "rgb(112, 156, 255)",
+    );

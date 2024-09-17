@@ -2,9 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:yessine/models/models.dart';
+import 'package:yessine/view/loading.dart';
 
 import '../utils/globals.dart';
 import '../utils/helpers/cardos.dart';
+import 'blue_sod.dart';
 
 class CTFs extends StatefulWidget {
   const CTFs({super.key});
@@ -14,28 +17,7 @@ class CTFs extends StatefulWidget {
 }
 
 class _CTFsState extends State<CTFs> {
-  final GlobalKey<State> _ctfsKey = GlobalKey<State>();
-
-  List<QueryDocumentSnapshot<Map<String, dynamic>>> _ctfs = <QueryDocumentSnapshot<Map<String, dynamic>>>[];
-
-  final ScrollController _scrollController = ScrollController();
-
-  Future<void> _load() async {
-    await FirebaseFirestore.instance.collection("ctfs").get().then((QuerySnapshot<Map<String, dynamic>> value) => _ctfs = value.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> value) => value).toList());
-    _ctfsKey.currentState!.setState(() {});
-  }
-
-  @override
-  void initState() {
-    _load();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
+  List<CTFModel> _ctfs = <CTFModel>[];
 
   @override
   Widget build(BuildContext context) {
@@ -44,54 +26,58 @@ class _CTFsState extends State<CTFs> {
       color: oddDarkBgColor,
       alignment: Alignment.center,
       padding: const EdgeInsets.all(24),
-      child: Scrollbar(
-        thumbVisibility: false,
-        trackVisibility: false,
-        controller: _scrollController,
-        child: SingleChildScrollView(
-          controller: _scrollController,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Center(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text("CTF", style: GoogleFonts.jura(fontSize: 35, color: whiteColor, fontWeight: FontWeight.w500)),
-                    const SizedBox(width: 20),
-                    /*HAKJKJ*/
-                  ],
-                ),
-              ),
-              const SizedBox(height: 25),
-              StatefulBuilder(
-                key: _ctfsKey,
-                builder: (BuildContext context, void Function(void Function() _) _) {
-                  final List<Map<String, dynamic>> data = _ctfs.map((QueryDocumentSnapshot<Map<String, dynamic>> e) => e.data()).toList();
-                  return data.isEmpty
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Center(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text("CTF", style: GoogleFonts.jura(fontSize: 35, color: whiteColor, fontWeight: FontWeight.w500)),
+                const SizedBox(width: 20),
+                /*HAKJKJ*/
+              ],
+            ),
+          ),
+          const SizedBox(height: 25),
+          Expanded(
+            child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+              stream: FirebaseFirestore.instance.collection("ctfs").orderBy("endPeriod", descending: true).snapshots(),
+              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                if (snapshot.hasData) {
+                  _ctfs = snapshot.data!.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> e) => CTFModel.fromJson(e.data())).toList();
+                  return _ctfs.isEmpty
                       ? Center(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              LottieBuilder.asset("assets/lotties/empty.json", width: 300, height: 300),
-                              Text("No CTFs yet.", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
+                              LottieBuilder.asset("assets/lotties/empty.json"),
+                              Text("NO EXPERIENCES YET.", style: GoogleFonts.jura(fontSize: 22, color: whiteColor, fontWeight: FontWeight.w500)),
                             ],
                           ),
                         )
-                      : Wrap(
-                          alignment: WrapAlignment.center,
-                          crossAxisAlignment: WrapCrossAlignment.center,
-                          runAlignment: WrapAlignment.center,
-                          runSpacing: 20,
-                          spacing: 20,
-                          children: <Widget>[for (final Map<String, dynamic> item in data) Cardos(item: item)],
+                      : ListView(
+                          children: <Widget>[
+                            Wrap(
+                              alignment: WrapAlignment.center,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              runAlignment: WrapAlignment.center,
+                              runSpacing: 20,
+                              spacing: 20,
+                              children: <Widget>[for (final CTFModel ctf in _ctfs) Cardos(item: ctf)],
+                            ),
+                          ],
                         );
-                },
-              ),
-            ],
+                } else if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Loading();
+                } else {
+                  return BlueScreenOfDeath(error: snapshot.error.toString());
+                }
+              },
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
