@@ -25,6 +25,7 @@ dependencies:
   cached_network_image: ^3.4.1
   date_format: ^2.0.9
   fluttertoast: ^8.2.8
+  flutter_widget_from_html: ^0.15.2
 
 dev_dependencies:
   flutter_test:

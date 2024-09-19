@@ -73,7 +73,10 @@ class HolderState extends State<Holder> with TickerProviderStateMixin {
                           hoverColor: transparent,
                           splashColor: transparent,
                           highlightColor: transparent,
-                          onTap: () => true,
+                          onTap: () {
+                            tabsController.animateTo(0);
+                            currentTab = 0;
+                          },
                           onHover: (bool value) => _(() => _titleState = value),
                           child: Text(
                             "Personal Website | Yassine Sahli",
@@ -90,6 +93,7 @@ class HolderState extends State<Holder> with TickerProviderStateMixin {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               TabBar(
+                                onTap: (int value) => currentTab = value,
                                 controller: tabsController,
                                 automaticIndicatorColorAdjustment: true,
                                 dividerColor: transparent,

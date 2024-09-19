@@ -33,9 +33,7 @@ class _ContactState extends State<Contact> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 64),
       color: evenDarkBgColor,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
+      child: ListView(
         children: <Widget>[
           Center(child: Text("Contact", style: GoogleFonts.jura(fontSize: 35, color: whiteColor, fontWeight: FontWeight.w500))),
           const SizedBox(height: 25),
@@ -44,48 +42,42 @@ class _ContactState extends State<Contact> {
             style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
           ),
           const SizedBox(height: 20),
-          Flexible(
-            child: Container(
-              decoration: BoxDecoration(color: darkGreyColor.withOpacity(.4), borderRadius: BorderRadius.circular(5), border: Border.all(color: blueColor, width: 2)),
-              child: TextField(
-                controller: _nameController,
-                style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                decoration: InputDecoration(
-                  hintText: "Name",
-                  hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                ),
+          Container(
+            decoration: BoxDecoration(color: darkGreyColor.withOpacity(.4), borderRadius: BorderRadius.circular(5), border: Border.all(color: blueColor, width: 2)),
+            child: TextField(
+              controller: _nameController,
+              style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+              decoration: InputDecoration(
+                hintText: "Name",
+                hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16),
               ),
             ),
           ),
           const SizedBox(height: 20),
-          Flexible(
-            child: Container(
-              decoration: BoxDecoration(color: darkGreyColor.withOpacity(.4), borderRadius: BorderRadius.circular(5), border: Border.all(color: blueColor, width: 2)),
-              child: TextField(
-                controller: _emailController,
-                style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                decoration: InputDecoration(
-                  hintText: "E-mail",
-                  hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                ),
+          Container(
+            decoration: BoxDecoration(color: darkGreyColor.withOpacity(.4), borderRadius: BorderRadius.circular(5), border: Border.all(color: blueColor, width: 2)),
+            child: TextField(
+              controller: _emailController,
+              style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+              decoration: InputDecoration(
+                hintText: "E-mail",
+                hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16),
               ),
             ),
           ),
           const SizedBox(height: 20),
-          Flexible(
-            child: Container(
-              decoration: BoxDecoration(color: darkGreyColor.withOpacity(.4), borderRadius: BorderRadius.circular(5), border: Border.all(color: blueColor, width: 2)),
-              child: TextField(
-                controller: _messageController,
-                maxLines: 15,
-                style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                decoration: InputDecoration(
-                  hintText: "Message",
-                  hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                ),
+          Container(
+            decoration: BoxDecoration(color: darkGreyColor.withOpacity(.4), borderRadius: BorderRadius.circular(5), border: Border.all(color: blueColor, width: 2)),
+            child: TextField(
+              controller: _messageController,
+              maxLines: 15,
+              style: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+              decoration: InputDecoration(
+                hintText: "Message",
+                hintStyle: GoogleFonts.jura(fontSize: 18, color: whiteColor, fontWeight: FontWeight.w500),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               ),
             ),
           ),

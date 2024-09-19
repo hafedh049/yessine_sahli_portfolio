@@ -42,7 +42,7 @@ class _CTFsState extends State<CTFs> {
           const SizedBox(height: 25),
           Expanded(
             child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream: FirebaseFirestore.instance.collection("ctfs").orderBy("endPeriod", descending: true).snapshots(),
+              stream: FirebaseFirestore.instance.collection("ctfs").snapshots(),
               builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                 if (snapshot.hasData) {
                   _ctfs = snapshot.data!.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> e) => CTFModel.fromJson(e.data())).toList();

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -82,7 +83,7 @@ class _ExperiencesState extends State<Experiences> {
                                   ],
                                 ),
                                 const SizedBox(height: 20),
-                                Text(_experiences[index].description, style: GoogleFonts.jura(fontSize: 14, color: whiteColor, fontWeight: FontWeight.w500)),
+                                HtmlWidget(_experiences[index].description, textStyle: GoogleFonts.jura(fontSize: 14, color: whiteColor, fontWeight: FontWeight.w500)),
                               ],
                             ),
                           ),
