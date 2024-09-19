@@ -74,12 +74,12 @@ class _HomeState extends State<Home> {
                     duration: 500.ms,
                     width: 140,
                     height: 140,
-                    decoration: const BoxDecoration(shape: BoxShape.circle, image: DecorationImage(image: AssetImage("assets/images/yassine.png"))),
+                    decoration: const BoxDecoration(shape: BoxShape.circle, image: DecorationImage(image: AssetImage("assets/images/yassine.jpeg"), fit: BoxFit.cover)),
                   ),
                   const SizedBox(height: 20),
                   Text("Yassine Sahli", style: GoogleFonts.jura(fontSize: 30, color: whiteColor, fontWeight: FontWeight.w500)),
                   const SizedBox(height: 20),
-                  Text("Computer Science Student Specialized In Security of Computer Systems & Networks", style: GoogleFonts.jura(fontSize: 25, color: darkGreyColor, fontWeight: FontWeight.w500)),
+                  Text("Cybersecurity Engineering Student |  Top 10 in Tunisia on TryHackMe | eJPTv2® | RHCSA® | Ai-900 | CNSP | BTJA | HCIA IoT", style: GoogleFonts.jura(fontSize: 25, color: darkGreyColor, fontWeight: FontWeight.w500)),
                   const SizedBox(height: 20),
                   StatefulBuilder(
                     builder: (BuildContext context, void Function(void Function()) _) {
