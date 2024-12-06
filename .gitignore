@@ -11,10 +11,6 @@ pubspec.lock
 # If you don't generate documentation locally you can remove this line.
 
 doc/api/
-auto_commit.py
-web/index.html
-lib/shared/callbacks.dart
-web/index.html
 
 # dotenv environment variables file
 .env*
